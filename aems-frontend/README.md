@@ -1,8 +1,18 @@
-# React + Vite
+SRC: FOLDER STRUCTURE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+    page: The folder to store the section page (Dashboard, Leave Request, ...)
 
-Currently, two official plugins are available:
+    components: The folder to store the shared component for everyone
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    redux: The folder to store and handle state of the redux slice
+
+    service: The folder to handle call API function
+
+App.jsx: The manage router for the page, the new page will have the path format "/newPageName" (/Dashboard)
+
+Install it and run:
+
+```bash
+npm install
+npm run dev
+```
