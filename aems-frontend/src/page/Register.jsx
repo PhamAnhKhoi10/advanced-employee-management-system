@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 const Register = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [inviteCode, setInviteCode] = useState('');
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
@@ -43,6 +46,9 @@ const Register = () => {
     }
 
     const userData = {
+      firstName,
+      lastName,
+      inviteCode,
       email,
       password,
     };
@@ -72,9 +78,9 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white">
-      <div className="w-full max-w-md p-8 bg-gray-800 rounded-md shadow-lg text-center">
-        <h1 className="text-3xl font-bold mb-4">Create an account</h1>
-        <p className="text-xl text-gray-400 mb-6">
+      <div className="text-center">
+        <h1 className="text-7xl font-bold mb-4">Create an account</h1>
+        <p className="text-4xl text-gray-400 mb-6">
           Let us simplify your workflow
         </p>
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -86,7 +92,9 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="First Name"
-                className="w-full p-3 bg-gray-700 rounded text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full p-3 bg-gray-700 rounded-2xl text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 required
               />
             </div>
@@ -97,10 +105,25 @@ const Register = () => {
               <input
                 type="text"
                 placeholder="Last Name"
-                className="w-full p-3 bg-gray-700 rounded text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full p-3 bg-gray-700 rounded-2xl text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 required
               />
             </div>
+          </div>
+          <div>
+            <label className="block text-left mb-1">
+              Invite Code <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Invite Code"
+              className="w-full p-3 bg-gray-700 rounded-2xl text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              value={inviteCode}
+              onChange={(e) => setInviteCode(e.target.value)}
+              required
+            />
           </div>
           <div>
             <label className="block text-left mb-1">
@@ -109,7 +132,7 @@ const Register = () => {
             <input
               type="email"
               placeholder="Email"
-              className="w-full p-3 bg-gray-700 rounded text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full p-3 bg-gray-700 rounded-2xl text-white focus:ring-2 focus:ring-blue-500 outline-none"
               value={email}
               onChange={handleEmailChange}
               required
@@ -123,7 +146,7 @@ const Register = () => {
             <input
               type="password"
               placeholder="Password"
-              className="w-full p-3 bg-gray-700 rounded text-white focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full p-3 bg-gray-700 rounded-2xl text-white focus:ring-2 focus:ring-blue-500 outline-none"
               value={password}
               onChange={handlePasswordChange}
               required
@@ -132,12 +155,12 @@ const Register = () => {
           </div>
           <button
             type="submit"
-            className="w-full p-3 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
+            className="w-full p-3 bg-blue-600 hover:bg-blue-700 rounded-2xl text-white font-semibold"
           >
             Sign Up
           </button>
         </form>
-        <div className="mt-4 text-sm">
+        <div className="mt-4 text-lg">
           <p>
             Already signed up?{' '}
             <a href="#" className="text-blue-400 hover:underline">
@@ -145,7 +168,7 @@ const Register = () => {
             </a>
           </p>
         </div>
-        <div className="mt-4 text-sm">
+        <div className="mt-4 text-lg">
           <p>
             Are you an user?{' '}
             <a href="#" className="text-blue-400 hover:underline">
