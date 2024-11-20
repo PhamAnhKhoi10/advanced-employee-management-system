@@ -13,6 +13,6 @@ App.jsx: The manage router for the page, the new page will have the path format 
 Install it and run:
 
 ```bash
-npm install
+npm install | npm i
 npm run dev
 ```
