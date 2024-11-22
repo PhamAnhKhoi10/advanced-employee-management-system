@@ -19,7 +19,6 @@ function Login() {
 
   const handleLogin = handleSubmit(async (data) => {
     try {
-      console.log(data);
       dispatch(loginAsync(data));
     } catch (error) {
       console.error(error);
