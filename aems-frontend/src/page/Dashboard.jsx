@@ -1,7 +1,13 @@
 import React from "react";
+import NavBar from "../components/NavBar";
+import Sidebar from "../components/SideBar";
 
 function Dashboard() {
-  return <div>Hello world</div>;
+  return (
+    <>
+      
+    </>
+  );
 }
 
 export default Dashboard;
