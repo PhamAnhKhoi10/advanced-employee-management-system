@@ -5,8 +5,7 @@ import Sidebar from "../components/SideBar";
 function Dashboard() {
   return (
     <>
-      <NavBar role={"Employee"}/>
-      <Sidebar role={"Employee"}/>
+      
     </>
   );
 }
