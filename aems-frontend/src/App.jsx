@@ -7,13 +7,18 @@ import Layout from "./components/Layout";
 
 const App = () => {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/login" element={<Login />} />
+    <Routes>
+      {/* Routes without Layout */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Routes with Layout */}
+      <Route
+        element={<Layout />}
+      >
         <Route path="/home" element={<PrivateRoute element={Dashboard} />} />
         <Route path="/notifications" element={<Notification />} />
-      </Routes>
-    </Layout>
+      </Route>
+    </Routes>
   );
 };
 
