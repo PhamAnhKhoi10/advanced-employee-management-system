@@ -4,7 +4,7 @@ import { loginAsync } from "../../services/auth/auth.service";
 const employeeSlice = createSlice({
   name: "employee",
   initialState: {
-    employee: null,
+    employee: {},
   },
   reducers: {},
   extraReducers: (builder) => {
