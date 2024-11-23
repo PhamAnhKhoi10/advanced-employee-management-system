@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import { doLogout } from "./auth/auth.service";
 
 const AxiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "api/v1",
   withCredentials: true,
 });
 
 AxiosInstance.interceptors.request.use(
   (config) => {
-    const token = TokenService.getLocalAccessToken();
+    const token = TokenService.getToken();
+
     const unAuthorizedUrls = ["/login", "/register"];
     if (token && config.url && !unAuthorizedUrls.includes(config.url)) {
       config.headers["Authorization"] = "Bearer " + token;

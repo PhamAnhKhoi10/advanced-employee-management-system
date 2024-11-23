@@ -29,6 +29,7 @@ function Login() {
       const result = await response.json();
 
       console.log(result);
+      dispatch(loginAsync(data));
     } catch (error) {
       console.error("There was a problem with the login request:", error);
     }
