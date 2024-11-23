@@ -5,7 +5,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { IoTimerSharp } from "react-icons/io5";
 import { TfiBell } from "react-icons/tfi";
 
-const Dashboard = () => {
+const UserSalary = () => {
   return (
     <div style={styles.container}>
       {/* Avatar and Sign Out button*/}
@@ -528,4 +528,4 @@ const styles = {
 
 };
 
-export default Dashboard;
+export default UserSalary;
