@@ -1,12 +1,8 @@
 // src/page/Login.jsx
 import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import React from "react";
-import { loginAsync } from "../services/auth/auth.service";
-import { useDispatch } from "react-redux";
 
 function Login() {
-  const dispatch = useDispatch();
   const methods = useForm({
     defaultValues: {
       email: "",
@@ -19,10 +15,22 @@ function Login() {
 
   const handleLogin = handleSubmit(async (data) => {
     try {
-      console.log(data);
-      dispatch(loginAsync(data));
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+
+      console.log(result);
     } catch (error) {
-      console.error(error);
+      console.error("There was a problem with the login request:", error);
     }
   });
 
