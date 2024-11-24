@@ -4,12 +4,17 @@ import { loginAsync } from "../../services/auth/auth.service";
 const employeeSlice = createSlice({
   name: "employee",
   initialState: {
-    employee: null,
+    user: {
+      id: 1,
+      name: "Minh Khanh",
+      email: "tinlun12344@gmail.com",
+      role: "Employee",
+    },
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loginAsync.fulfilled, (state, action) => {
-      state.employee = action.payload;
+      state.user = action.payload;
     });
   },
 });

@@ -5,7 +5,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { CampaignRounded } from "@mui/icons-material";
 
 function Notification() {
-  const { employee } = useSelector(selectEmployees);
+  const { user } = useSelector(selectEmployees);
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -14,17 +14,14 @@ function Notification() {
     },
   ]);
 
-  const requestInfomations = async (employeeId) => {
+  const requestInfomations = async (userId) => {
     try {
-      const response = await fetch(
-        `/api/notification?employeeId=${employeeId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/notification?userId=${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -38,10 +35,10 @@ function Notification() {
   };
 
   useEffect(() => {
-    if (employee && employee.id) {
-      requestInfomations(employee.id);
+    if (user && user.id) {
+      requestInfomations(user.id);
     }
-  }, [employee]);
+  }, [user]);
   return (
     <Stack
       sx={{

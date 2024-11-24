@@ -11,14 +11,11 @@ const App = () => {
     <Routes>
       {/* Put all routes that does not need Nav bar and Side Bar Here */}
       <Route path="/login" element={<Login />} />
-      
+
       {/* Put all routes that need Nav bar and Side Bar Here */}
       <Route element={<Layout />}>
-        <Route path="/home" element={<PrivateRoute element={Dashboard} />} />
-        <Route 
-          path="/notifications" 
-          element={<PrivateRoute element={Notification} />} 
-        />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/notifications" element={<Notification />} />
       </Route>
     </Routes>
   );

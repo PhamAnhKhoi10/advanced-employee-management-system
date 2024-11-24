@@ -1,24 +1,23 @@
-import React from "react";
-
+// eslint-disable-next-line react/prop-types
 const NavBar = ({ role }) => {
   const getNavItems = () => {
     switch (role) {
       case "HR":
         return [
-          { href: "/hr/dashboard", label: "Dashboard" },
-          { href: "/hr/request-leave", label: "Request Leave" },
-          { href: "/hr/profile", label: "Profile" },
+          { href: "/", label: "Dashboard" },
+          { href: "/request-leave", label: "Request Leave" },
+          { href: "/profile", label: "Profile" },
         ];
       case "Employee":
         return [
-          { href: "/employee/dashboard", label: "Dashboard" },
-          { href: "/employee/request-leave", label: "Request Leave" },
-          { href: "/employee/profile", label: "Profile" },
+          { href: "/", label: "Dashboard" },
+          { href: "/request-leave", label: "Request Leave" },
+          { href: "/profile", label: "Profile" },
         ];
       case "Admin":
         return [
-          { href: "/admin/dashboard", label: "Dashboard" },
-          { href: "/admin/profile", label: "Profile" },
+          { href: "/", label: "Dashboard" },
+          { href: "/profile", label: "Profile" },
         ];
       default:
         return [];
@@ -151,4 +150,3 @@ export default NavBar;
 // };
 
 // export default NavBar;
-
