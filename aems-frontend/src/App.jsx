@@ -1,22 +1,24 @@
+// App.jsx
 import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
 import Dashboard from "./page/Dashboard";
 import Login from "./page/Login";
 import Notification from "./page/Notification";
 import PrivateRoute from "./components/PrivateRoute";
-import Layout from "./components/Layout";
 
 const App = () => {
   return (
     <Routes>
-      {/* Routes without Layout */}
+      {/* Put all routes that does not need Nav bar and Side Bar Here */}
       <Route path="/login" element={<Login />} />
-
-      {/* Routes with Layout */}
-      <Route
-        element={<Layout />}
-      >
+      
+      {/* Put all routes that need Nav bar and Side Bar Here */}
+      <Route element={<Layout />}>
         <Route path="/home" element={<PrivateRoute element={Dashboard} />} />
-        <Route path="/notifications" element={<Notification />} />
+        <Route 
+          path="/notifications" 
+          element={<PrivateRoute element={Notification} />} 
+        />
       </Route>
     </Routes>
   );
