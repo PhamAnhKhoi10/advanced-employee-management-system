@@ -253,11 +253,11 @@ const styles = {
   },
   verticalLine: {
     position: "absolute",
-    top: "calc(90px)", // Bắt đầu từ sau vị trí thanh ngang
-    left: "17%", // Căn giữa hoặc chỉnh tùy vị trí mong muốn
-    width: "0.5px", // Độ dày của thanh
-    height: "calc(100% - 90px)", // Độ dài kéo từ trên xuống dưới (tùy chỉnh phù hợp)
-    backgroundColor: "#444", // Màu thanh
+    top: "calc(90px)", 
+    left: "17%", 
+    width: "0.5px", 
+    height: "calc(100% - 90px)",
+    backgroundColor: "#444", 
   },
   hr: {
     border: "1px solid #444",
@@ -267,43 +267,43 @@ const styles = {
   },
   leftButtonContainer: {
     position: "absolute",
-    top: "150px", // Đã thay đổi từ 100px thành 130px để dời xuống dưới 30px
-    left: "10px", // Đặt vị trí bên trái so với thanh dọc
+    top: "150px", 
+    left: "10px", 
     display: "flex",
-    flexDirection: "column", // Các nút bấm xếp theo chiều dọc
+    flexDirection: "column", 
   },
   buttonContent: {
-    display: "flex", // Sử dụng flexbox
-    alignItems: "center", // Căn giữa icon và text theo chiều dọc
+    display: "flex", 
+    alignItems: "center", 
     marginLeft: "-30px",
   },
   leftButton: {
     backgroundColor: "transparent",
     color: "#fff",
-    padding: "10px 45px", // Đảm bảo chiều rộng là 180px
-    height: "50px",       // Đặt chiều cao cố định là 50px
+    padding: "10px 45px", 
+    height: "50px",       
     border: "none",
     borderRadius: "5px",
-    fontSize: "1.5rem",   // Tăng kích thước chữ để phù hợp với nút lớn hơn
+    fontSize: "1.5rem",  
     cursor: "pointer",
     transition: "background-color 0.3s",
   },
   icon1: {
-    marginRight: "40px", // Khoảng cách giữa icon và text
-    fontSize: "3rem", // Kích thước của icon
+    marginRight: "40px", 
+    fontSize: "3rem", 
   },
   icon: {
-    marginRight: "20px", // Khoảng cách giữa icon và text
-    fontSize: "3rem", // Kích thước của icon
+    marginRight: "20px", 
+    fontSize: "3rem", 
   },
   salarySection: {
     display: "flex",
-    flexDirection: "column", // Đặt các phần tử xếp dọc
-    alignItems: "center",    // Căn giữa theo chiều ngang
+    flexDirection: "column", 
+    alignItems: "center",    /
     position: "absolute",
-    top: "calc(50% + 60px)",              // Căn giữa theo chiều dọc
+    top: "calc(50% + 60px)",              
     left: "calc(50% + 120px)",
-    transform: "translate(-50%, -50%)", // Giữ vị trí giữa màn hình
+    transform: "translate(-50%, -50%)", 
   },
 
   salaryText: {
@@ -311,218 +311,215 @@ const styles = {
     color: "#fff",
     fontFamily: "Inter, sans-serif",
     fontWeight: "bold",
-    marginBottom: "20px", // Tạo khoảng cách giữa chữ và card
+    marginBottom: "20px", 
   },
 
   card: {
-    width: "500px",         // Chiều rộng card
-    height: "450px",        // Chiều cao card
-    backgroundColor: "#1A1A1A", // Màu nền của card
-    borderRadius: "10px",   // Bo góc card
+    width: "500px",        
+    height: "450px",        
+    backgroundColor: "#1A1A1A", 
+    borderRadius: "10px",   
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", // Hiệu ứng bóng
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", 
   },
 
   cardContent: {
-    textAlign: "center",    // Căn giữa nội dung trong card
+    textAlign: "center",    
     color: "#fff",
     fontFamily: "Inter, sans-serif",
   },
   innerCardsContainer: {
     display: "flex",
-    flexDirection: "column", // Các card con xếp theo chiều dọc
-    justifyContent: "center", // Căn giữa theo chiều dọc
-    alignItems: "center", // Căn giữa theo chiều ngang
+    flexDirection: "column",
+    justifyContent: "center", 
+    alignItems: "center", 
     width: "100%",
     height: "100%",
   },
 
   innerCard1: {
-    width: "400px", // Width of the main card
-    height: "140px", // Height of the main card
-    backgroundColor: "#444", // Main card color
-    borderRadius: "10px", // Rounded corners
-    display: "flex", // Use flexbox to center the content
-    flexDirection: "column", // Stack content vertically
-    justifyContent: "center", // Center content vertically
-    alignItems: "center", // Center content horizontally
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", // Shadow effect
-    color: "#fff", // Text color
+    width: "400px", 
+    height: "140px",
+    backgroundColor: "#444", 
+    borderRadius: "10px", 
+    display: "flex", 
+    flexDirection: "column", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", 
+    color: "#fff", 
     fontFamily: "Inter, sans-serif",
-    marginBottom: "20px", // Margin between cards
-    textAlign: "center", // Center text inside the card
-    position: "relative", // For positioning the smaller card inside it
+    marginBottom: "20px", 
+    textAlign: "center", 
+    position: "relative", 
   },
 
   innerCard1SummaryContainer: {
     position: "relative",
-    width: "330px", // Độ rộng container
-    height: "120px", // Chiếm toàn bộ chiều cao của parent card
-    display: "flex", // Sử dụng flexbox
-    flexDirection: "column", // Sắp xếp nội dung theo chiều dọc
-    justifyContent: "flex-end", // Đẩy nội dung xuống sát lề dưới
-    alignItems: "center", // Căn giữa nội dung theo chiều ngang
-    padding: "10px", // Khoảng cách padding bên trong
-    color: "#fff", // Màu chữ
+    width: "330px", 
+    height: "120px", 
+    display: "flex", 
+    flexDirection: "column", 
+    justifyContent: "flex-end", 
+    alignItems: "center", 
+    padding: "10px", 
+    color: "#fff", 
     fontFamily: "Inter, sans-serif",
-    position: "relative", // Giữ vị trí relative cho container
+    position: "relative", 
   },
 
   card1Text: {
-    position: "absolute",  // Position the text absolutely
-    top: "10px",           // 10px from the top
-    left: "10px",          // 10px from the left
-    fontSize: "1rem",      // Font size for the summary text
-    color: "#fff",         // Color of the text
-    fontWeight: "bold",    // Bold text
+    position: "absolute",  
+    top: "10px",           
+    left: "10px",         
+    fontSize: "1rem",      
+    color: "#fff",         
+    fontWeight: "bold",    
     fontFamily: "Inter, sans-serif",
   },
 
   summaryText: {
-    position: "absolute",  // Position the text absolutely
-    top: "0px",           // 10px from the top
-    left: "0px",          // 10px from the left
-    fontSize: "1.4rem",      // Font size for the summary text
-    color: "#FFFFFF",         // Color of the text
-    fontWeight: "bold",    // Bold text
+    position: "absolute", 
+    top: "0px",           
+    left: "0px",          
+    fontSize: "1.4rem",      
+    color: "#FFFFFF",        
+    fontWeight: "bold",    
     fontFamily: "Inter, sans-serif",
   },
 
   rightAlignedTextContainer: {
-    position: "absolute", // Giữ vị trí tuyệt đối trong card
-    right: "0px", // Căn sang phải
-    bottom: "10px", // Khoảng cách từ phía trên
+    position: "absolute", 
+    right: "0px", 
+    bottom: "10px", 
     transform: "translateX(-50%)",
     display: "flex",
-    flexDirection: "column", // Các dòng chữ xếp theo chiều dọc
-    alignItems: "flex-end", // Căn chỉnh các dòng chữ về phía bên phải
+    flexDirection: "column", 
+    alignItems: "flex-end", 
   },
 
   rightAlignedText: {
-    fontSize: "0.8rem", // Kích thước chữ
-    color: "#EAEAEA", // Màu chữ
-    fontFamily: "Inter, sans-serif", // Font chữ
-    textAlign: "right", // Căn chữ theo bên trái
-    width: "100%", // Đảm bảo mỗi dòng chiếm đủ chiều rộng
+    fontSize: "0.8rem", 
+    color: "#EAEAEA", 
+    fontFamily: "Inter, sans-serif", 
+    textAlign: "right", 
+    width: "100%", 
   },
 
   innerCard2: {
-    width: "400px", // Chiều rộng của card lớn
-    height: "50px", // Chiều cao của card lớn (tăng lên để chứa 3 card nhỏ)
-    backgroundColor: "#444", // Màu nền của card lớn
-    borderRadius: "10px", // Bo góc cho card lớn
-    display: "flex", // Sử dụng flexbox
-    flexDirection: "row", // Xếp các card nhỏ theo chiều ngang
-    justifyContent: "space-between", // Căn đều các card nhỏ theo chiều ngang
-    alignItems: "center", // Căn giữa các card nhỏ theo chiều dọc
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", // Hiệu ứng bóng
-    color: "#fff", // Màu chữ của card
+    width: "400px", 
+    height: "50px", 
+    backgroundColor: "#444", 
+    borderRadius: "10px", 
+    display: "flex", 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", 
+    color: "#fff",
     fontFamily: "Inter, sans-serif",
-    marginBottom: "20px", // Khoảng cách giữa các card
-    textAlign: "center", // Căn giữa nội dung trong mỗi card nhỏ
+    marginBottom: "20px", 
+    textAlign: "center",
   },
-
   innerCard2Child: {
-    width: "30%", // Mỗi card nhỏ chiếm 30% chiều rộng của card lớn
-    height: "100%", // Chiều cao của mỗi card nhỏ bằng chiều cao của card lớn
-    borderRadius: "5px", // Bo góc cho các card nhỏ
-    display: "flex", // Sử dụng flexbox cho các card nhỏ
-    justifyContent: "center", // Căn giữa nội dung
-    alignItems: "center", // Căn giữa nội dung theo chiều dọc
-    color: "#fff", // Màu chữ của các card nhỏ
+    width: "30%",
+    height: "100%", 
+    borderRadius: "5px", 
+    display: "flex", 
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#fff", 
     fontFamily: "Inter, sans-serif",
-    fontSize: "1rem", // Kích thước chữ trong các card nhỏ
+    fontSize: "1rem", 
   },
-  // Cập nhật lại innerCard3 và tạo phần chứa các tháng
   innerCard3: {
-    width: "400px", // Chiều rộng của card 3
-    height: "140px", // Chiều cao của card 3
-    backgroundColor: "transparent", // Màu nền của card 3
-    borderRadius: "10px", // Bo góc cho card 3
-    display: "flex", // Sử dụng flexbox để căn giữa
-    flexDirection: "column", // Căn các phần tử theo chiều dọc
-    justifyContent: "center", // Căn giữa nội dung theo chiều dọc
-    alignItems: "center", // Căn giữa nội dung theo chiều ngang
-    color: "#fff", // Màu chữ của card 3
+    width: "400px", 
+    height: "140px", 
+    backgroundColor: "transparent", 
+    borderRadius: "10px",
+    display: "flex", 
+    flexDirection: "column", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    color: "#fff",
     fontFamily: "Inter, sans-serif",
-    textAlign: "center", // Căn giữa nội dung
-    padding: "10px", // Thêm padding cho card
+    textAlign: "center", 
+    padding: "10px", 
   },
 
-  // Cập nhật phần container chứa các tháng (Thêm container mới cho tháng)
   monthContainer: {
     display: "flex",
-    flexDirection: "column", // Xếp theo chiều dọc
-    justifyContent: "center", // Căn giữa theo chiều dọc
-    alignItems: "flex-start", // Căn giữa theo chiều ngang
-    gap: "20px", // Khoảng cách giữa các phần tử
+    flexDirection: "column", 
+    justifyContent: "center", 
+    alignItems: "flex-start", 
+    gap: "20px", 
   },
   monthText: {
-    fontSize: "0.8rem", // Kích thước chữ
-    color: "#EAEAEA", // Màu chữ
+    fontSize: "0.8rem", 
+    color: "#EAEAEA",
     fontFamily: "Inter, sans-serif",
-    fontWeight: "bold", // Làm đậm chữ
+    fontWeight: "bold", 
   },
   statusContainer: {
     display: "flex",
-    flexDirection: "column", // Xếp theo chiều dọc
-    justifyContent: "center", // Căn giữa theo chiều dọc
-    alignItems: "center", // Căn giữa theo chiều ngang
-    gap: "20px", // Khoảng cách giữa các phần tử
+    flexDirection: "column", 
+    justifyContent: "center", 
+    alignItems: "center", 
+    gap: "20px", 
   },
   statusText: {
-    fontSize: "0.8rem", // Kích thước chữ
-    color: "#EAEAEA", // Màu chữ
+    fontSize: "0.8rem", 
+    color: "#EAEAEA", 
     fontFamily: "Inter, sans-serif",
-    fontWeight: "bold", // Làm đậm chữ
+    fontWeight: "bold", 
   },
 
   innerCard3Container: {
-    display: "flex", // Sử dụng flexbox để căn chỉnh 3 card nhỏ theo chiều ngang
-    justifyContent: "space-between", // Căn đều các card nhỏ theo chiều ngang
-    alignItems: "center", // Căn giữa các card nhỏ theo chiều dọc
-    width: "100%", // Đảm bảo container chiếm hết chiều rộng
-    height: "100%", // Đảm bảo container chiếm hết chiều cao của card 3
+    display: "flex", 
+    justifyContent: "space-between", 
+    alignItems: "center", 
+    width: "100%", 
+    height: "100%", 
   },
 
   innerCard3Child: {
-    width: "30%", // Mỗi card nhỏ chiếm 30% chiều rộng của card lớn
-    height: "100%", // Chiều cao của mỗi card nhỏ bằng chiều cao của card lớn
-    display: "flex", // Sử dụng flexbox cho các card nhỏ
-    justifyContent: "center", // Căn giữa nội dung
-    alignItems: "center", // Căn giữa nội dung theo chiều dọc
-    color: "#fff", // Màu chữ của các card nhỏ
+    width: "30%", 
+    height: "100%", 
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center", 
+    color: "#fff", 
     fontFamily: "Inter, sans-serif",
-    fontSize: "1rem", // Kích thước chữ trong các card nhỏ
+    fontSize: "1rem", 
   },
 
   innerCard3ChildContent: {
-    textAlign: "center", // Căn giữa nội dung trong card
+    textAlign: "center", 
   },
 
   additionalText: {
-    fontSize: "0.8rem", // Kích thước chữ
-    color: "#EAEAEA", // Màu chữ
-    fontFamily: "Inter, sans-serif", // Font chữ
-    textAlign: "left", // Căn chữ theo bên trái
-    width: "100%", // Đảm bảo mỗi dòng chiếm đủ chiều rộng
-    paddingLeft: "20px", // Khoảng cách từ lề trái (hoặc thay đổi theo ý muốn)
+    fontSize: "0.8rem",
+    color: "#EAEAEA", 
+    fontFamily: "Inter, sans-serif", 
+    textAlign: "left", 
+    width: "100%", 
+    paddingLeft: "20px",
   },
 
   statusText: {
-    fontSize: "0.9rem", // Kích thước chữ
+    fontSize: "0.9rem", 
     fontFamily: "Inter, sans-serif",
-    fontWeight: "bold", // Làm đậm chữ
+    fontWeight: "bold",
   },
 
   pendingText: {
-    color: "#b8860b", // Màu vàng cho Pending
+    color: "#b8860b", 
   },
 
   paidText: {
-    color: "#00ff7f", // Màu xanh lá cây cho Paid
+    color: "#00ff7f",
   },
 
 
