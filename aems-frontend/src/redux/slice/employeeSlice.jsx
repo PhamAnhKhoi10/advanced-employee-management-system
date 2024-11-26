@@ -5,14 +5,7 @@ import { requestPerformance } from "../../services/employee.service";
 const employeeSlice = createSlice({
   name: "employee",
   initialState: {
-    attendance: [
-      { id: 1, date: "2021-10-10", status: "Present", remarks: "On time" },
-      { id: 2, date: "2021-10-11", status: "Absent", remarks: "Sick" },
-      { id: 3, date: "2021-10-12", status: "Present", remarks: "On time" },
-      { id: 4, date: "2021-10-13", status: "Present", remarks: "On time" },
-      { id: 5, date: "2021-10-14", status: "Absent", remarks: "Late 10 min" },
-      { id: 6, date: "2021-10-15", status: "Present", remarks: "On time" },
-    ],
+    attendance: [],
     performance: {
       projectCompleted: "0",
       hourWorked: "0",
