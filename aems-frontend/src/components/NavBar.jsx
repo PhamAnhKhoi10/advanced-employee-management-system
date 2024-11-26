@@ -4,19 +4,19 @@ const NavBar = ({ role }) => {
     switch (role) {
       case "HR":
         return [
-          { href: "/", label: "Dashboard" },
+          { href: "/dashboard", label: "Dashboard" },
           { href: "/request-leave", label: "Request Leave" },
           { href: "/profile", label: "Profile" },
         ];
       case "Employee":
         return [
-          { href: "/", label: "Dashboard" },
+          { href: "/dashboard", label: "Dashboard" },
           { href: "/request-leave", label: "Request Leave" },
           { href: "/profile", label: "Profile" },
         ];
       case "Admin":
         return [
-          { href: "/", label: "Dashboard" },
+          { href: "/dashboard", label: "Dashboard" },
           { href: "/profile", label: "Profile" },
         ];
       default:

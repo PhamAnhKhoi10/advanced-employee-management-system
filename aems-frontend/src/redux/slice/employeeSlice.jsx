@@ -14,7 +14,7 @@ const employeeSlice = createSlice({
       { id: 6, date: "2021-10-15", status: "Present", remarks: "On time" },
     ],
     performance: {
-      projectCompleted: "0",
+      projectCompleted: "10",
       hourWorked: "0",
       rating: "0/100",
       rows: [],

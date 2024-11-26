@@ -7,16 +7,18 @@ import PrivateRoute from "./components/PrivateRoute";
 import Login from "./page/Login";
 import Performance from "./page/Performance";
 import Attendance from "./page/Attendance";
+import Landing from "./page/Landing";
 
 const App = () => {
   return (
     <Routes>
       {/* Put all routes that does not need Nav bar and Side Bar Here */}
       <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Landing />} />
 
       {/* Put all routes that need Nav bar and Side Bar Here */}
       <Route element={<Layout />}>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/notification" element={<Notification />} />
         <Route path="/salary" element={<h1>Salary</h1>} />
         <Route path="/attendance" element={<Attendance />} />
