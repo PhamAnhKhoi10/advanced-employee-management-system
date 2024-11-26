@@ -25,6 +25,7 @@ function Performance() {
   const dispatch = useDispatch();
   const { user, performance } = useSelector(selectEmployees);
 
+  console.log(performance);
   useEffect(() => {
     if (user && user.id) {
       dispatch(requestPerformance(user.id));

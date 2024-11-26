@@ -14,7 +14,7 @@ const employeeSlice = createSlice({
       { id: 6, date: "2021-10-15", status: "Present", remarks: "On time" },
     ],
     performance: {
-      projectCompleted: "10",
+      projectCompleted: "0",
       hourWorked: "0",
       rating: "0/100",
       rows: [],
@@ -31,9 +31,9 @@ const employeeSlice = createSlice({
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.user = action.payload;
     });
-    builder.addCase(requestPerformance.fulfilled, (state, action) => {
-      state.performance = action.payload;
-    });
+    // builder.addCase(requestPerformance.fulfilled, (state, action) => {
+    //   state.performance = action.payload;
+    // });
   },
 });
 
