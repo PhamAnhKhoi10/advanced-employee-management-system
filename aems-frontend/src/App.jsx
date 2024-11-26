@@ -6,6 +6,7 @@ import Login from "./page/Login";
 import Notification from "./page/Notification";
 import PrivateRoute from "./components/PrivateRoute";
 import Landing from "./page/Landing";
+import CalculateSalary from "./page/CalculateSalary";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <Route element={<Layout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/notifications" element={<Notification />} />
+        <Route path="/calculate" element={<CalculateSalary/>} />
       </Route>
     </Routes>
   );
