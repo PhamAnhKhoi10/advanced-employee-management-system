@@ -2,9 +2,11 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Dashboard from "./page/Dashboard";
-import Login from "./page/Login";
 import Notification from "./page/Notification";
 import PrivateRoute from "./components/PrivateRoute";
+import Login from "./page/Login";
+import Performance from "./page/Performance";
+import Attendance from "./page/Attendance";
 
 const App = () => {
   return (
@@ -15,7 +17,10 @@ const App = () => {
       {/* Put all routes that need Nav bar and Side Bar Here */}
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/notifications" element={<Notification />} />
+        <Route path="/notification" element={<Notification />} />
+        <Route path="/salary" element={<h1>Salary</h1>} />
+        <Route path="/attendance" element={<Attendance />} />
+        <Route path="/performance" element={<Performance />} />
       </Route>
     </Routes>
   );

@@ -17,7 +17,7 @@ const Sidebar = ({ role }) => {
           { href: "/salary", label: "Salary", icon: FaMoneyBillAlt },
           { href: "/attendance", label: "Attendance", icon: FaCalendarAlt },
           { href: "/performance", label: "Performance", icon: FaChartBar },
-          { href: "/notifications", label: "Notifications", icon: FaBell },
+          { href: "/notification", label: "Notifications", icon: FaBell },
         ];
       case "HR":
         return [
@@ -29,7 +29,7 @@ const Sidebar = ({ role }) => {
             label: "Emp Info",
             icon: FaUserAlt,
           },
-          { href: "/notifications", label: "Notifications", icon: FaBell },
+          { href: "/notification", label: "Notifications", icon: FaBell },
         ];
       case "Admin":
         return [
@@ -40,7 +40,7 @@ const Sidebar = ({ role }) => {
           },
           { href: "/salary", label: "Salary", icon: FaMoneyBillAlt },
           {
-            href: "/employee/create-notifications",
+            href: "/employee/create-notification",
             label: "Create Notifications",
             icon: FaBell,
           },

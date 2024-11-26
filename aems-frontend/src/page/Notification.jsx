@@ -16,7 +16,7 @@ function Notification() {
 
   const requestInfomations = async (userId) => {
     try {
-      const response = await fetch(`/api/notification?userId=${userId}`, {
+      const response = await fetch(`/api/notification/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,6 @@ function Notification() {
       sx={{
         bgcolor: "#000000",
         display: "flex",
-        height: "100vh",
         justifyContent: "center",
         fontFamily: "Inter",
         alignItems: "center",

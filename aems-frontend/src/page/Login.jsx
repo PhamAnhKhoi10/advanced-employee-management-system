@@ -1,6 +1,7 @@
 // src/page/Login.jsx
 import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { loginAsync } from "../services/auth/auth.service";
 
 function Login() {
   const methods = useForm({
@@ -29,7 +30,7 @@ function Login() {
       const result = await response.json();
 
       console.log(result);
-      dispatch(loginAsync(data));
+      dispatchEvent(loginAsync(data));
     } catch (error) {
       console.error("There was a problem with the login request:", error);
     }
