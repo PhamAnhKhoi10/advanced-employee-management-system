@@ -9,6 +9,7 @@ from app.models.employees import Employee
 from app.models.roles import Role
 import logging
 
+
 logger = logging.getLogger(__name__)    
 
 # Cấu hình JWT
@@ -97,11 +98,12 @@ def get_employee_info(db: Session, user: User):
     return {
         "employee_id": employee.EmployeeID,
         "name": employee.Name,
-        "department": employee.Department,
+        "departmentID": employee.DepartmentID,
         "position": employee.Position,
         "phone_number": employee.PhoneNumber,
         "address": employee.Address,
-        "role": role.RoleName,
+        "date_of_joining": employee.DateOfJoining,
+        "roleID": user.RoleID,
     }
 
 

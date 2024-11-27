@@ -11,5 +11,5 @@ class Role(Base):
     Description = Column(Text, nullable=True)
 
     # Quan hệ với RolePermission và User
-    permissions = relationship("RolePermission", back_populates="role")
     users = relationship("User", back_populates="role")
+

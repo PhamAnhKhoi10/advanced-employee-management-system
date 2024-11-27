@@ -10,7 +10,7 @@ class Employee(Base):
     UserID = Column(Integer, ForeignKey(
         "users.UserID", ondelete="CASCADE"), nullable=False)
     Name = Column(String(100), nullable=False)
-    Department = Column(String(100), nullable=False)
+    DepartmentID = Column(Integer, ForeignKey('departments.DepartmentID'))
     Position = Column(String(100), nullable=False)
     DateOfJoining = Column(String(100), nullable=False)
     PhoneNumber = Column(String(20), nullable=True)
@@ -19,3 +19,11 @@ class Employee(Base):
     # Quan hệ với User
     user = relationship("User", back_populates="employee")
     department = relationship("Department", back_populates="employees")
+
+    # Quan hệ với Attendance
+    attendances = relationship("Attendance", back_populates="employee", cascade="all, delete-orphan")
+    leave_requests = relationship("LeaveRequest", back_populates="employee", cascade="all, delete-orphan")
+    payslips = relationship("Payslip", back_populates="employee", cascade="all, delete-orphan")
+    performances = relationship("Performance", back_populates="employee", cascade="all, delete-orphan")
+    salaries = relationship("Salary", back_populates="employee", cascade="all, delete-orphan")
+

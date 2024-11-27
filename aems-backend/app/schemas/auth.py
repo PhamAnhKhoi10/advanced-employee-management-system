@@ -15,8 +15,8 @@ class LoginResponse(BaseModel):
     token_type: str = "Bearer"
     employee_id: int
     name: str
-    department: str
+    departmentID: int
     position: str
     phone_number: str
     address: str
-    role: str
+    roleID: int

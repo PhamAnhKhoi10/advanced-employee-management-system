@@ -29,7 +29,7 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
 
     # Tạo access token (JWT)
     access_token = create_access_token(
-        data={"sub": user.Username, "role": employee_info["role"]},
+        data={"sub": user.Username, "roleID": employee_info["roleID"]},
         expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
     )
 
