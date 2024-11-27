@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EmployeeLeaveRequest = () => {
+const SendLeaveRequest = () => {
   return (
     <>
       {/* Header */}
@@ -103,4 +103,4 @@ const EmployeeLeaveRequest = () => {
   );
 };
 
-export default EmployeeLeaveRequest;
+export default SendLeaveRequest;
