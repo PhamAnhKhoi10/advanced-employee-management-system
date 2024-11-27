@@ -9,6 +9,7 @@ import Performance from "./page/Performance";
 import Attendance from "./page/Attendance";
 import Landing from "./page/Landing";
 import CalculateSalary from "./page/CalculateSalary";
+import EmployeeLeaveRequest from "./page/EmployeeLeaveRequest";
 
 const App = () => {
   return (
@@ -19,6 +20,9 @@ const App = () => {
 
       {/* Put all routes that need Nav bar and Side Bar Here */}
       <Route element={<Layout />}>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/notifications" element={<Notification />} />
+        <Route path="/request-leave" element={<EmployeeLeaveRequest/>} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/notification" element={<Notification />} />
         <Route path="/employee/salary" element={<CalculateSalary/>} />
