@@ -5,6 +5,7 @@ import Dashboard from "./page/Dashboard";
 import Login from "./page/Login";
 import Notification from "./page/Notification";
 import PrivateRoute from "./components/PrivateRoute";
+import EmployeeLeaveRequest from "./page/EmployeeLeaveRequest";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/notifications" element={<Notification />} />
+        <Route path="/request-leave" element={<EmployeeLeaveRequest/>} />
       </Route>
     </Routes>
   );
