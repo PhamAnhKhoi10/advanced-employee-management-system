@@ -8,6 +8,7 @@ import Login from "./page/Login";
 import Performance from "./page/Performance";
 import Attendance from "./page/Attendance";
 import Landing from "./page/Landing";
+import CalculateSalary from "./page/CalculateSalary";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
       <Route element={<Layout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/notification" element={<Notification />} />
+        <Route path="/employee/salary" element={<CalculateSalary/>} />
         <Route path="/salary" element={<h1>Salary</h1>} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/performance" element={<Performance />} />
