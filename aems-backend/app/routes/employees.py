@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.models.employees import Employee
 from app.schemas.employees import EmployeeCreate, EmployeeUpdate, EmployeeOut
 from app.config.database import SessionLocal
+from app.models.users import User
 
 router = APIRouter()
 
@@ -17,12 +18,21 @@ def get_db():
 # API để tạo nhân viên
 @router.post("/", response_model=EmployeeOut)
 def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
-    # Kiểm tra xem người dùng có tồn tại không
+    # Kiểm tra xem UserID có tồn tại không
+    user = db.query(User).filter(User.UserID == employee.UserID).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Kiểm tra nếu UserID là role admin
+    if user.RoleID == 1:  # Giả sử RoleID = 1 là admin
+        raise HTTPException(status_code=400, detail="Cannot create Employee for an Admin user")
+
+    # Kiểm tra Employee đã tồn tại chưa
     if db.query(Employee).filter(Employee.UserID == employee.UserID).first():
         raise HTTPException(status_code=400, detail="Employee already exists")
 
     new_employee = Employee(
-        UserID=employee.UserID,
+        UserID=employee.UserID,  # Thêm UserID từ bảng User
         Name=employee.Name,
         DepartmentID=employee.DepartmentID,
         Position=employee.Position,

@@ -5,9 +5,9 @@ from datetime import date
 
 # Schema cho việc tạo Employee
 class EmployeeCreate(BaseModel):
-    UserID: int
+    UserID: int  # Khóa ngoại liên kết với User
     Name: str
-    Department: str
+    DepartmentID: int
     Position: str
     DateOfJoining: date
     PhoneNumber: Optional[str] = None  # Giá trị mặc định là None
@@ -17,7 +17,7 @@ class EmployeeCreate(BaseModel):
 # Schema cho việc cập nhật Employee
 class EmployeeUpdate(BaseModel):
     Name: Optional[str] = None
-    Department: Optional[str] = None
+    DepartmentID: Optional[int] = None
     Position: Optional[str] = None
     DateOfJoining: Optional[date] = None
     PhoneNumber: Optional[str] = None
@@ -29,7 +29,7 @@ class EmployeeOut(BaseModel):
     EmployeeID: int
     UserID: int
     Name: str
-    Department: str
+    DepartmentID: int
     Position: str
     DateOfJoining: date
     PhoneNumber: Optional[str]

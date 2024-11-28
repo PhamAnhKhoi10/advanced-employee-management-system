@@ -15,7 +15,6 @@ class UserCreate(BaseModel):
 
 # Schema cho việc cập nhật User
 class UserUpdate(BaseModel):
-    Username: Optional[str] = Field(None, min_length=3, max_length=50)
     Password: Optional[str] = Field(None, min_length=8, max_length=128)
     RoleID: Optional[int] = None
     Email: Optional[EmailStr] = None

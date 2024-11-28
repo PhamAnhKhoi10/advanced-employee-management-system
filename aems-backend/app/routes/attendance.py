@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.models.attendances import Attendance
 from app.schemas.attendances import AttendanceCreate, AttendanceUpdate, AttendanceOut
 from app.config.database import SessionLocal
+from app.models.employees import Employee
 
 router = APIRouter()
 
@@ -17,21 +18,38 @@ def get_db():
 # API để tạo attendance (điểm danh)
 @router.post("/", response_model=AttendanceOut)
 def create_attendance(attendance: AttendanceCreate, db: Session = Depends(get_db)):
-    # Kiểm tra xem nhân viên có điểm danh trong ngày này chưa
-    existing_attendance = db.query(Attendance).filter(Attendance.EmployeeID == attendance.EmployeeID, Attendance.Date == attendance.Date).first()
-    if existing_attendance:
-        raise HTTPException(status_code=400, detail="Attendance for this employee on this date already exists")
+    try:
+        # Kiểm tra xem nhân viên có tồn tại không
+        employee = db.query(Employee).filter(Employee.EmployeeID == attendance.EmployeeID).first()
+        if not employee:
+            raise HTTPException(status_code=404, detail="Employee not found")
 
-    new_attendance = Attendance(
-        EmployeeID=attendance.EmployeeID,
-        Date=attendance.Date,
-        Status=attendance.Status,
-        HoursWorked=attendance.HoursWorked
-    )
-    db.add(new_attendance)
-    db.commit()
-    db.refresh(new_attendance)
-    return new_attendance
+        # Kiểm tra xem nhân viên đã điểm danh trong ngày chưa
+        existing_attendance = db.query(Attendance).filter(
+            Attendance.EmployeeID == attendance.EmployeeID,
+            Attendance.Date == attendance.Date
+        ).first()
+        if existing_attendance:
+            raise HTTPException(status_code=400, detail="Attendance for this employee on this date already exists")
+
+        # Tạo attendance mới
+        new_attendance = Attendance(
+            EmployeeID=attendance.EmployeeID,
+            Date=attendance.Date,
+            Status=attendance.Status,
+            HoursWorked=attendance.HoursWorked
+        )
+        db.add(new_attendance)
+        db.commit()
+        db.refresh(new_attendance)
+        return new_attendance
+    except HTTPException as http_exc:
+        db.rollback()  # Rollback khi có lỗi HTTP
+        raise http_exc
+    except Exception as e:
+        db.rollback()  # Rollback khi có lỗi không xác định
+        raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+
 
 # API để lấy thông tin attendance theo ID
 @router.get("/{attendance_id}", response_model=AttendanceOut)

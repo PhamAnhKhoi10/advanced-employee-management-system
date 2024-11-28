@@ -6,7 +6,7 @@ from app.config.database import Base
 class Employee(Base):
     __tablename__ = "employees"
 
-    EmployeeID = Column(Integer, primary_key=True, index=True)
+    EmployeeID = Column(Integer, primary_key=True, index=True, autoincrement=True)
     UserID = Column(Integer, ForeignKey(
         "users.UserID", ondelete="CASCADE"), nullable=False)
     Name = Column(String(100), nullable=False)

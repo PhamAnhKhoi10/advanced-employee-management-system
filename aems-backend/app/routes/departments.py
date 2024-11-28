@@ -19,7 +19,7 @@ def get_db():
 def get_all_departments(db: Session = Depends(get_db)):
     departments = db.query(Department).all()
     return departments
-
+    
 # API để lấy phòng ban theo ID
 @router.get("/{department_id}", response_model=DepartmentOut)
 def get_department(department_id: int, db: Session = Depends(get_db)):

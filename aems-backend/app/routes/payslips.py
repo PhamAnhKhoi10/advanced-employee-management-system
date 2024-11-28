@@ -49,4 +49,19 @@ def update_payslip(payslip_id: int, payslip: PayslipUpdate, db: Session = Depend
     db_payslip = db.query(Payslip).filter(Payslip.PayslipID == payslip_id).first()
     if not db_payslip:
         raise HTTPException(status_code=404, detail="Payslip not found")
-    
+
+    try:
+        # Cập nhật các trường có trong payload
+        if payslip.CreatedAt:
+            db_payslip.CreatedAt = payslip.CreatedAt
+
+        # Thực hiện commit thay đổi
+        db.commit()
+        db.refresh(db_payslip)
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+    return db_payslip
+

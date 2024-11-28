@@ -4,6 +4,7 @@ from app.models.users import User
 from app.models.roles import Role
 from app.schemas.users import UserCreate, UserUpdate, UserOut
 from app.config.database import SessionLocal
+from datetime import datetime, timezone
 
 router = APIRouter()
 
@@ -15,26 +16,54 @@ def get_db():
     finally:
         db.close()
 
-# API để tạo user mới
-@router.post("/", response_model=UserOut)
-def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    # Kiểm tra xem vai trò có tồn tại không
-    role = db.query(Role).filter(Role.RoleID == user.RoleID).first()
-    if not role:
-        raise HTTPException(status_code=404, detail="Role not found")
+from fastapi import HTTPException, Depends
+from sqlalchemy.exc import IntegrityError
+from passlib.context import CryptContext
 
-    new_user = User(
-        Username=user.Username,
-        Password=user.Password,
-        RoleID=user.RoleID,
-        Email=user.Email,
-        CreatedAt=user.CreatedAt,
-        UpdatedAt=user.UpdatedAt
-    )
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    return new_user
+# Password hashing
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+@router.post("/", response_model=UserOut)
+async def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    try:
+        if user.RoleID <= 0:
+            raise HTTPException(status_code=400, detail="Invalid RoleID")
+
+        # Check if role exists
+        role = db.query(Role).filter(Role.RoleID == user.RoleID).first()
+        if not role:
+            raise HTTPException(status_code=404, detail="Role not found")
+
+        # Check if username exists
+        existing_user = db.query(User).filter(User.Username == user.Username).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Username already registered")
+
+        # Hash password
+        hashed_password = pwd_context.hash(user.Password)
+
+        new_user = User(
+            Username=user.Username,
+            Password=hashed_password,
+            RoleID=user.RoleID,
+            Email=user.Email,
+            CreatedAt=str(datetime.now(timezone.utc)),
+            UpdatedAt=str(datetime.now(timezone.utc)),
+        )
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+
+        # Trả về UserID để sử dụng khi tạo Employee
+        return new_user
+
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=400, detail="Database integrity error")
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 # API để lấy thông tin user theo ID
 @router.get("/{user_id}", response_model=UserOut)
@@ -57,8 +86,6 @@ def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_db)):
     if not db_user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    if user.Username:
-        db_user.Username = user.Username
     if user.Password:
         db_user.Password = user.Password
     if user.RoleID:
@@ -74,10 +101,28 @@ def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_db)):
 # API để xóa user
 @router.delete("/{user_id}", response_model=dict)
 def delete_user(user_id: int, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.UserID == user_id).first()
-    if not db_user:
-        raise HTTPException(status_code=404, detail="User not found")
+    try:
+        # Kiểm tra User có tồn tại không
+        db_user = db.query(User).filter(User.UserID == user_id).first()
+        if not db_user:
+            raise HTTPException(
+                status_code=404,
+                detail=f"User with ID {user_id} does not exist"
+            )
 
-    db.delete(db_user)
-    db.commit()
-    return {"message": f"User with ID {user_id} has been deleted successfully"}
+        # Xóa Employee liên kết nếu có
+        if db_user.employee:
+            db.delete(db_user.employee)
+
+        # Xóa User
+        db.delete(db_user)
+        db.commit()
+        return {"message": f"User with ID {user_id} has been deleted successfully"}
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"An unexpected error occurred: {str(e)}"
+        )
+

@@ -1,6 +1,6 @@
 from datetime import datetime
 from app.config.database import engine
-from datetime import datetime
+from datetime import date
 from sqlalchemy.orm import Session
 from app.models.roles import Role
 from app.models.users import User 
@@ -12,12 +12,25 @@ from app.models.payslips import Payslip
 from app.models.performances import Performance
 from app.models.notifications import Notification
 from app.models.salaries import Salary
-import sys
-import os
-# Thêm thư mục gốc dự án (aems-backend) vào sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+hashed_admin_password = hash_password("admin_password")
+hashed_password1 = hash_password("hr1_password")
+hashed_password2 = hash_password("hr2_password")
+hashed_password3 = hash_password("hr3_password")
+hashed_password4 = hash_password("em1_password")
+hashed_password5 = hash_password("em2_password")
+hashed_password6 = hash_password("em3_password")
+hashed_password7 = hash_password("em4_password")
+hashed_password8 = hash_password("em5_password")
+hashed_password9 = hash_password("em6_password")
+hashed_password10 = hash_password("em7_password")
 
 def seed_data():
     # Tạo session
@@ -34,17 +47,17 @@ def seed_data():
 
     # 2. Tạo Users
     users = [
-        User(UserID=1, Username="admin", Password="hashed_admin_password", RoleID=1, Email="admin@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=2, Username="hr1", Password="hashed_hr1_password", RoleID=2, Email="hr1@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=3, Username="hr2", Password="hashed_hr2_password", RoleID=2, Email="hr2@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=4, Username="hr3", Password="hashed_hr3_password", RoleID=2, Email="hr3@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=5, Username="emp1", Password="hashed_emp1_password", RoleID=3, Email="emp1@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=6, Username="emp2", Password="hashed_emp2_password", RoleID=3, Email="emp2@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=7, Username="emp3", Password="hashed_emp3_password", RoleID=3, Email="emp3@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=8, Username="emp4", Password="hashed_emp4_password", RoleID=3, Email="emp4@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=9, Username="emp5", Password="hashed_emp5_password", RoleID=3, Email="emp5@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=10, Username="emp6", Password="hashed_emp6_password", RoleID=3, Email="emp6@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
-        User(UserID=11, Username="emp7", Password="hashed_emp7_password", RoleID=3, Email="emp7@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=1, Username="admin", Password=hashed_admin_password, RoleID=1, Email="admin@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=2, Username="hr1", Password=hashed_password1, RoleID=2, Email="hr1@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=3, Username="hr2", Password=hashed_password2, RoleID=2, Email="hr2@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=4, Username="hr3", Password=hashed_password3, RoleID=2, Email="hr3@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=5, Username="emp1", Password=hashed_password4, RoleID=3, Email="emp1@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=6, Username="emp2", Password=hashed_password5, RoleID=3, Email="emp2@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=7, Username="emp3", Password=hashed_password6, RoleID=3, Email="emp3@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=8, Username="emp4", Password=hashed_password7, RoleID=3, Email="emp4@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=9, Username="emp5", Password=hashed_password8, RoleID=3, Email="emp5@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=10, Username="emp6", Password=hashed_password9, RoleID=3, Email="emp6@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
+        User(UserID=11, Username="emp7", Password=hashed_password10, RoleID=3, Email="emp7@example.com", CreatedAt=datetime.now(), UpdatedAt=datetime.now()),
     ]
     session.add_all(users)
     session.commit()
@@ -76,9 +89,9 @@ def seed_data():
 
     # 5. Tạo Attendances
     attendances = [
-        Attendance(AttendanceID=1, EmployeeID=4, Date=datetime(2023, 11, 1), Status="Present", HoursWorked=8),
-        Attendance(AttendanceID=2, EmployeeID=5, Date=datetime(2023, 11, 1), Status="Absent", HoursWorked=0),
-        Attendance(AttendanceID=3, EmployeeID=6, Date=datetime(2023, 11, 1), Status="Present", HoursWorked=7),
+        Attendance(AttendanceID=1, EmployeeID=4, Date=date(2023, 11, 1), Status="Present", HoursWorked=8),
+        Attendance(AttendanceID=2, EmployeeID=5, Date=date(2023, 11, 1), Status="Absent", HoursWorked=0),
+        Attendance(AttendanceID=3, EmployeeID=6, Date=date(2023, 11, 1), Status="Present", HoursWorked=7),
     ]
     session.add_all(attendances)
     session.commit()

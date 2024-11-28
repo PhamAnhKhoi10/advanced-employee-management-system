@@ -6,7 +6,7 @@ from app.config.database import Base
 class User(Base):
     __tablename__ = "users"
 
-    UserID = Column(Integer, primary_key=True, index=True)
+    UserID = Column(Integer, primary_key=True, index=True, autoincrement=True)
     Username = Column(String(50), unique=True, nullable=False)
     Password = Column(String(128), nullable=False)
     RoleID = Column(Integer, ForeignKey(
@@ -14,6 +14,7 @@ class User(Base):
     Email = Column(String(100), unique=True, nullable=True)
     CreatedAt = Column(String(100), nullable=False)
     UpdatedAt = Column(String(100), nullable=False)
+    
 
     # Quan hệ với Role
     role = relationship("Role", back_populates="users")

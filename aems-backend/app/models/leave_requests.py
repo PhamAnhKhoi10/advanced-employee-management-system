@@ -23,7 +23,7 @@ class LeaveRequest(Base):
     Reason = Column(String(255), nullable=True)
     Status = Column(Enum(LeaveRequestStatus), nullable=False,
                     default=LeaveRequestStatus.pending)  # Enum cho trạng thái
-    HRManagerID = Column(Integer, ForeignKey("users.UserID"), nullable=False)
+    HRManagerID = Column(Integer, ForeignKey("users.UserID", ondelete="CASCADE"), nullable=False)
 
     # Quan hệ với Employee
     employee = relationship("Employee", back_populates="leave_requests")

@@ -14,7 +14,8 @@ class LeaveRequestCreate(BaseModel):
     StartDate: str
     EndDate: str
     Reason: Optional[str] = None
-    Status: LeaveRequestStatus = LeaveRequestStatus.pending  # Default là Pending
+    Status: LeaveRequestStatus = LeaveRequestStatus.pending  # Default là Pending 
+    HRManagerID: int
 
     class Config:
         orm_mode = True

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date
+from datetime import datetime
 
 
 # Schema cho việc tạo Payslip
@@ -9,12 +9,12 @@ class PayslipCreate(BaseModel):
     Month: str
     Year: str
     GeneratedBy: int
-    CreatedAt: date
+    CreatedAt: datetime
 
 
 # Schema cho việc cập nhật Payslip
 class PayslipUpdate(BaseModel):
-    CreatedAt: Optional[date] = None  # Cho phép cập nhật ngày tạo phiếu lương
+    CreatedAt: Optional[datetime] = None  # Cho phép cập nhật ngày tạo phiếu lương
 
 
 # Schema cho việc trả về Payslip (đọc dữ liệu)
@@ -24,7 +24,7 @@ class PayslipOut(BaseModel):
     Month: str
     Year: str
     GeneratedBy: int
-    CreatedAt: date
+    CreatedAt: datetime
 
     class Config:
         orm_mode = True
