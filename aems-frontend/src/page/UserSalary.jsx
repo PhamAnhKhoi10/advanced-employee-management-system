@@ -299,7 +299,7 @@ const styles = {
   salarySection: {
     display: "flex",
     flexDirection: "column", 
-    alignItems: "center",    /
+    alignItems: "center",    
     position: "absolute",
     top: "calc(50% + 60px)",              
     left: "calc(50% + 120px)",
