@@ -10,6 +10,7 @@ import Attendance from "./page/Attendance";
 import Landing from "./page/Landing";
 import CalculateSalary from "./page/CalculateSalary";
 import SendLeaveRequest from "./page/SendLeaveRequest";
+import AttendanceReport from "./page/AttendanceReport";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/salary" element={<h1>Salary</h1>} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/performance" element={<Performance />} />
+        <Route path="/employee/attendance" element={<AttendanceReport/>} />
       </Route>
     </Routes>
   );
