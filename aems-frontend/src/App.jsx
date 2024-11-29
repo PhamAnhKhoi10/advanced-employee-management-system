@@ -25,15 +25,15 @@ const App = () => {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/notifications" element={<Notification />} />
-        <Route path="/request-leave" element={<SendLeaveRequest/>} />
+        <Route path="/request-leave" element={<SendLeaveRequest />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/notification" element={<Notification />} />
-        <Route path="/employee/salary" element={<CalculateSalary/>} />
+        <Route path="/employee/salary" element={<CalculateSalary />} />
         <Route path="/salary" element={<h1>Salary</h1>} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/performance" element={<Performance />} />
-        <Route path="/employee/attendance" element={<AttendanceReport/>} />
-        <Route path="/employee/notification" element={<SendNotification/>}/>
+        <Route path="/employee/attendance" element={<AttendanceReport />} />
+        <Route path="/employee/notification" element={<SendNotification />} />
         <Route path="/payslips" element={<Payslips />} />
       </Route>
     </Routes>
