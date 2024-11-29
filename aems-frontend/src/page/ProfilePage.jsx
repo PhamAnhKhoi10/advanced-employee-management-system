@@ -21,16 +21,16 @@ const ProfilePage = () => {
     <div className="flex items-center justify-center bg-black mt-20">
       {/* Edit Profile Form */}
       <div
-        className="flex flex-col justify-center bg-[#1E1E2A] p-10 rounded-3xl shadow-lg"
+        className="flex flex-col justify-center bg-[#18181b] p-10 rounded-3xl shadow-lg"
         style={{ width: "800px", height: "500px" }}
       >
-        <h2 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600 mb-6 text-center mt-[-30px] transform hover:scale-105 hover:text-indigo-400 transition duration-300" >
+        <h2 className="text-5xl text-white font-extrabold mb-6 text-center mt-[-30px]" >
           Edit Profile
         </h2>
         <form onSubmit={handleSubmit} className="w-full space-y-4">
           <div className="flex space-x-4">
             <div className="flex-1">
-              <label className="block mb-1 text-blue-500">
+              <label className="block font-extrabold mb-1 text-blue-500">
                 First Name
                 <span className="text-red-500">*</span>
               </label>
@@ -41,7 +41,7 @@ const ProfilePage = () => {
               />
             </div>
             <div className="flex-1">
-              <label className="block mb-1 text-blue-500">
+              <label className="block font-extrabold mb-1 text-blue-500">
                 Last Name
                 <span className="text-red-500">*</span>
                 </label>
@@ -53,7 +53,7 @@ const ProfilePage = () => {
             </div>
           </div>
           <div>
-            <label className="block mb-1 text-blue-500">
+            <label className="block font-extrabold mb-1 text-blue-500">
               Email
               <span className="text-red-500">*</span>
             </label>
@@ -64,7 +64,7 @@ const ProfilePage = () => {
             />
           </div>
           <div>
-            <label className="block mb-1 text-blue-500">Password</label>
+            <label className="block font-extrabold mb-1 text-blue-500">Password</label>
             <input
               type="password"
               defaultValue="******"
