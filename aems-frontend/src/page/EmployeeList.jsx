@@ -59,11 +59,11 @@ const EmployeeDetailsPage = () => {
                 </div>
 
                 {/* Buttons */}
-                <button className="bg-blue-500 px-6 py-3 rounded-lg hover:bg-blue-600 transition">
+                <button className="bg-blue-500 px-6 py-3 rounded-lg hover:bg-blue-600 transition text-base">
                     Filter
                 </button>
-                <button className="bg-green-500 px-6 py-3 rounded-lg hover:bg-green-600 transition w-[200px]">
-                    Add Employee
+                <button className="bg-green-500 px-6 py-3 rounded-lg hover:bg-green-600 transition text-base">
+                    Add
                 </button>
             </div>
 
