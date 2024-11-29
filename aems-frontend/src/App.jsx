@@ -14,6 +14,7 @@ import AttendanceReport from "./page/AttendanceReport";
 import SendNotification from "./page/SendNotification";
 import Payslips from "./page/Payslips";
 import EmployeeDetails from "./page/EmployeeDetails";
+import ProfilePage from "./page/ProfilePage";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/employee/notification" element={<SendNotification/>}/>
         <Route path="/payslips" element={<Payslips />} />
         <Route path="/employee/employee-info" element={<EmployeeDetails/>} />
+        <Route path="/profile-page" element={<ProfilePage/>} />
       </Route>
     </Routes>
   );
