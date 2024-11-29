@@ -1,18 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const EmployeeDetails = () => {
-  const [formData, setFormData] = useState({
-    id: "E000001",
-    firstName: "John",
-    lastName: "Doe",
-    email: "johndoe@example.com",
-    address: "aa Street, District b, TPHCM",
-    phoneNumber: "0123456789",
-    salary: "9000",
-    role: "Employee",
-    dateOfBirth: "",
-    gender: "male", // Default gender value
-  });
+  const { id } = useParams(); // Extract the employee ID from the URL
+  const [formData, setFormData] = useState(null);
+
+  // Fetch employee details based on the ID
+  useEffect(() => {
+    const fetchEmployeeData = async () => {
+      // Updated mock data to include E000003
+      const mockEmployeeData = [
+        {
+          id: "E000001",
+          firstName: "John",
+          lastName: "Doe",
+          email: "johndoe@example.com",
+          address: "aa Street, District b, TPHCM",
+          phoneNumber: "0123456789",
+          salary: "9000",
+          role: "Employee",
+          dateOfBirth: "",
+          gender: "male",
+        },
+        {
+          id: "H000002",
+          firstName: "Jane",
+          lastName: "Smith",
+          email: "jane@example.com",
+          address: "bb Street, District c, TPHCM",
+          phoneNumber: "0987654321",
+          salary: "12000",
+          role: "HR Manager",
+          dateOfBirth: "",
+          gender: "female",
+        },
+        {
+          id: "E000003",
+          firstName: "Alice",
+          lastName: "Johnson",
+          email: "alice@example.com",
+          address: "cc Street, District a, TPHCM",
+          phoneNumber: "0981112223",
+          salary: "8000",
+          role: "Employee",
+          dateOfBirth: "",
+          gender: "female",
+        },
+      ];
+
+      // Find the employee by ID
+      const employee = mockEmployeeData.find((emp) => emp.id === id);
+      setFormData(employee || {}); // Set empty object if no employee is found
+    };
+
+    fetchEmployeeData();
+  }, [id]);
+
+  if (!formData) {
+    return <p className="text-white text-center">Loading...</p>;
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +81,7 @@ const EmployeeDetails = () => {
 
   const handleSendNotification = () => {
     window.location.href = "/employee/notification";
-  }
+  };
 
   return (
     <div className="p-10">
@@ -53,9 +99,10 @@ const EmployeeDetails = () => {
             <input
               type="text"
               name="id"
-              value={formData.id}
+              value={formData.id || ""}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+              disabled
             />
           </div>
           <div>
@@ -63,7 +110,7 @@ const EmployeeDetails = () => {
             <input
               type="text"
               name="firstName"
-              value={formData.firstName}
+              value={formData.firstName || ""}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -73,7 +120,7 @@ const EmployeeDetails = () => {
             <input
               type="text"
               name="lastName"
-              value={formData.lastName}
+              value={formData.lastName || ""}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -83,7 +130,7 @@ const EmployeeDetails = () => {
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={formData.email || ""}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -93,7 +140,7 @@ const EmployeeDetails = () => {
             <input
               type="text"
               name="address"
-              value={formData.address}
+              value={formData.address || ""}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -103,7 +150,7 @@ const EmployeeDetails = () => {
             <input
               type="text"
               name="phoneNumber"
-              value={formData.phoneNumber}
+              value={formData.phoneNumber || ""}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -113,7 +160,7 @@ const EmployeeDetails = () => {
             <input
               type="text"
               name="salary"
-              value={formData.salary}
+              value={formData.salary || ""}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -123,7 +170,7 @@ const EmployeeDetails = () => {
             <input
               type="text"
               name="role"
-              value={formData.role}
+              value={formData.role || ""}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -176,8 +223,9 @@ const EmployeeDetails = () => {
           <div className="bg-zinc-700 rounded-xl p-4">
             <h3 className="text-lg font-semibold mb-2">Notifications</h3>
             <p className="text-sm text-zinc-400">Description</p>
-            <button className="bg-blue-500 px-4 py-2 mt-4 rounded-lg text-white hover:bg-blue-600 transition"
-                onClick={handleSendNotification}
+            <button
+              className="bg-blue-500 px-4 py-2 mt-4 rounded-lg text-white hover:bg-blue-600 transition"
+              onClick={handleSendNotification}
             >
               Send Notifications
             </button>
