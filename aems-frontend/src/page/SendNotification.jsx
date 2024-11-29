@@ -49,7 +49,7 @@ const SendNotification = () => {
                             type="text"
                             value={recipients}
                             onChange={(e) => setRecipients(e.target.value)}
-                            className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200 focus:scale-105"
+                            className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200"
                             placeholder="Enter recipient names"
                         />
                     </div>
@@ -59,7 +59,7 @@ const SendNotification = () => {
                             type="text"
                             value={subject}
                             onChange={(e) => setSubject(e.target.value)}
-                            className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200 focus:scale-105"
+                            className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200"
                             placeholder="Enter subject"
                         />
                     </div>
@@ -71,7 +71,7 @@ const SendNotification = () => {
                     <textarea
                         value={messageContent}
                         onChange={(e) => setMessageContent(e.target.value)}
-                        className="w-full max-w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200 focus:scale-105 resize-none"
+                        className="w-full max-w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200"
                         placeholder="Enter your message here"
                         rows="4"
                     />

@@ -8,7 +8,7 @@ const EmployeeDetails = () => {
     email: "johndoe@example.com",
     address: "aa Street, District b, TPHCM",
     phoneNumber: "0123456789",
-    salary: "Employee",
+    salary: "9000",
     role: "Employee",
     dateOfBirth: "",
     gender: "male", // Default gender value
@@ -49,7 +49,7 @@ const EmployeeDetails = () => {
         <div className="grid grid-cols-2 gap-6">
           {/* Form Fields */}
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">ID *</label>
+            <label className="block text-base text-zinc-400 mb-2">ID *</label>
             <input
               type="text"
               name="id"
@@ -59,7 +59,7 @@ const EmployeeDetails = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">First Name *</label>
+            <label className="block text-base text-zinc-400 mb-2">First Name *</label>
             <input
               type="text"
               name="firstName"
@@ -69,7 +69,7 @@ const EmployeeDetails = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">Last Name *</label>
+            <label className="block text-base text-zinc-400 mb-2">Last Name *</label>
             <input
               type="text"
               name="lastName"
@@ -79,7 +79,7 @@ const EmployeeDetails = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">Email *</label>
+            <label className="block text-base text-zinc-400 mb-2">Email *</label>
             <input
               type="email"
               name="email"
@@ -89,7 +89,7 @@ const EmployeeDetails = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">Address</label>
+            <label className="block text-base text-zinc-400 mb-2">Address</label>
             <input
               type="text"
               name="address"
@@ -99,7 +99,7 @@ const EmployeeDetails = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">Phone Number</label>
+            <label className="block text-base text-zinc-400 mb-2">Phone Number</label>
             <input
               type="text"
               name="phoneNumber"
@@ -109,7 +109,7 @@ const EmployeeDetails = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">Salary *</label>
+            <label className="block text-base text-zinc-400 mb-2">Salary *</label>
             <input
               type="text"
               name="salary"
@@ -119,7 +119,7 @@ const EmployeeDetails = () => {
             />
           </div>
           <div>
-            <label className="block text-sm text-zinc-400 mb-2">Role *</label>
+            <label className="block text-base text-zinc-400 mb-2">Role *</label>
             <input
               type="text"
               name="role"
@@ -132,7 +132,7 @@ const EmployeeDetails = () => {
 
         {/* Gender Section */}
         <div className="mt-6">
-          <label className="block text-sm text-zinc-400 mb-2">Gender</label>
+          <label className="block text-base text-zinc-400 mb-2">Gender</label>
           <div className="flex items-center space-x-6">
             <label className="flex items-center space-x-2">
               <input
