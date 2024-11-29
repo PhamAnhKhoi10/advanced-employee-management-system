@@ -38,7 +38,7 @@ const App = () => {
         <Route path="/employee/notification" element={<SendNotification/>}/>
         <Route path="/payslips" element={<Payslips />} />
         <Route path="/employee/employee-info" element={<EmployeeDetails/>} />
-        <Route path="/profile-page" element={<ProfilePage/>} />
+        <Route path="/profile" element={<ProfilePage/>} />
       </Route>
     </Routes>
   );
