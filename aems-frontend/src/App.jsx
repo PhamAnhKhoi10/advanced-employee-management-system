@@ -14,6 +14,7 @@ import Payslips from "./page/Payslips";
 import EmployeeDetails from "./page/EmployeeDetails";
 import ProfilePage from "./page/ProfilePage";
 import EmployeeList from "./page/EmployeeList";
+import AddEmployee from "./page/AddEmployee";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         <Route path="/employee/employee-info" element={<EmployeeList />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/employee/details/:id" element={<EmployeeDetails />} />
+        <Route path="/employee/add" element={<AddEmployee />} />
       </Route>
     </Routes>
   );
