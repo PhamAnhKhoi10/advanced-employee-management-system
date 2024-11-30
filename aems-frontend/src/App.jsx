@@ -25,7 +25,7 @@ const App = () => {
       {/* Routes with NavBar and Sidebar */}
       <Route element={<Layout />}>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/notifications" element={<Notification />} />
+        <Route path="/notification" element={<Notification />} />
         <Route path="/request-leave" element={<SendLeaveRequest />} />
         <Route path="/employee/salary" element={<CalculateSalary />} />
         <Route path="/salary" element={<h1>Salary</h1>} />
