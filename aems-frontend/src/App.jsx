@@ -15,6 +15,7 @@ import EmployeeDetails from "./page/EmployeeDetails";
 import ProfilePage from "./page/ProfilePage";
 import EmployeeList from "./page/EmployeeList";
 import AddEmployee from "./page/AddEmployee";
+import UserSalary from "./page/UserSalary";
 
 const App = () => {
   return (
@@ -29,7 +30,7 @@ const App = () => {
         <Route path="/notification" element={<Notification />} />
         <Route path="/request-leave" element={<SendLeaveRequest />} />
         <Route path="/employee/salary" element={<CalculateSalary />} />
-        <Route path="/salary" element={<h1>Salary</h1>} />
+        <Route path="/salary" element={<UserSalary/>} />
         <Route path="/attendance" element={<Attendance />} />
         <Route path="/performance" element={<Performance />} />
         <Route path="/employee/attendance" element={<AttendanceReport />} />
@@ -38,7 +39,7 @@ const App = () => {
         <Route path="/employee/employee-info" element={<EmployeeList />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/employee/details/:id" element={<EmployeeDetails />} />
-        <Route path="/employee/add" element={<AddEmployee />} />
+        <Route path="/employee/add" element={<AddEmployee />} />"
       </Route>
     </Routes>
   );
