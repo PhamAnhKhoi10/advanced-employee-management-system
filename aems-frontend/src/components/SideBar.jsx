@@ -11,6 +11,7 @@ import {
   FaDollarSign,
 } from "react-icons/fa";
 
+// eslint-disable-next-line react/prop-types
 const Sidebar = ({ role }) => {
   const getSidebarItems = () => {
     switch (role) {
@@ -25,7 +26,11 @@ const Sidebar = ({ role }) => {
         return [
           { href: "/salary", label: "Salary", icon: FaMoneyBillAlt },
           { href: "/attendance", label: "Attendance", icon: FaCalendarAlt },
-          { href: "/performance", label: "Performance", icon: FaChartBar },
+          {
+            href: "employee/performance",
+            label: "Emp Performance",
+            icon: FaChartBar,
+          },
           {
             href: "/employee/employee-info",
             label: "Emp Info",
