@@ -1,9 +1,7 @@
-// App.jsx
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Dashboard from "./page/Dashboard";
 import Notification from "./page/Notification";
-import PrivateRoute from "./components/PrivateRoute";
 import Login from "./page/Login";
 import Performance from "./page/Performance";
 import Attendance from "./page/Attendance";
@@ -14,15 +12,18 @@ import AttendanceReport from "./page/AttendanceReport";
 import SendNotification from "./page/SendNotification";
 import Payslips from "./page/Payslips";
 import EmployeePerformanceRecord from "./page/EmployeePerformance";
+import EmployeeDetails from "./page/EmployeeDetails";
+import ProfilePage from "./page/ProfilePage";
+import EmployeeList from "./page/EmployeeList";
 
 const App = () => {
   return (
     <Routes>
-      {/* Put all routes that does not need Nav bar and Side Bar Here */}
+      {/* Routes without NavBar and Sidebar */}
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Landing />} />
 
-      {/* Put all routes that need Nav bar and Side Bar Here */}
+      {/* Routes with NavBar and Sidebar */}
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/notifications" element={<Notification />} />
@@ -40,6 +41,9 @@ const App = () => {
         />
         <Route path="/employee/notification" element={<SendNotification />} />
         <Route path="/payslips" element={<Payslips />} />
+        <Route path="/employee/employee-info" element={<EmployeeList />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/employee/details/:id" element={<EmployeeDetails />} />
       </Route>
     </Routes>
   );

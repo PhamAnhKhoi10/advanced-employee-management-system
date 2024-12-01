@@ -93,7 +93,7 @@ const CalculateSalary = () => {
                                             ? setBonus(Number(e.target.value))
                                             : setSubsidy(Number(e.target.value))
                                     }
-                                    className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 transition transform duration-200 focus:scale-105"
+                                    className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
                                 />
                             </div>
                         ))}
@@ -133,7 +133,7 @@ const CalculateSalary = () => {
                                             ? setPenalty(Number(e.target.value))
                                             : setAdvanceSalary(Number(e.target.value))
                                     }
-                                    className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 transition transform duration-200 focus:scale-105"
+                                    className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
                                 />
                             </div>
                         ))}

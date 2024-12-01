@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginAsync } from "../../services/auth/auth.service";
 import { requestPerformance } from "../../services/employee.service";
+import { requestEmployeeDetails } from "../../services/hr.service";
 
 const employeeSlice = createSlice({
   name: "employee",
@@ -24,9 +25,12 @@ const employeeSlice = createSlice({
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.user = action.payload;
     });
-    // builder.addCase(requestPerformance.fulfilled, (state, action) => {
-    //   state.performance = action.payload;
-    // });
+    builder.addCase(requestPerformance.fulfilled, (state, action) => {
+      state.performance = action.payload;
+    });
+    builder.addCase(requestEmployeeDetails.fulfilled, (state, action) => {
+      state.attendance = action.payload;
+    });
   },
 });
 

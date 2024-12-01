@@ -26,12 +26,12 @@ const titleForHR = [
   {
     title: "Performance Record",
     subtile: "View employee employees performance record",
-    link: "/performance",
+    link: "employee/performance",
   },
   {
     title: "Employee List",
     subtile: "View employee employees list",
-    link: "/employee",
+    link: "/employee/employee-info",
   },
   {
     title: "Leave Request",

@@ -1,16 +1,14 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import {
   Box,
   Button,
   FormControl,
   InputLabel,
   MenuItem,
-  Paper,
   Select,
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
   TextField,
@@ -97,8 +95,7 @@ function EmployeePerformanceRecord() {
         </Typography>
 
         {/* Table Section */}
-        <TableContainer
-          component={Paper}
+        <Box
           sx={{
             backgroundColor: "#222",
             color: "#fff",
@@ -106,14 +103,24 @@ function EmployeePerformanceRecord() {
             overflow: "hidden",
           }}
         >
-          <Table>
-            <TableHead>
-              <TableRow sx={{ justifyContent: "space-between" }}>
+          <Table
+            sx={{
+              m: "20px",
+              "& .MuiTableCell-root": {
+                borderBottom: "none", // Hide the border between table rows
+              },
+            }}
+          >
+            <TableHead sx={{ bgcolor: "#27272a", borderRadius: "10px" }}>
+              <TableRow>
                 {["Employee", "Task", "Status", "Date", "Score", "Actions"].map(
                   (header) => (
                     <TableCell
                       key={header}
-                      sx={{ color: "#fff", fontWeight: "bold" }}
+                      sx={{
+                        color: "#fff",
+                        fontWeight: "bold",
+                      }}
                     >
                       {header}
                     </TableCell>
@@ -122,7 +129,7 @@ function EmployeePerformanceRecord() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {employeePerRecord.map((record) => (
+              {employeePerRecord?.map((record) => (
                 <TableRow key={record.id}>
                   <TableCell sx={{ color: "#fff" }}>
                     {record.employeeName}
@@ -167,7 +174,7 @@ function EmployeePerformanceRecord() {
             onChangeDense={table.onChangeDense}
             onRowsPerPageChange={table.onChangeRowsPerPage}
           />
-        </TableContainer>
+        </Box>
 
         {/* Form Section */}
         <Box
@@ -193,7 +200,10 @@ function EmployeePerformanceRecord() {
               }}
               variant="outlined"
               fullWidth
-              sx={{ input: { color: "#fff" }, label: { color: "#aaa" } }}
+              sx={{
+                input: { color: "#fff" },
+                label: { color: "#aaa" },
+              }}
             />
             <TextField
               {...register("task")}

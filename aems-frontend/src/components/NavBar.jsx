@@ -1,5 +1,9 @@
+import { useSelector } from "react-redux";
+import { selectEmployees } from "../redux/slice/employeeSlice";
+
 // eslint-disable-next-line react/prop-types
 const NavBar = ({ role }) => {
+  const { user } = useSelector(selectEmployees);
   const getNavItems = () => {
     switch (role) {
       case "HR":
@@ -55,8 +59,8 @@ const NavBar = ({ role }) => {
         <div className="flex items-center space-x-4">
           {/* Placeholder User Info */}
           <div className="text-sm">
-            <p className="font-semibold">Thieu Bao Tram</p>
-            <p className="text-gray-400">@msthanhxuan</p>
+            <p className="font-semibold">{user.name}</p>
+            <p className="text-gray-400">{user.email}</p>
           </div>
           {/* Sign Out Button */}
           <div className="flex items-center">
