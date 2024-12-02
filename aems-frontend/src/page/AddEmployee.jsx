@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addEmployee } from "../services/hr.service";
 
 const AddEmployee = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     id: "",
     firstName: "",
@@ -10,7 +13,6 @@ const AddEmployee = () => {
     phoneNumber: "",
     salary: "",
     role: "",
-    dateOfBirth: "",
     gender: "male", // Default gender value
     note: "",
   });
@@ -31,8 +33,7 @@ const AddEmployee = () => {
   };
 
   const handleAddEmployee = () => {
-    console.log("New Employee Added:", formData);
-    // Perform add employee logic here
+    dispatch(addEmployee(formData));
   };
 
   return (
@@ -58,7 +59,9 @@ const AddEmployee = () => {
             />
           </div>
           <div>
-            <label className="block text-base text-zinc-400 mb-2">First Name *</label>
+            <label className="block text-base text-zinc-400 mb-2">
+              First Name *
+            </label>
             <input
               type="text"
               name="firstName"
@@ -69,7 +72,9 @@ const AddEmployee = () => {
             />
           </div>
           <div>
-            <label className="block text-base text-zinc-400 mb-2">Last Name *</label>
+            <label className="block text-base text-zinc-400 mb-2">
+              Last Name *
+            </label>
             <input
               type="text"
               name="lastName"
@@ -80,7 +85,9 @@ const AddEmployee = () => {
             />
           </div>
           <div>
-            <label className="block text-base text-zinc-400 mb-2">Email *</label>
+            <label className="block text-base text-zinc-400 mb-2">
+              Email *
+            </label>
             <input
               type="email"
               name="email"
@@ -91,7 +98,9 @@ const AddEmployee = () => {
             />
           </div>
           <div>
-            <label className="block text-base text-zinc-400 mb-2">Address</label>
+            <label className="block text-base text-zinc-400 mb-2">
+              Address
+            </label>
             <input
               type="text"
               name="address"
@@ -102,7 +111,9 @@ const AddEmployee = () => {
             />
           </div>
           <div>
-            <label className="block text-base text-zinc-400 mb-2">Phone Number</label>
+            <label className="block text-base text-zinc-400 mb-2">
+              Phone Number
+            </label>
             <input
               type="text"
               name="phoneNumber"
@@ -113,7 +124,9 @@ const AddEmployee = () => {
             />
           </div>
           <div>
-            <label className="block text-base text-zinc-400 mb-2">Salary *</label>
+            <label className="block text-base text-zinc-400 mb-2">
+              Salary *
+            </label>
             <input
               type="text"
               name="salary"

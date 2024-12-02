@@ -1,11 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginAsync } from "../../services/auth/auth.service";
-import { requestPerformance } from "../../services/employee.service";
-import { requestEmployeeDetails } from "../../services/hr.service";
+import {
+  requestLeaveRequestsInformation,
+  requestPerformance,
+} from "../../services/employee.service";
 
 const employeeSlice = createSlice({
   name: "employee",
   initialState: {
+    leaveRequests: [
+      {
+        id: 1,
+        reason: "Sick Leave",
+        duration: "1",
+        date: "2022-12-12",
+        status: "Pending",
+      },
+    ],
     attendance: [],
     performance: {
       projectCompleted: "0",
@@ -28,9 +39,12 @@ const employeeSlice = createSlice({
     builder.addCase(requestPerformance.fulfilled, (state, action) => {
       state.performance = action.payload;
     });
-    builder.addCase(requestEmployeeDetails.fulfilled, (state, action) => {
-      state.attendance = action.payload;
-    });
+    builder.addCase(
+      requestLeaveRequestsInformation.fulfilled,
+      (state, action) => {
+        state.leaveRequests = action.payload;
+      }
+    );
   },
 });
 

@@ -58,3 +58,40 @@ export const checkAttendance = createAsyncThunk(
     }
   }
 );
+export const requestLeaveRequestsInformation = createAsyncThunk(
+  "leave/fetch",
+  async (userId) => {
+    try {
+      const response = await fetch(`/api/leave/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("There was a problem with the request:", error);
+    }
+  }
+);
+export const requestLeave = createAsyncThunk(
+  "leave/request",
+  async (leaveRequest) => {
+    try {
+      const response = await fetch(`/api/leave`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(leaveRequest),
+      });
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("There was a problem with the request:", error);
+    }
+  }
+);

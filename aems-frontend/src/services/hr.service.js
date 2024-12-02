@@ -156,3 +156,24 @@ export const requestAttendanceReport = createAsyncThunk(
     }
   }
 );
+
+export const addEmployee = createAsyncThunk(
+  "hr/addEmployee",
+  async (employee) => {
+    try {
+      const response = await fetch(`/api/employee`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(employee),
+      });
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("There was a problem with the request:", error);
+      throw error;
+    }
+  }
+);

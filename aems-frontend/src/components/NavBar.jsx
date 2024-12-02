@@ -35,7 +35,7 @@ const NavBar = ({ role }) => {
       {/* Left Section - Logo */}
       <div className="flex items-center space-x-9">
         <a
-          href="/"
+          href="/dashboard"
           className="text-xl font-bold hover:text-gray-400 transition duration-300 ease-in-out"
         >
           IU Management
