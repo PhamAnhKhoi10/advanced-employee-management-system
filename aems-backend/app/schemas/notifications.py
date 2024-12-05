@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import datetime
+from datetime import date
 
 
 # Schema cho việc tạo Notification
@@ -9,7 +9,7 @@ class NotificationCreate(BaseModel):
     RecipientID: int
     Title: str
     Content: str
-    SentAt: datetime = datetime.now()
+    SentAt: date
 
 
 # Schema cho việc cập nhật Notification
@@ -25,7 +25,8 @@ class NotificationOut(BaseModel):
     Title: str
     Content: str
     IsRead: bool
-    SentAt: datetime
+    SentAt: date
 
     class Config:
         orm_mode = True
+

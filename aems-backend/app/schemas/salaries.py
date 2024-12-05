@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field
 from typing import Optional
-from datetime import date
 
 
 # Schema cho việc tạo Salary
@@ -32,8 +31,9 @@ class SalaryOut(BaseModel):
     Bonuses: Optional[float]
     Deductions: Optional[float]
     NetPay: float
-    Month: str
-    Year: str
+    Month: int
+    Year: int
 
     class Config:
         orm_mode = True
+

@@ -19,3 +19,4 @@ class DepartmentOut(BaseModel):
 
     class Config:
         orm_mode = True
+

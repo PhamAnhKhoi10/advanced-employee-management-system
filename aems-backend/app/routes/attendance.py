@@ -62,6 +62,9 @@ def get_attendance(attendance_id: int, db: Session = Depends(get_db)):
 # API để lấy tất cả attendance của một nhân viên
 @router.get("/employee/{employee_id}", response_model=list[AttendanceOut])
 def get_employee_attendance(employee_id: int, db: Session = Depends(get_db)):
+    employee = db.query(Employee).filter(Employee.EmployeeID == employee_id).first()
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")   
     attendances = db.query(Attendance).filter(Attendance.EmployeeID == employee_id).all()
     return attendances
 

@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from enum import Enum
 from typing import Optional
+from datetime import date
 
 # Enum cho trạng thái
 class LeaveRequestStatus(str, Enum):
@@ -11,8 +12,8 @@ class LeaveRequestStatus(str, Enum):
 
 class LeaveRequestCreate(BaseModel):
     EmployeeID: int
-    StartDate: str
-    EndDate: str
+    StartDate: date
+    EndDate: date
     Reason: Optional[str] = None
     Status: LeaveRequestStatus = LeaveRequestStatus.pending  # Default là Pending 
     HRManagerID: int
@@ -29,11 +30,12 @@ class LeaveRequestUpdate(BaseModel):
 class LeaveRequestOut(BaseModel):
     LeaveRequestID: int
     EmployeeID: int
-    StartDate: str
-    EndDate: str
+    StartDate: date
+    EndDate: date
     Reason: Optional[str]
     Status: LeaveRequestStatus
     HRManagerID: int
 
     class Config:
         orm_mode = True
+
