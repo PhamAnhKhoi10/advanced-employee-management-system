@@ -55,7 +55,7 @@ export const checkAttendance = createAsyncThunk(
         body: JSON.stringify({
           Status: "string",
           HoursWorked: 0,
-          EmployeeId: userId,
+          EmployeeID: userId,
           Date: new Date().toISOString().split("T")[0],
         }),
       });

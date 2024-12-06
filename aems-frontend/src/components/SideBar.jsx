@@ -20,7 +20,7 @@ const Sidebar = ({ roleID }) => {
           { href: "/salary", label: "Salary", icon: FaMoneyBillAlt },
           { href: "/attendance", label: "Attendance", icon: FaCalendarAlt },
           { href: "/performance", label: "Performance", icon: FaChartBar },
-          { href: "/notification", label: "Notifications", icon: FaBell },
+          { href: "/notifications", label: "Notifications", icon: FaBell },
         ];
       case 2:
         return [
@@ -36,7 +36,7 @@ const Sidebar = ({ roleID }) => {
             label: "Emp Info",
             icon: FaUserAlt,
           },
-          { href: "/notification", label: "Notifications", icon: FaBell },
+          { href: "/notifications", label: "Notifications", icon: FaBell },
           { href: "/employee/attendance", label: "Reports", icon: FaFileAlt },
         ];
       case 1:
@@ -48,7 +48,7 @@ const Sidebar = ({ roleID }) => {
           },
           { href: "/salary", label: "Salary", icon: FaMoneyBillAlt },
           {
-            href: "/employee/create-notification",
+            href: "/employee/notification",
             label: "Create Notifications",
             icon: FaEnvelopeOpenText,
           },

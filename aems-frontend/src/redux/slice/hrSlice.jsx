@@ -27,7 +27,13 @@ const hrSlice = createSlice({
       state.employee = action.payload;
     });
     builder.addCase(requestAttendanceReport.fulfilled, (state, action) => {
-      state.attendanceReport = action.payload;
+      const existingIds = state.attendanceReport.map(
+        (record) => record.AttendanceID
+      );
+      const newRecords = action.payload.filter(
+        (record) => !existingIds.includes(record.AttendanceID)
+      );
+      state.attendanceReport = [...state.attendanceReport, ...newRecords];
     });
     builder.addCase(requestPerformance.fulfilled, (state, action) => {
       const existingIds = state.employeePerRecord.map(

@@ -19,6 +19,7 @@ import AddEmployee from "./page/AddEmployee";
 import UserSalary from "./page/UserSalary";
 import LeaveRequestApproval from "./page/LeaveRequestApproval";
 import PrivateRoute from "./components/PrivateRoute"; // Adjust the import path as needed
+import CreateAccount from "./page/CreateUser";
 const App = () => {
   return (
     <Routes>
@@ -32,7 +33,6 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/notifications" element={<Notification />} />
           <Route path="/request-leave" element={<SendLeaveRequest />} />
-          <Route path="/notification" element={<Notification />} />
           <Route path="/employee/salary" element={<CalculateSalary />} />
           <Route path="/salary" element={<UserSalary />} />
           <Route path="/attendance" element={<Attendance />} />
@@ -42,6 +42,7 @@ const App = () => {
             path="/employee/performance"
             element={<EmployeePerformanceRecord />}
           />
+          <Route path="/employee/create-account" element={<CreateAccount />} />
           <Route path="/employee/notification" element={<SendNotification />} />
           <Route path="/payslips" element={<Payslips />} />
           <Route path="/employee/employee-info" element={<EmployeeList />} />

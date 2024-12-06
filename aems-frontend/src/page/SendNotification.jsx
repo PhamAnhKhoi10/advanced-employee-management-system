@@ -1,38 +1,38 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEmployees } from "../redux/slice/employeeSlice";
+import { sendNotification } from "../services/admin.service";
 
 const SendNotification = () => {
-  const [recipients, setRecipients] = useState("");
-  const [subject, setSubject] = useState("");
-  const [messageContent, setMessageContent] = useState("");
-
-  // Notification history starts empty
   const [notificationHistory, setNotificationHistory] = useState([]);
+  const dispatch = useDispatch();
+  const { user } = useSelector(selectEmployees);
+  const methods = useForm({
+    defaultValues: {
+      SenderID: user.employee_id,
+      RecipientID: null,
+      Title: "",
+      Content: "",
+    },
+  });
 
-  // Handle form submission
-  const handleSend = () => {
-    if (recipients && subject && messageContent) {
-      const newNotification = {
-        recipient: recipients,
-        subject: subject,
-        message: messageContent,
-        timestamp: new Date().toLocaleString(),
-        status: "Sent", // Add status field
-      };
+  const { handleSubmit, register } = methods;
 
-      // Add new notification to history
-      setNotificationHistory((prevHistory) => [
-        newNotification,
-        ...prevHistory,
-      ]);
-
-      // Clear form fields
-      setRecipients("");
-      setSubject("");
-      setMessageContent("");
-    } else {
-      alert("Please fill in all fields before sending.");
-    }
-  };
+  const SendNotification = handleSubmit(async (data) => {
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split("T")[0];
+    dispatch(sendNotification({ ...data, SentAt: formattedDate }));
+    setNotificationHistory((prev) => [
+      ...prev,
+      {
+        RecipientID: data.RecipientID,
+        Title: data.Title,
+        Content: data.Content,
+        Status: "Sent", // Add Status to the notification
+      },
+    ]);
+  });
 
   return (
     <div className="p-10">
@@ -42,26 +42,27 @@ const SendNotification = () => {
       </div>
 
       {/* Notification Form */}
-      <div className="bg-zinc-800 rounded-2xl shadow-lg p-6 mb-8 text-white">
+      <form
+        onSubmit={SendNotification}
+        className="bg-zinc-800 rounded-2xl shadow-lg p-6 mb-8 text-white"
+      >
         <div className="grid grid-cols-2 gap-7 mb-4">
           <div>
             <label className="block text-sm text-zinc-400 mb-1">
               Select Recipients
             </label>
             <input
-              type="text"
-              value={recipients}
-              onChange={(e) => setRecipients(e.target.value)}
+              {...register("RecipientID")}
+              type="number"
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200"
-              placeholder="Enter recipient names"
+              placeholder="Enter recipient ID"
             />
           </div>
           <div>
             <label className="block text-sm text-zinc-400 mb-1">Subject</label>
             <input
+              {...register("Title")}
               type="text"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200"
               placeholder="Enter subject"
             />
@@ -72,8 +73,7 @@ const SendNotification = () => {
             Message Content
           </label>
           <textarea
-            value={messageContent}
-            onChange={(e) => setMessageContent(e.target.value)}
+            {...register("Content")}
             className="w-full max-w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition transform duration-200"
             placeholder="Enter your message here"
             rows="4"
@@ -81,13 +81,13 @@ const SendNotification = () => {
         </div>
         <div className="flex justify-end mt-4">
           <button
-            onClick={handleSend}
+            type="submit"
             className="bg-blue-500 px-9 py-3 rounded-xl text-base font-semibold hover:bg-blue-600 transition"
           >
             Send
           </button>
         </div>
-      </div>
+      </form>
 
       {/* Notification History */}
       <div className="bg-zinc-800 rounded-2xl shadow-lg p-6 text-white">
@@ -99,7 +99,6 @@ const SendNotification = () => {
                 <th className="py-2 px-4">Recipient</th>
                 <th className="py-2 px-4">Subject</th>
                 <th className="py-2 px-4">Message</th>
-                <th className="py-2 px-4">Timestamp</th>
                 <th className="py-2 px-4">Status</th> {/* Add Status column */}
               </tr>
             </thead>
@@ -109,15 +108,14 @@ const SendNotification = () => {
                   key={index}
                   className="hover:bg-zinc-700 transition duration-200"
                 >
-                  <td className="py-2 px-4">{notification.recipient}</td>
-                  <td className="py-2 px-4">{notification.subject}</td>
+                  <td className="py-2 px-4">{notification.RecipientID}</td>
+                  <td className="py-2 px-4">{notification.Title}</td>
                   <td className="py-2 px-4">
                     <span className="inline-block bg-blue-500 text-white px-2 py-1 rounded-lg">
-                      {notification.message}
+                      {notification.Content}
                     </span>
                   </td>
-                  <td className="py-2 px-4">{notification.timestamp}</td>
-                  <td className="py-2 px-4">{notification.status}</td>{" "}
+                  <td className="py-2 px-4">{notification.Status}</td>{" "}
                   {/* Display Status */}
                 </tr>
               ))}

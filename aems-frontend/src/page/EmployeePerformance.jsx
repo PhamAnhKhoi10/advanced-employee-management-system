@@ -120,6 +120,7 @@ function EmployeePerformanceRecord() {
                       sx={{
                         color: "#fff",
                         fontWeight: "bold",
+                        justifyContent: "space-between",
                       }}
                     >
                       {header}
@@ -174,7 +175,6 @@ function EmployeePerformanceRecord() {
             count={employeePerRecord.length}
             rowsPerPage={table.rowsPerPage}
             onPageChange={table.onChangePage}
-            onChangeDense={table.onChangeDense}
             onRowsPerPageChange={table.onChangeRowsPerPage}
           />
         </Box>

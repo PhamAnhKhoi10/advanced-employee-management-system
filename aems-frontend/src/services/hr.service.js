@@ -144,15 +144,17 @@ export const deleteEmployee = createAsyncThunk(
 );
 export const requestAttendanceReport = createAsyncThunk(
   "hr/requestAttendanceReport",
-  async (filter) => {
+  async (id) => {
     try {
-      const params = new URLSearchParams(filter).toString();
-      const response = await fetch(`${BASE_URL}/api/v1/data?${params}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${BASE_URL}/api/v1/attendance/employee/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Network response was not ok");

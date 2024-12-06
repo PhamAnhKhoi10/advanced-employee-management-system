@@ -6,7 +6,7 @@ const titleForEmployee = [
   {
     title: "Notification",
     subtile: "Check your notification",
-    link: "/notification",
+    link: "/notifications",
   },
   { title: "Salary", subtile: "1/10/2024", link: "/salary" },
   {
@@ -39,7 +39,7 @@ const titleForHR = [
   {
     title: "Notification",
     subtile: "View employee employees notification",
-    link: "/notification",
+    link: "/notifications",
   },
 ];
 const titleForAdmin = [

@@ -1,128 +1,155 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { selectHr } from "../redux/slice/hrSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { requestAttendanceReport } from "../services/hr.service";
+import { selectHr } from "../redux/slice/hrSlice";
 
 const AttendanceReport = () => {
   const dispatch = useDispatch();
   const { attendanceReport } = useSelector(selectHr);
-  const [filters, setFilters] = useState({
-    id: "",
-    name: "",
-    date: "",
-    status: "",
-    remarks: "",
-  });
 
-  const [debouncedFilters, setDebouncedFilters] = useState(filters);
-
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters({
-      ...filters,
-      [name]: value,
-    });
+  const requestInformationOfEachEmployee = async (id) => {
+    dispatch(requestAttendanceReport(id));
   };
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedFilters(filters);
-    }, 1000);
-
-    return () => {
-      clearTimeout(handler);
+    const requestInformation = async () => {
+      for (let i = 4; i <= 20; i++) {
+        await requestInformationOfEachEmployee(i);
+      }
     };
-  }, [filters]);
+    requestInformation();
+  }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(requestAttendanceReport(debouncedFilters));
-  }, [debouncedFilters, dispatch]);
+  const [filters, setFilters] = useState({
+    name: "",
+    id: null,
+    status: "",
+    Date: "",
+  });
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const filteredEmployees = attendanceReport?.filter((employee) => {
+    return (
+      (!filters.name ||
+        employee.Name.toLowerCase().includes(filters.name.toLowerCase())) &&
+      (!filters.id || employee.EmployeeID.toString() === filters.id) &&
+      (!filters.status ||
+        employee.Status.toLowerCase().includes(filters.status.toLowerCase())) &&
+      (!filters.Date ||
+        employee.Date.toLowerCase().includes(filters.Date.toLowerCase()))
+    );
+  });
 
   return (
-    <div className="p-10">
-      {/* Page Title */}
-      <div className="text-center mb-8">
-        <h2 className="text-5xl font-bold text-white">Attendance Report</h2>
-      </div>
+    <div className="p-6 bg-black min-h-screen text-white">
+      {/* Header */}
+      <h1 className="text-5xl font-bold text-center mb-8">Attendance Report</h1>
 
-      <div className="bg-zinc-800 rounded-2xl shadow-lg p-6 text-white">
-        {/* Filter Inputs */}
-        <div className="flex flex-col md:flex-row justify-between mb-4 space-y-2 md:space-y-0 md:space-x-2">
+      {/* Input Section */}
+      <div className="bg-[#27272a] p-4 rounded-lg flex justify-between items-center space-x-4 mb-6 max-w-5xl mx-auto">
+        {/* NAME Input */}
+        <div className="relative flex flex-col mb-4 w-[150px]">
+          <label
+            htmlFor="name"
+            className="text-blue-600 text-sm mb-1 font-bold"
+          >
+            NAME
+          </label>
           <input
-            type="text"
-            name="id"
-            value={filters.id}
-            onChange={handleFilterChange}
-            placeholder="Filter by ID"
-            className="bg-zinc-700 text-base px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
+            id="name"
             name="name"
+            type="text"
+            placeholder="John"
             value={filters.name}
             onChange={handleFilterChange}
-            placeholder="Filter by Name"
-            className="bg-zinc-700 text-base px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="date"
-            name="date"
-            value={filters.date}
-            onChange={handleFilterChange}
-            placeholder="Filter by Date"
-            className="bg-zinc-700 text-base px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            name="status"
-            value={filters.status}
-            onChange={handleFilterChange}
-            placeholder="Filter by Status"
-            className="bg-zinc-700 text-base px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            name="remarks"
-            value={filters.remarks}
-            onChange={handleFilterChange}
-            placeholder="Filter by Remarks"
-            className="bg-zinc-700 text-base px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-gray-700  text-white border border-blue-500 rounded-lg px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        {/* Attendance Table */}
-        {attendanceReport.length > 0 ? (
-          <table className="w-full text-left text-base text-zinc-400">
-            <thead className="text-zinc-300 bg-zinc-700">
-              <tr>
-                <th className="py-2 px-4">ID</th>
-                <th className="py-2 px-4">Employee Name</th>
-                <th className="py-2 px-4">Date</th>
-                <th className="py-2 px-4">Status</th>
-                <th className="py-2 px-4">Remarks</th>
+        {/* ID Input */}
+        <div className="relative flex flex-col mb-4 w-[150px]">
+          <label htmlFor="id" className="text-blue-600 text-sm mb-1 font-bold">
+            ID
+          </label>
+          <input
+            id="id"
+            name="id"
+            type="text"
+            placeholder="H000002"
+            value={filters.id}
+            onChange={handleFilterChange}
+            className="bg-gray-700 text-white border border-blue-500 rounded-lg px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Position Input */}
+        <div className="relative flex flex-col mb-4 w-[150px]">
+          <label
+            htmlFor="status"
+            className="text-blue-600 text-sm mb-1 font-bold"
+          >
+            Date
+          </label>
+          <input
+            id="Date"
+            name="Date"
+            type="text"
+            placeholder="Employee"
+            value={filters.Date}
+            onChange={handleFilterChange}
+            className="bg-gray-700 text-white border border-blue-500 rounded-lg px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/* Email Input */}
+        <div className="relative flex flex-col mb-4 w-[150px]">
+          <label
+            htmlFor="Status"
+            className="text-blue-600 text-sm mb-1 font-bold"
+          >
+            Status
+          </label>
+          <input
+            id="status"
+            name="status"
+            value={filters.status}
+            onChange={handleFilterChange}
+            className="bg-gray-700 text-white border border-blue-500 rounded-lg px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      {/* Table Section */}
+      <div className="overflow-x-auto bg-[#161619] p-4 rounded-3xl max-w-5xl mx-auto">
+        <table className="min-w-full table-auto text-left rounded-3xl">
+          <thead>
+            <tr className="text-white uppercase text-sm bg-[#27272a]">
+              <th className="px-6 py-3">Name</th>
+              <th className="px-6 py-3">ID</th>
+              <th className="px-6 py-3">Date</th>
+              <th className="px-6 py-3">Status</th>
+              <th className="px-6 py-3">Hours Worked</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredEmployees.map((employee) => (
+              <tr
+                key={employee.EmployeeID}
+                className="hover:bg-gray-700  transition duration-100"
+              >
+                <td className="px-6 py-4">{employee.Name}</td>
+                <td className="px-6 py-4">{employee.EmployeeID}</td>
+                <td className="px-6 py-4">{employee.Date}</td>
+                <td className="px-6 py-4">{employee.Status}</td>
+                <td className="px-6 py-4">{employee.HoursWorked}</td>
               </tr>
-            </thead>
-            <tbody>
-              {attendanceReport.map((item, index) => (
-                <tr
-                  key={index}
-                  className="hover:bg-zinc-700 transition duration-200"
-                >
-                  <td className="py-2 px-4">{item.id || "-"}</td>
-                  <td className="py-2 px-4">{item.name || "-"}</td>
-                  <td className="py-2 px-4">{item.date || "-"}</td>
-                  <td className="py-2 px-4">{item.status || "-"}</td>
-                  <td className="py-2 px-4">{item.remarks || "-"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p className="text-center text-zinc-400">
-            No attendance records found.
-          </p>
-        )}
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

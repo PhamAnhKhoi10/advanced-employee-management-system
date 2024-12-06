@@ -5,6 +5,7 @@ import { addEmployee } from "../services/hr.service";
 const AddEmployee = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
+    UserID: null,
     Name: "",
     DepartmentID: null,
     Position: "",
@@ -44,10 +45,12 @@ const AddEmployee = () => {
         <div className="grid grid-cols-2 gap-6">
           {/* Form Fields */}
           <div>
-            <label className="block text-base text-zinc-400 mb-2">ID *</label>
+            <label className="block text-base text-zinc-400 mb-2">
+              User ID *
+            </label>
             <input
               type="text"
-              name="EmployeeID"
+              name="UserID"
               disabled
               value={formData.EmployeeID}
               onChange={handleInputChange}
