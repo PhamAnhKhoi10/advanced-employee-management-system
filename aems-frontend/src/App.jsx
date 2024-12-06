@@ -1,57 +1,61 @@
-import React from "react";
-
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Dashboard from "./page/Dashboard";
+import Notification from "./page/Notification";
+import Login from "./page/Login";
+import Performance from "./page/Performance";
+import Attendance from "./page/Attendance";
+import Landing from "./page/Landing";
+import CalculateSalary from "./page/CalculateSalary";
+import SendLeaveRequest from "./page/SendLeaveRequest";
+import AttendanceReport from "./page/AttendanceReport";
+import SendNotification from "./page/SendNotification";
+import Payslips from "./page/Payslips";
+import EmployeePerformanceRecord from "./page/EmployeePerformance";
+import EmployeeDetails from "./page/EmployeeDetails";
+import ProfilePage from "./page/ProfilePage";
+import EmployeeList from "./page/EmployeeList";
+import AddEmployee from "./page/AddEmployee";
+import UserSalary from "./page/UserSalary";
+import LeaveRequestApproval from "./page/LeaveRequestApproval";
+import PrivateRoute from "./components/PrivateRoute"; // Adjust the import path as needed
 const App = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-bold text-gray-800 text-center mb-4">
-          Welcome to My React App
-        </h1>
-        <p className="text-gray-600 text-center mb-6">
-          This is a sample React application styled with Tailwind CSS.
-        </p>
+    <Routes>
+      {/* Routes without NavBar and Sidebar */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Landing />} />
 
-        <form className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              placeholder="you@example.com"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              placeholder="********"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 transition"
-          >
-            Login
-          </button>
-        </form>
-
-        <p className="text-sm text-gray-500 text-center mt-6">
-          Don't have an account?{" "}
-          <a href="#" className="text-blue-500 hover:underline">
-            Sign Up
-          </a>
-        </p>
-      </div>
-    </div>
+      {/* Routes with NavBar and Sidebar */}
+      <Route element={<PrivateRoute />}>
+        <Route element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/notifications" element={<Notification />} />
+          <Route path="/request-leave" element={<SendLeaveRequest />} />
+          <Route path="/notification" element={<Notification />} />
+          <Route path="/employee/salary" element={<CalculateSalary />} />
+          <Route path="/salary" element={<UserSalary />} />
+          <Route path="/attendance" element={<Attendance />} />
+          <Route path="/performance" element={<Performance />} />
+          <Route path="/employee/attendance" element={<AttendanceReport />} />
+          <Route
+            path="/employee/performance"
+            element={<EmployeePerformanceRecord />}
+          />
+          <Route path="/employee/notification" element={<SendNotification />} />
+          <Route path="/payslips" element={<Payslips />} />
+          <Route path="/employee/employee-info" element={<EmployeeList />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/employee/details/:id" element={<EmployeeDetails />} />
+          <Route path="/employee/add" element={<AddEmployee />} />
+          <Route
+            path="/employee/request-leave"
+            element={<LeaveRequestApproval />}
+          />
+        </Route>
+      </Route>
+    </Routes>
   );
 };
 
 export default App;
- 
