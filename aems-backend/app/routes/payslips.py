@@ -41,6 +41,8 @@ def get_payslip(payslip_id: int, db: Session = Depends(get_db)):
 @router.get("/employee/{employee_id}", response_model=list[PayslipOut])
 def get_employee_payslips(employee_id: int, db: Session = Depends(get_db)):
     payslips = db.query(Payslip).filter(Payslip.EmployeeID == employee_id).all()
+    if not payslips:
+        raise HTTPException(status_code=404, detail="Employee not found")
     return payslips
 
 # API để cập nhật payslip

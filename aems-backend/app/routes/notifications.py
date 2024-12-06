@@ -41,7 +41,7 @@ def get_notification(notification_id: int, db: Session = Depends(get_db)):
 @router.get("/recipient/{recipient_id}", response_model=list[NotificationOut])
 def get_notifications_by_recipient(recipient_id: int, db: Session = Depends(get_db)):
     notifications = db.query(Notification).filter(Notification.RecipientID == recipient_id).all()
-    return notifications
+    return notifications    
 
 # API để cập nhật trạng thái đã đọc của notification
 @router.put("/{notification_id}", response_model=NotificationOut)

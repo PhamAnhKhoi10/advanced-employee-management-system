@@ -58,4 +58,6 @@ def get_leave_request(leave_request_id: int, db: Session = Depends(get_db)):
 @router.get("/employee/{employee_id}", response_model=list[LeaveRequestOut])
 def get_employee_leave_requests(employee_id: int, db: Session = Depends(get_db)):
     leave_requests = db.query(LeaveRequest).filter(LeaveRequest.EmployeeID == employee_id).all()
+    if not leave_requests:
+        raise HTTPException(status_code=404, detail="Employee not found")
     return leave_requests
