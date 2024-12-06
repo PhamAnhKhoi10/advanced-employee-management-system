@@ -16,7 +16,7 @@ import { selectEmployees } from "../redux/slice/employeeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { requestPerformance } from "../services/employee.service";
 const title = [
-  { title: "Projects Completed", subtitle: "THis month" },
+  { title: "Projects Completed", subtitle: "This month" },
   { title: "Hours Worked", subtitle: "Total logged hours" },
   { title: "Rating", subtitle: "Average rating" },
 ];
@@ -27,10 +27,10 @@ function Performance() {
 
   console.log(performance);
   useEffect(() => {
-    if (user && user.id) {
-      dispatch(requestPerformance(user.id));
+    if (user) {
+      dispatch(requestPerformance(user.employee_id));
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <Stack
@@ -80,7 +80,7 @@ function Performance() {
               color: "#FFFFFF",
             }}
           >
-            {performance.projectCompleted}
+            {performance?.TaskCompletion}
           </Typography>
           <Typography variant="body2" sx={{ mt: 0.5, opacity: 0.8 }}>
             {title[0].subtitle}
@@ -103,7 +103,7 @@ function Performance() {
               color: "#FFFFFF",
             }}
           >
-            {performance.hourWorked}
+            {performance?.hourWorked}
           </Typography>
           <Typography variant="body2" sx={{ mt: 0.5, opacity: 0.8 }}>
             {title[1].subtitle}
@@ -126,7 +126,7 @@ function Performance() {
               color: "#FFFFFF",
             }}
           >
-            {performance.rating}
+            {performance?.rating}
           </Typography>
           <Typography variant="body2" sx={{ mt: 0.5, opacity: 0.8 }}>
             {title[2].subtitle}
@@ -161,13 +161,17 @@ function Performance() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {performance.rows.map((row, index) => (
+            {performance?.map((row, index) => (
               <TableRow key={index}>
-                <TableCell sx={{ color: "#fff" }}>{row.task}</TableCell>
-                <TableCell sx={{ color: "#fff" }}>{row.status}</TableCell>
-                <TableCell sx={{ color: "#fff" }}>{row.date}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>
+                  {row?.PerformanceID}
+                </TableCell>
+                <TableCell sx={{ color: "#fff" }}>{row.Feedback}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>
+                  {row.EvaluationDate}
+                </TableCell>
                 <TableCell sx={{ color: "#fff", fontWeight: "bold" }}>
-                  {row.score}
+                  {row.Rating}
                 </TableCell>
               </TableRow>
             ))}

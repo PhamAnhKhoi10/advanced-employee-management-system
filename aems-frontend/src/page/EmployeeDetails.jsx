@@ -71,8 +71,8 @@ const EmployeeDetails = () => {
             <label className="block text-base text-zinc-400 mb-2">ID *</label>
             <input
               type="text"
-              name="id"
-              value={formData?.id}
+              name="EmployeeID"
+              value={formData?.EmployeeID}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               disabled
@@ -84,20 +84,20 @@ const EmployeeDetails = () => {
             </label>
             <input
               type="text"
-              name="firstName"
-              value={formData?.firstName}
+              name="Name"
+              value={formData?.Name}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
           </div>
           <div>
             <label className="block text-base text-zinc-400 mb-2">
-              Last Name *
+              Position
             </label>
             <input
               type="text"
-              name="lastName"
-              value={formData?.lastName}
+              name="Position"
+              value={formData?.Position}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -108,8 +108,8 @@ const EmployeeDetails = () => {
             </label>
             <input
               type="email"
-              name="email"
-              value={formData?.email}
+              name="Email"
+              value={formData?.Email}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -120,8 +120,8 @@ const EmployeeDetails = () => {
             </label>
             <input
               type="text"
-              name="address"
-              value={formData?.address}
+              name="Address"
+              value={formData?.Address}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />
@@ -132,8 +132,8 @@ const EmployeeDetails = () => {
             </label>
             <input
               type="text"
-              name="phoneNumber"
-              value={formData?.phoneNumber}
+              name="PhoneNumber"
+              value={formData?.PhoneNumber}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />

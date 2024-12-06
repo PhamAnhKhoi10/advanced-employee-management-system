@@ -13,15 +13,24 @@ import {
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { selectEmployees } from "../redux/slice/employeeSlice";
-import { checkAttendance } from "../services/employee.service";
+import {
+  checkAttendance,
+  requestAttendance,
+} from "../services/employee.service";
+import { useEffect } from "react";
 
 function Attendance() {
   const dispatch = useDispatch();
 
   const { attendance, user } = useSelector(selectEmployees);
   const handleCheckAttendance = () => {
-    dispatch(checkAttendance(user.id));
+    dispatch(checkAttendance(user.employee_id));
   };
+  useEffect(() => {
+    if (user) {
+      dispatch(requestAttendance(user.employee_id));
+    }
+  }, [user, dispatch]);
   return (
     <Stack
       sx={{
@@ -113,9 +122,11 @@ function Attendance() {
               <TableBody>
                 {attendance.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell sx={{ color: "#fff" }}>{row.date}</TableCell>
-                    <TableCell sx={{ color: "#fff" }}>{row.status}</TableCell>
-                    <TableCell sx={{ color: "#fff" }}>{row.remarks}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{row.Date}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>{row.Status}</TableCell>
+                    <TableCell sx={{ color: "#fff" }}>
+                      {row.HoursWorked} hours worked
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -2,10 +2,6 @@ import { useEffect } from "react";
 import {
   Box,
   Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   Table,
   TableBody,
   TableCell,
@@ -18,13 +14,13 @@ import { selectHr } from "../redux/slice/hrSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { PaginationItems } from "../components/Pagination";
 import { useTable } from "../hooks/useTable";
-import { selectEmployees } from "../redux/slice/employeeSlice";
+
 import {
   createPerformanceRecord,
-  requestPerformanceRecord,
   updatePerformanceRecord,
 } from "../services/hr.service";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { requestPerformance } from "../services/employee.service";
 
 function EmployeePerformanceRecord() {
   const table = useTable({
@@ -32,39 +28,43 @@ function EmployeePerformanceRecord() {
     defaultRowsPerPage: 10,
   });
   const dispatch = useDispatch();
-  const { user } = useSelector(selectEmployees);
+
   const { employeePerRecord } = useSelector(selectHr);
-  console.log(employeePerRecord);
   const methods = useForm({
     defaultValues: {
-      id: null,
-      employeeName: "",
-      task: "",
-      status: "",
-      date: "",
-      score: "",
+      PerformanceID: null,
+      EmployeeID: 0,
+      EvaluationDate: "",
+      TaskCompletion: 0,
+      Feedback: "",
+      Rating: 0,
     },
   });
+  const requestInformationOfEachEmployee = async (id) => {
+    dispatch(requestPerformance(id));
+  };
 
-  const { handleSubmit, register, setValue, reset } = methods;
   useEffect(() => {
-    if (user.role !== "HR") {
-      alert("You are not authorized to view this page");
-    } else {
-      dispatch(requestPerformanceRecord(user.id));
-    }
-  }, [user]);
+    const requestInformation = async () => {
+      for (let i = 4; i <= 20; i++) {
+        await requestInformationOfEachEmployee(i);
+      }
+    };
+    requestInformation();
+  }, [dispatch]);
 
+  const { handleSubmit, register, setValue, reset, watch } = methods;
+  const performanceID = watch("PerformanceID");
   const handleEditRequest = (record) => {
-    setValue("id", record.id);
-    setValue("employeeName", record.employeeName);
-    setValue("task", record.task);
-    setValue("status", record.status);
-    setValue("date", record.date);
-    setValue("score", record.score);
+    setValue("PerformanceID", record.PerformanceID);
+    setValue("EmployeeID", record.EmployeeID);
+    setValue("EvaluationDate", record.EvaluationDate);
+    setValue("TaskCompletion", record.TaskCompletion);
+    setValue("Feedback", record.Feedback);
+    setValue("Rating", record.Rating);
   };
   const onSubmit = (data) => {
-    if (data.id) {
+    if (data.PerformanceID) {
       dispatch(updatePerformanceRecord(data)); // Update existing record
     } else {
       console.log(data);
@@ -113,7 +113,7 @@ function EmployeePerformanceRecord() {
           >
             <TableHead sx={{ bgcolor: "#27272a", borderRadius: "10px" }}>
               <TableRow>
-                {["Employee", "Task", "Status", "Date", "Score", "Actions"].map(
+                {["Employee", "Feedback", "Date", "Score", "Actions"].map(
                   (header) => (
                     <TableCell
                       key={header}
@@ -130,14 +130,17 @@ function EmployeePerformanceRecord() {
             </TableHead>
             <TableBody>
               {employeePerRecord?.map((record) => (
-                <TableRow key={record.id}>
+                <TableRow key={record.PerformanceID}>
                   <TableCell sx={{ color: "#fff" }}>
-                    {record.employeeName}
+                    {record.EmployeeID}
                   </TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{record.task}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{record.status}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{record.date}</TableCell>
-                  <TableCell sx={{ color: "#fff" }}>{record.score}</TableCell>
+                  <TableCell sx={{ color: "#fff" }}>
+                    {record.Feedback}
+                  </TableCell>
+                  <TableCell sx={{ color: "#fff" }}>
+                    {record.EvaluationDate}
+                  </TableCell>
+                  <TableCell sx={{ color: "#fff" }}>{record.Rating}</TableCell>
                   <TableCell>
                     <Button
                       onClick={() => handleEditRequest(record)}
@@ -191,8 +194,8 @@ function EmployeePerformanceRecord() {
           </Typography>
           <Box display="flex" flexDirection="column" gap={2}>
             <TextField
-              label="Employee Name"
-              {...register("employeeName")}
+              label="Employee ID"
+              {...register("EmployeeID")}
               slotProps={{
                 inputLabel: {
                   shrink: true,
@@ -205,78 +208,56 @@ function EmployeePerformanceRecord() {
                 label: { color: "#aaa" },
               }}
             />
+            {!!performanceID && (
+              <TextField
+                {...register("PerformanceID")}
+                slotProps={{
+                  inputLabel: {
+                    shrink: true,
+                  },
+                }}
+                label="Performance ID"
+                variant="outlined"
+                fullWidth
+                sx={{ input: { color: "#fff" }, label: { color: "#aaa" } }}
+              />
+            )}
             <TextField
-              {...register("task")}
+              {...register("TaskCompletion")}
               slotProps={{
                 inputLabel: {
                   shrink: true,
                 },
               }}
-              label="Task Name"
+              type="number"
+              label="Task Completion"
               variant="outlined"
               fullWidth
               sx={{ input: { color: "#fff" }, label: { color: "#aaa" } }}
             />
-            <FormControl fullWidth>
-              <InputLabel
-                id="demo-simple-select-label"
-                sx={{
-                  color: "#aaa", // Set label color to white
-                }}
-              >
-                Status
-              </InputLabel>
-              <Controller
-                defaultValue={""}
-                name="status"
-                control={methods.control}
-                render={({ field }) => (
-                  <Select
-                    defaultValue={""}
-                    labelId="demo-simple-select-label"
-                    label="Status"
-                    id="demo-simple-select"
-                    {...field}
-                    displayEmpty
-                    sx={{
-                      color: "#fff", // Set text color to white
-                      ".MuiSelect-icon": { color: "#fff" }, // Set dropdown arrow color
-                      backgroundColor: "#222", // Optional: set background color
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="notStarted">Not Started</MenuItem>
-                    <MenuItem value="completed">Completed</MenuItem>
-                    <MenuItem value="inProgress">In Progress</MenuItem>
-                  </Select>
-                )}
-              />
-            </FormControl>
             <TextField
-              {...register("date")}
+              {...register("EvaluationDate")}
               slotProps={{
                 inputLabel: {
                   shrink: true,
                 },
               }}
-              name="date"
+              name="EvaluationDate"
               type="date"
-              label="Completion Date"
+              label="Evaluation Date"
               variant="outlined"
               fullWidth
               placeholder="dd/mm/yyyy"
               sx={{ input: { color: "#fff" }, label: { color: "#aaa" } }}
             />
             <TextField
-              {...register("score")}
+              {...register("Rating")}
               slotProps={{
                 inputLabel: {
                   shrink: true,
                 },
               }}
-              name="score"
+              name="Rating"
               type="number"
               onInputCapture={(e) => {
                 e.target.value < 100 ? e.target.value : (e.target.value = 100);

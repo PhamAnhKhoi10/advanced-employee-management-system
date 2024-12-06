@@ -1,15 +1,20 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-const PrivateRoute = ({ element: Component, ...rest }) => {
-  const isAuthenticated = useAuth();
+const PrivateRoute = () => {
+  const { isAuthenticated, isLoading } = useAuth();
 
-  return isAuthenticated ? <Component {...rest} /> : <Navigate to="/login" />;
+  if (isLoading) {
+    // Show a loading indicator while waiting for authentication check
+    return <div>Loading...</div>;
+  }
+
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
+
 PrivateRoute.propTypes = {
-  element: PropTypes.elementType.isRequired,
+  element: PropTypes.elementType,
 };
 
 export default PrivateRoute;

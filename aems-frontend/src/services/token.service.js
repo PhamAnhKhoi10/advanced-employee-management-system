@@ -1,12 +1,14 @@
-export const sessionKey = "session";
+/* eslint-disable no-unused-vars */
+export const sessionKey = "token";
 export const rememberMeKey = "rememberMe";
 export const getToken = () => {
   try {
     const session = localStorage.getItem(sessionKey);
+    console.log("hihi", session);
     if (session === null) {
       return null;
     }
-    return JSON.parse(session).accessToken;
+    return JSON.parse(session);
   } catch (error) {
     console.error("Invalid Token. Redirecting to /login");
     // setTimeout(doLogout, 300);
@@ -29,7 +31,12 @@ export const getPermissions = () => {
 };
 
 export const setSession = (newSession) => {
-  localStorage.setItem(sessionKey, JSON.stringify(newSession));
+  try {
+    localStorage.setItem(sessionKey, JSON.stringify(newSession));
+    console.log("setSession", newSession);
+  } catch (error) {
+    console.error("Failed to set session:", error);
+  }
 };
 
 export const getSession = () => {

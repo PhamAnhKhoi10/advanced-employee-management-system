@@ -1,32 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEmployees } from "../redux/slice/employeeSlice";
+import { requestProfileEdit } from "../services/employee.service";
 
 const ProfilePage = () => {
+  const { user } = useSelector(selectEmployees);
+  const dispatch = useDispatch();
   const [profileData, setProfileData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
+    id: user.employee_id,
+    Name: user.name,
+    Position: user.position,
+    PhoneNumber: user.phone_number,
+    Address: user.address,
   });
 
   useEffect(() => {
-    // Simulate fetching data from the backend
-    const fetchProfileData = async () => {
-      const mockData = {
-        firstName: "John",
-        lastName: "Terry",
-        email: "johnterry@example.com",
-        password: "******", // Placeholder password
-      };
-      setProfileData(mockData);
-    };
-
-    fetchProfileData();
-
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
+    setProfileData({
+      id: user.employee_id,
+      Name: user.name,
+      Position: user.position,
+      PhoneNumber: user.phone_number,
+      Address: user.address,
+    });
+  }, [user, dispatch]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -37,22 +33,18 @@ const ProfilePage = () => {
   };
 
   const handleCancel = () => {
-    alert("Changes canceled!");
-    // Optionally, reset form data to the original fetched data
-    const resetData = {
-      firstName: "John",
-      lastName: "Doe",
-      email: "johndoe@example.com",
-      password: "******",
-    };
-    setProfileData(resetData);
+    setProfileData({
+      id: user.employee_id,
+      Name: user.name,
+      Position: user.position,
+      PhoneNumber: user.phone_number,
+      Address: user.address,
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleEdit = (e) => {
     e.preventDefault();
-    alert("Profile updated!");
-    // Simulate sending updated data to the backend
-    console.log("Updated Profile Data:", profileData);
+    dispatch(requestProfileEdit(profileData));
   };
 
   return (
@@ -65,30 +57,30 @@ const ProfilePage = () => {
         <h2 className="text-5xl text-white font-extrabold mb-6 text-center mt-[-30px]">
           Edit Profile
         </h2>
-        <form onSubmit={handleSubmit} className="w-full space-y-4">
+        <form onSubmit={handleEdit} className="w-full space-y-4">
           <div className="flex space-x-4">
             <div className="flex-1">
               <label className="block font-extrabold mb-1 text-blue-500">
-                First Name
+                Name
                 <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                name="firstName"
-                value={profileData.firstName}
+                name="Name"
+                value={profileData.Name}
                 onChange={handleInputChange}
                 className="w-full p-3 bg-[#2B2B3C] text-gray-400 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-[#353546] transition"
               />
             </div>
             <div className="flex-1">
               <label className="block font-extrabold mb-1 text-blue-500">
-                Last Name
+                Position
                 <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                name="lastName"
-                value={profileData.lastName}
+                name="Position"
+                value={profileData.Position}
                 onChange={handleInputChange}
                 className="w-full p-3 bg-[#2B2B3C] text-gray-400 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-[#353546] transition"
               />
@@ -96,25 +88,24 @@ const ProfilePage = () => {
           </div>
           <div>
             <label className="block font-extrabold mb-1 text-blue-500">
-              Email
+              Phone Number
               <span className="text-red-500">*</span>
             </label>
             <input
-              type="email"
-              name="email"
-              value={profileData.email}
+              type="text"
+              name="PhoneNumber"
+              value={profileData.PhoneNumber}
               onChange={handleInputChange}
               className="w-full p-3 bg-[#2B2B3C] text-gray-400 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-[#353546] transition"
             />
           </div>
           <div>
             <label className="block font-extrabold mb-1 text-blue-500">
-              Password
+              Address
             </label>
             <input
-              type="password"
-              name="password"
-              value={profileData.password}
+              name="address"
+              value={profileData.Address}
               onChange={handleInputChange}
               className="w-full p-3 bg-[#2B2B3C] text-gray-400 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500 hover:bg-[#353546] transition"
             />

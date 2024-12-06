@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectEmployees } from "../redux/slice/employeeSlice";
 import { useForm } from "react-hook-form";
-import { requestLeave } from "../services/employee.service";
+import {
+  requestLeave,
+  requestLeaveRequestsInformation,
+} from "../services/employee.service";
+import { useEffect } from "react";
 
 const SendLeaveRequest = () => {
   const dispatch = useDispatch();
@@ -10,16 +14,36 @@ const SendLeaveRequest = () => {
   const methods = useForm({
     defaultValues: {
       name: user.name,
-      id: user.id,
-      date: "",
-      duration: "",
-      reason: "",
+      EmployeeID: user.employee_id,
+      StartDate: "",
+      duration: null,
+      Reason: "",
     },
   });
+
+  useEffect(() => {
+    dispatch(requestLeaveRequestsInformation(user.employee_id));
+  }, [dispatch, user.employee_id]);
+
   const { handleSubmit, register } = methods;
   const handleRequest = handleSubmit(async (data) => {
+    // Parse StartDate as a date
+    const startDate = new Date(data.StartDate);
+
+    // Add Duration to StartDate
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + parseInt(data.duration, 10));
+
+    // Format EndDate as needed (e.g., YYYY-MM-DD)
+    const formattedEndDate = endDate.toISOString().split("T")[0];
     console.log("object", data);
-    dispatch(requestLeave(data));
+    const Data = {
+      ...data,
+      Reason: data.Reason,
+      HRManager: 1,
+      EndDate: formattedEndDate,
+    };
+    dispatch(requestLeave(Data));
   });
 
   return (
@@ -36,7 +60,7 @@ const SendLeaveRequest = () => {
             <div className="mb-4">
               <label className="block text-gray-300 mb-1">Date:</label>
               <input
-                {...register("date")}
+                {...register("StartDate")}
                 type="date"
                 className="w-full p-3 bg-zinc-700 g-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               />
@@ -53,7 +77,7 @@ const SendLeaveRequest = () => {
             <div className="mb-4">
               <label className="block text-gray-300 mb-1">Reason:</label>
               <textarea
-                {...register("reason")}
+                {...register("Reason")}
                 placeholder="Type your reason"
                 className="w-full p-3 bg-zinc-700 g-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
                 rows="3"
@@ -77,8 +101,8 @@ const SendLeaveRequest = () => {
             <thead>
               <tr>
                 <th className="pb-3">REASON</th>
-                <th className="pb-3">DATE</th>
-                <th className="pb-3">DURATION</th>
+                <th className="pb-3">START-DATE</th>
+                <th className="pb-3">END-DATE</th>
                 <th className="pb-3">STATUS</th>
               </tr>
             </thead>
@@ -88,10 +112,10 @@ const SendLeaveRequest = () => {
                 leaveRequests.map((leaveRequest) => (
                   <>
                     <tr className="border-b border-gray-700">
-                      <td className="py-2">{leaveRequest.reason}</td>
-                      <td className="py-2">{leaveRequest.date}</td>
-                      <td className="py-2">{leaveRequest.duration}</td>
-                      <td className="py-2">{leaveRequest.status}</td>
+                      <td className="py-2">{leaveRequest.Reason}</td>
+                      <td className="py-2">{leaveRequest.StartDate}</td>
+                      <td className="py-2">{leaveRequest.EndDate}</td>
+                      <td className="py-2">{leaveRequest.Status}</td>
                     </tr>
                   </>
                 ))}

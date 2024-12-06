@@ -5,16 +5,12 @@ import { addEmployee } from "../services/hr.service";
 const AddEmployee = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    id: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    address: "",
-    phoneNumber: "",
-    salary: "",
-    role: "",
-    gender: "male", // Default gender value
-    note: "",
+    Name: "",
+    DepartmentID: null,
+    Position: "",
+    DateOfJoining: "",
+    PhoneNumber: "",
+    Address: "",
   });
 
   const handleInputChange = (e) => {
@@ -51,21 +47,20 @@ const AddEmployee = () => {
             <label className="block text-base text-zinc-400 mb-2">ID *</label>
             <input
               type="text"
-              name="id"
-              value={formData.id}
+              name="EmployeeID"
+              disabled
+              value={formData.EmployeeID}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="E000001"
             />
           </div>
           <div>
-            <label className="block text-base text-zinc-400 mb-2">
-              First Name *
-            </label>
+            <label className="block text-base text-zinc-400 mb-2">Name *</label>
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="Name"
+              value={formData.Name}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="John"
@@ -73,12 +68,12 @@ const AddEmployee = () => {
           </div>
           <div>
             <label className="block text-base text-zinc-400 mb-2">
-              Last Name *
+              Position
             </label>
             <input
               type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="Position"
+              value={formData.Position}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="Doe"
@@ -90,8 +85,8 @@ const AddEmployee = () => {
             </label>
             <input
               type="email"
-              name="email"
-              value={formData.email}
+              name="Email"
+              value={formData.Email}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="johndoe@example.com"
@@ -103,8 +98,8 @@ const AddEmployee = () => {
             </label>
             <input
               type="text"
-              name="address"
-              value={formData.address}
+              name="Address"
+              value={formData.Address}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="aa Street, District b, TPHCM"
@@ -116,8 +111,8 @@ const AddEmployee = () => {
             </label>
             <input
               type="text"
-              name="phoneNumber"
-              value={formData.phoneNumber}
+              name="PhoneNumber"
+              value={formData.PhoneNumber}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="0123456789"
@@ -129,22 +124,24 @@ const AddEmployee = () => {
             </label>
             <input
               type="text"
-              name="salary"
-              value={formData.salary}
+              name="Salary"
+              value={formData.Salary}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="3000 $"
             />
           </div>
           <div>
-            <label className="block text-base text-zinc-400 mb-2">Role *</label>
+            <label className="block text-base text-zinc-400 mb-2">
+              Date of joining *
+            </label>
             <input
-              type="text"
-              name="role"
-              value={formData.role}
+              type="date"
+              name="DateOfJoining"
+              value={formData.DateOfJoining}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
-              placeholder="Employee"
+              placeholder="yyyy-mm-dd"
             />
           </div>
         </div>

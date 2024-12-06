@@ -10,11 +10,11 @@ const Layout = () => {
   return (
     <div className="flex flex-col h-screen m-0 p-0">
       <div className="w-full">
-        <NavBar role={user.role} /> {/* Fixed at top */}
+        <NavBar roleID={user?.roleID} /> {/* Fixed at top */}
       </div>
       <div className="flex flex-1 overflow-hidden">
         <div className="h-full">
-          <Sidebar role={user.role} /> {/* Fixed at left side */}
+          <Sidebar roleID={user?.roleID} /> {/* Fixed at left side */}
         </div>
         <main className="flex-1 overflow-auto bg-[#000000]">
           <Outlet />

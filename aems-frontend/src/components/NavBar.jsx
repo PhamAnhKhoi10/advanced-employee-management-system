@@ -1,24 +1,27 @@
 import { useSelector } from "react-redux";
 import { selectEmployees } from "../redux/slice/employeeSlice";
+import { doLogout } from "../services/auth/auth.service";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-const NavBar = ({ role }) => {
+const NavBar = ({ roleID }) => {
+  const navigate = useNavigate();
   const { user } = useSelector(selectEmployees);
   const getNavItems = () => {
-    switch (role) {
-      case "HR":
+    switch (roleID) {
+      case 2:
         return [
           { href: "/dashboard", label: "Dashboard" },
           { href: "/request-leave", label: "Request Leave" },
           { href: "/profile", label: "Profile" },
         ];
-      case "Employee":
+      case 3:
         return [
           { href: "/dashboard", label: "Dashboard" },
           { href: "/request-leave", label: "Request Leave" },
           { href: "/profile", label: "Profile" },
         ];
-      case "Admin":
+      case 1:
         return [
           { href: "/dashboard", label: "Dashboard" },
           { href: "/profile", label: "Profile" },
@@ -44,7 +47,9 @@ const NavBar = ({ role }) => {
           {navItems.map((item, index) => (
             <li className="hover:scale-110 transition duration-300" key={index}>
               <a
-                href={item.href}
+                onClick={() => {
+                  navigate(item.href);
+                }}
                 className="text-white transition duration-300 ease-in-out transform hover:text-gray-400"
               >
                 {item.label}
@@ -55,7 +60,7 @@ const NavBar = ({ role }) => {
       </div>
 
       {/* Right Section - User Info */}
-      {role && (
+      {user && (
         <div className="flex items-center space-x-4">
           {/* Placeholder User Info */}
           <div className="text-sm">
@@ -65,7 +70,10 @@ const NavBar = ({ role }) => {
           {/* Sign Out Button */}
           <div className="flex items-center">
             <button
-              onClick={() => alert("No user logged in")}
+              onClick={() => {
+                doLogout();
+                window.location.href = "/login";
+              }}
               className="px-4 py-2 bg-black text-blue-500 border border-blue-700 rounded hover:bg-gray-700 hover:text-white transition"
             >
               Sign out

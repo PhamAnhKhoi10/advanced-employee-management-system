@@ -5,24 +5,13 @@ import {
   requestEmployeeList,
   requestPerformanceRecord,
 } from "../../services/hr.service";
+import { requestPerformance } from "../../services/employee.service";
 
 const hrSlice = createSlice({
   name: "hr",
   initialState: {
     attendanceReport: [],
-    employee: {
-      id: 1,
-      firstName: "Minh Khanh",
-      lastName: "Nguyen",
-
-      email: "aascasca@gmail.com",
-      address: "Hanoi",
-      phoneNumber: "123456789",
-      salary: "1000$",
-      role: "HR",
-      gender: "male",
-      notifications: [],
-    },
+    employee: {},
     employeeList: [],
     employeePerRecord: [],
   },
@@ -39,6 +28,15 @@ const hrSlice = createSlice({
     });
     builder.addCase(requestAttendanceReport.fulfilled, (state, action) => {
       state.attendanceReport = action.payload;
+    });
+    builder.addCase(requestPerformance.fulfilled, (state, action) => {
+      const existingIds = state.employeePerRecord.map(
+        (record) => record.PerformanceID
+      );
+      const newRecords = action.payload.filter(
+        (record) => !existingIds.includes(record.PerformanceID)
+      );
+      state.employeePerRecord = [...state.employeePerRecord, ...newRecords];
     });
   },
 });

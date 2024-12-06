@@ -2,11 +2,15 @@
 import { Box, Button, Link, Stack, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { loginAsync } from "../services/auth/auth.service";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const methods = useForm({
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
       rememberMe: true,
     },
@@ -15,25 +19,7 @@ function Login() {
   const { handleSubmit, register } = methods;
 
   const handleLogin = handleSubmit(async (data) => {
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const result = await response.json();
-
-      console.log(result);
-      dispatchEvent(loginAsync(data));
-    } catch (error) {
-      console.error("There was a problem with the login request:", error);
-    }
+    dispatch(loginAsync({ data, navigate }));
   });
 
   return (
@@ -76,9 +62,9 @@ function Login() {
         >
           <TextField
             required
-            rules={{ required: "Email is required" }}
-            {...register("email")}
-            label="Email"
+            rules={{ required: "username is required" }}
+            {...register("username")}
+            label="Username"
             sx={{
               size: "small",
               input: {

@@ -1,15 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+const BASE_URL = "http://127.0.0.1:8000";
 
 export const requestPerformanceRecord = createAsyncThunk(
   "hr/requestPerformance",
   async (userId) => {
     try {
-      const response = await fetch(`/api/performanceRecord/${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${BASE_URL}/api/v1/performanceRecord/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const result = await response.json();
       return result;
@@ -23,13 +27,16 @@ export const updatePerformanceRecord = createAsyncThunk(
   "hr/updatePerformance",
   async (record) => {
     try {
-      const response = await fetch(`/api/performanceRecord/${record.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(record),
-      });
+      const response = await fetch(
+        `${BASE_URL}/api/v1/performances/${record.PerformanceID}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(record),
+        }
+      );
 
       const result = await response.json();
       return result;
@@ -42,7 +49,7 @@ export const createPerformanceRecord = createAsyncThunk(
   "hr/createPerformance",
   async (record) => {
     try {
-      const response = await fetch(`/api/performanceRecord`, {
+      const response = await fetch(`${BASE_URL}/api/v1/performanceRecord`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +69,7 @@ export const requestEmployeeList = createAsyncThunk(
   "hr/requestEmployeeList",
   async () => {
     try {
-      const response = await fetch(`/api/employee`, {
+      const response = await fetch(`${BASE_URL}/api/v1/employees`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +87,7 @@ export const requestEmployeeDetails = createAsyncThunk(
   "hr/requestEmployeeDetails",
   async (id) => {
     try {
-      const response = await fetch(`/api/employee/${id}`, {
+      const response = await fetch(`${BASE_URL}/api/v1/employees/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -99,13 +106,16 @@ export const updateEmployeeDetails = createAsyncThunk(
   "hr/updateEmployeeDetails",
   async (employee) => {
     try {
-      const response = await fetch(`/api/employee/${employee.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(employee),
-      });
+      const response = await fetch(
+        `${BASE_URL}/api/v1/employee/${employee.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(employee),
+        }
+      );
 
       const result = await response.json();
       return result;
@@ -118,7 +128,7 @@ export const deleteEmployee = createAsyncThunk(
   "hr/deleteEmployee",
   async (id) => {
     try {
-      const response = await fetch(`/api/employee/${id}`, {
+      const response = await fetch(`${BASE_URL}/api/v1/employees/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +147,7 @@ export const requestAttendanceReport = createAsyncThunk(
   async (filter) => {
     try {
       const params = new URLSearchParams(filter).toString();
-      const response = await fetch(`/api/data?${params}`, {
+      const response = await fetch(`${BASE_URL}/api/v1/data?${params}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -161,7 +171,7 @@ export const addEmployee = createAsyncThunk(
   "hr/addEmployee",
   async (employee) => {
     try {
-      const response = await fetch(`/api/employee`, {
+      const response = await fetch(`${BASE_URL}/api/v1/employee`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

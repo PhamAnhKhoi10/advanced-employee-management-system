@@ -12,17 +12,17 @@ import {
 } from "react-icons/fa";
 
 // eslint-disable-next-line react/prop-types
-const Sidebar = ({ role }) => {
+const Sidebar = ({ roleID }) => {
   const getSidebarItems = () => {
-    switch (role) {
-      case "Employee":
+    switch (roleID) {
+      case 3:
         return [
           { href: "/salary", label: "Salary", icon: FaMoneyBillAlt },
           { href: "/attendance", label: "Attendance", icon: FaCalendarAlt },
           { href: "/performance", label: "Performance", icon: FaChartBar },
           { href: "/notification", label: "Notifications", icon: FaBell },
         ];
-      case "HR":
+      case 2:
         return [
           { href: "/salary", label: "Salary", icon: FaMoneyBillAlt },
           { href: "/attendance", label: "Attendance", icon: FaCalendarAlt },
@@ -39,7 +39,7 @@ const Sidebar = ({ role }) => {
           { href: "/notification", label: "Notifications", icon: FaBell },
           { href: "/employee/attendance", label: "Reports", icon: FaFileAlt },
         ];
-      case "Admin":
+      case 1:
         return [
           {
             href: "/employee/create-account",

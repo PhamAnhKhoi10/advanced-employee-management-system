@@ -1,42 +1,17 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { selectEmployees } from "../redux/slice/employeeSlice";
 import { Box, Stack, Typography } from "@mui/material";
 import { CampaignRounded } from "@mui/icons-material";
+import { requestNotification } from "../services/employee.service";
 
 function Notification() {
-  const { user } = useSelector(selectEmployees);
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      title: "New Task",
-      content: "You have a no task to complete",
-    },
-  ]);
-
-  const requestInfomations = async (userId) => {
-    try {
-      const response = await fetch(`/api/notification/${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-
-      const result = await response.json();
-      setNotifications(result);
-      console.log(result);
-    } catch (error) {
-      console.error("There was a problem with the request:", error);
-    }
-  };
+  const dispatch = useDispatch();
+  const { user, notifications } = useSelector(selectEmployees);
 
   useEffect(() => {
-    if (user && user.id) {
-      requestInfomations(user.id);
+    if (user) {
+      dispatch(requestNotification(user.employee_id));
     }
   }, [user]);
   return (
@@ -69,8 +44,8 @@ function Notification() {
           color: "#FFFFFF",
         }}
       >
-        {notifications ? (
-          notifications.map((notification) => (
+        {notifications?.length !== 0 ? (
+          notifications?.map((notification) => (
             <Box
               sx={{
                 bgcolor: "#3F3F46",
@@ -78,7 +53,7 @@ function Notification() {
                 borderRadius: "10px",
                 mt: 1,
               }}
-              key={notification.id}
+              key={notification.NotificationID}
             >
               <Box
                 sx={{
@@ -92,9 +67,9 @@ function Notification() {
                     color: "#FFFFFF",
                   }}
                 >
-                  {notification.title}:{" "}
+                  {notification.Title}:{" "}
                 </Typography>
-                <Typography>{notification.content}</Typography>
+                <Typography>{notification.Content}</Typography>
               </Box>
             </Box>
           ))

@@ -4,8 +4,11 @@ import { toast } from "react-toastify";
 import { doLogout } from "./auth/auth.service";
 
 const AxiosInstance = axios.create({
-  baseURL: "api/v1",
+  baseURL: "http://127.0.0.1:8000/",
   withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 AxiosInstance.interceptors.request.use(

@@ -1,8 +1,10 @@
 import { Card } from "@mui/material";
 import { RiShareForward2Fill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const Footer = ({ header, subHeader, bodyContent, buttonText, link }) => {
+  const navigate = useNavigate();
   return (
     <Card radius="lg" shadow="sm" style={styles.card}>
       {/* Header */}
@@ -19,7 +21,12 @@ const Footer = ({ header, subHeader, bodyContent, buttonText, link }) => {
 
       {/* Footer */}
       <div style={styles.footer}>
-        <a href={link} style={styles.link}>
+        <a
+          onClick={() => {
+            navigate(link);
+          }}
+          style={styles.link}
+        >
           {buttonText} <RiShareForward2Fill style={styles.icon} />
         </a>
       </div>

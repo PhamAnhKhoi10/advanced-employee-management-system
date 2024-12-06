@@ -12,19 +12,19 @@ const EmployeeList = () => {
   const { employeeList } = useSelector(selectHr);
 
   useEffect(() => {
-    if (user.role !== "HR") {
+    if (user.roleID !== 2) {
       alert("You are not authorized to view this page");
       navigate("/");
     } else {
       dispatch(requestEmployeeList());
     }
-  }, [user, dispatch]);
+  }, [user.roleID, dispatch, navigate]);
 
   const [filters, setFilters] = useState({
     name: "",
-    id: "",
+    id: null,
     position: "",
-    email: "",
+    PhoneNumber: "",
   });
 
   const handleFilterChange = (e) => {
@@ -34,12 +34,17 @@ const EmployeeList = () => {
 
   const filteredEmployees = employeeList?.filter((employee) => {
     return (
-      employee.name.toLowerCase().includes(filters.name.toLowerCase()) &&
-      employee.id.toLowerCase().includes(filters.id.toLowerCase()) &&
-      employee.position
-        .toLowerCase()
-        .includes(filters.position.toLowerCase()) &&
-      employee.email.toLowerCase().includes(filters.email.toLowerCase())
+      (!filters.name ||
+        employee.Name.toLowerCase().includes(filters.name.toLowerCase())) &&
+      (!filters.id || employee.EmployeeID.toString() === filters.id) &&
+      (!filters.position ||
+        employee.Position.toLowerCase().includes(
+          filters.position.toLowerCase()
+        )) &&
+      (!filters.PhoneNumber ||
+        employee.PhoneNumber.toLowerCase().includes(
+          filters.PhoneNumber.toLowerCase()
+        ))
     );
   });
 
@@ -83,8 +88,8 @@ const EmployeeList = () => {
             ID
           </label>
           <input
-            id="id"
-            name="id"
+            id="EmployeeID"
+            name="EmployeeID"
             type="text"
             placeholder="H000002"
             value={filters.id}
@@ -102,7 +107,7 @@ const EmployeeList = () => {
             Position
           </label>
           <input
-            id="position"
+            id="Position"
             name="position"
             type="text"
             placeholder="Employee"
@@ -121,11 +126,10 @@ const EmployeeList = () => {
             Email
           </label>
           <input
-            id="email"
-            name="email"
-            type="email"
+            id="PhoneNumber"
+            name="PhoneNumber"
             placeholder="Employee1@gmail.com"
-            value={filters.email}
+            value={filters.PhoneNumber}
             onChange={handleFilterChange}
             className="bg-gray-700 text-white border border-blue-500 rounded-lg px-4 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -153,26 +157,25 @@ const EmployeeList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredEmployees &&
-              filteredEmployees.map((employee, index) => (
-                <tr
-                  key={index}
-                  className="hover:bg-gray-700  transition duration-100"
-                >
-                  <td className="px-6 py-4">{employee.name}</td>
-                  <td className="px-6 py-4">{employee.id}</td>
-                  <td className="px-6 py-4">{employee.position}</td>
-                  <td className="px-6 py-4">{employee.email}</td>
-                  <td className="px-6 py-4 text-center">
-                    <button
-                      onClick={() => handleView(employee.id)}
-                      className="text-blue-500 hover:underline hover:text-blue-400 transition"
-                    >
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            {filteredEmployees.map((employee) => (
+              <tr
+                key={employee.EmployeeID}
+                className="hover:bg-gray-700  transition duration-100"
+              >
+                <td className="px-6 py-4">{employee.Name}</td>
+                <td className="px-6 py-4">{employee.EmployeeID}</td>
+                <td className="px-6 py-4">{employee.Position}</td>
+                <td className="px-6 py-4">{employee.PhoneNumber}</td>
+                <td className="px-6 py-4 text-center">
+                  <button
+                    onClick={() => handleView(employee.EmployeeID)}
+                    className="text-blue-500 hover:underline hover:text-blue-400 transition"
+                  >
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

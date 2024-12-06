@@ -1,24 +1,22 @@
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Footer from "../components/Footer";
 import { selectEmployees } from "../redux/slice/employeeSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { requestPerformance } from "../services/employee.service";
 
 const titleForEmployee = [
   {
     title: "Notification",
-    subtile: "From Jane-Manager",
+    subtile: "Check your notification",
     link: "/notification",
   },
   { title: "Salary", subtile: "1/10/2024", link: "/salary" },
   {
     title: "Performance",
-    subtile: "Rating last month: 80/100",
+    subtile: "View your performance",
     link: "/performance",
   },
   {
     title: "Attendance",
-    subtile: "1/10/2024: Late 5 minutes",
+    subtile: "Check your attendance",
     link: "/attendance",
   },
 ];
@@ -36,7 +34,7 @@ const titleForHR = [
   {
     title: "Leave Request",
     subtile: "View employee employees leave request",
-    link: "/employee/leave-request",
+    link: "/employee/request-leave",
   },
   {
     title: "Notification",
@@ -63,23 +61,17 @@ const titleForAdmin = [
 ];
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-  const { user, performance } = useSelector(selectEmployees);
-  useEffect(() => {
-    if (user && user.id) {
-      dispatch(requestPerformance(user.id));
-    }
-  }, [user]);
+  const { user } = useSelector(selectEmployees);
   return (
     <div style={styles.container}>
       {/* Header */}
       <div style={styles.header}>
-        <h1 style={styles.headerText}>Welcome Back {user.name}</h1>
+        <h1 style={styles.headerText}>Welcome Back {user?.name ?? ""}</h1>
         <h2 style={styles.subHeaderText}>Here your summary</h2>
       </div>
 
       <div style={styles.cardContainer}>
-        {user.role === "Employee" &&
+        {user?.roleID === 3 &&
           titleForEmployee.map((item, index) => (
             <Footer
               key={index}
@@ -90,7 +82,7 @@ const Dashboard = () => {
               link={item.link}
             />
           ))}
-        {user.role === "HR" &&
+        {user?.roleID === 2 &&
           titleForHR.map((item, index) => (
             <Footer
               key={index}
@@ -101,7 +93,7 @@ const Dashboard = () => {
               link={item.link}
             />
           ))}
-        {user.role === "Admin" &&
+        {user?.roleID === 1 &&
           titleForAdmin.map((item, index) => (
             <Footer
               key={index}
