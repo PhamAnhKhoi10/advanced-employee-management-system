@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Date
 from sqlalchemy.orm import relationship
 from app.config.database import Base
 
@@ -8,7 +8,7 @@ class Performance(Base):
 
     PerformanceID = Column(Integer, primary_key=True, index=True)
     EmployeeID = Column(Integer, ForeignKey("employees.EmployeeID", ondelete="CASCADE"), nullable=False)
-    EvaluationDate = Column(String(50), nullable=False)
+    EvaluationDate = Column(Date, nullable=False)
     TaskCompletion = Column(Float, nullable=False)  # % hoàn thành
     Feedback = Column(String(500), nullable=True)
     Rating = Column(Float, nullable=True)  # Điểm đánh giá (0-10)

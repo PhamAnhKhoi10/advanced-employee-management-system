@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from datetime import datetime, timezone
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from app.config.database import Base
 
@@ -12,8 +13,8 @@ class User(Base):
     RoleID = Column(Integer, ForeignKey(
         "roles.RoleID", ondelete="CASCADE"), nullable=False)
     Email = Column(String(100), unique=True, nullable=True)
-    CreatedAt = Column(String(100), nullable=False)
-    UpdatedAt = Column(String(100), nullable=False)
+    CreatedAt = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
+    UpdatedAt = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
     
 
     # Quan hệ với Role

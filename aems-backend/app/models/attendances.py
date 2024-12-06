@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Date
 from sqlalchemy.orm import relationship
 from app.config.database import Base
 
@@ -8,7 +8,7 @@ class Attendance(Base):
 
     AttendanceID = Column(Integer, primary_key=True, index=True)
     EmployeeID = Column(Integer, ForeignKey("employees.EmployeeID", ondelete="CASCADE"), nullable=False)
-    Date = Column(String(50), nullable=False)
+    Date = Column(Date, nullable=False)
     Status = Column(String(20), nullable=False)
     HoursWorked = Column(Integer, nullable=True)
 

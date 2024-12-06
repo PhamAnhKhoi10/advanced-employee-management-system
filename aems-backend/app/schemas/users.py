@@ -9,7 +9,7 @@ class UserCreate(BaseModel):
     Password: str = Field(..., min_length=8, max_length=128, description="Mật khẩu từ 8 đến 128 ký tự")
     RoleID: int = Field(..., description="ID của vai trò được gán cho người dùng")
     Email: Optional[EmailStr] = None  # Email là tùy chọn
-    CreatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    CreatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))  # Dùng datetime của Python
     UpdatedAt: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
@@ -31,4 +31,4 @@ class UserOut(BaseModel):
     UpdatedAt: datetime
 
     class Config:
-        orm_mode = True
+        orm_mode = True  # Kích hoạt ORM mode để tương thích với SQLAlchemy

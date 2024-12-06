@@ -12,8 +12,8 @@ class Salary(Base):
     Bonuses = Column(Float, nullable=True)
     Deductions = Column(Float, nullable=True)
     NetPay = Column(Float, nullable=False)
-    Month = Column(String(10), nullable=False)
-    Year = Column(String(4), nullable=False)
+    Month = Column(Integer, nullable=False)
+    Year = Column(Integer, nullable=False)
 
     # Quan hệ với Employee
     employee = relationship("Employee", back_populates="salaries")

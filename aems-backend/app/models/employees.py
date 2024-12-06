@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Date
 from sqlalchemy.orm import relationship
 from app.config.database import Base
 
@@ -12,7 +12,7 @@ class Employee(Base):
     Name = Column(String(100), nullable=False)
     DepartmentID = Column(Integer, ForeignKey('departments.DepartmentID'))
     Position = Column(String(100), nullable=False)
-    DateOfJoining = Column(String(100), nullable=False)
+    DateOfJoining = Column(Date, nullable=False)
     PhoneNumber = Column(String(20), nullable=True)
     Address = Column(String(255), nullable=True)
 
@@ -22,8 +22,24 @@ class Employee(Base):
 
     # Quan hệ với Attendance
     attendances = relationship("Attendance", back_populates="employee", cascade="all, delete-orphan")
-    leave_requests = relationship("LeaveRequest", back_populates="employee", cascade="all, delete-orphan")
+    
+    # Quan hệ với LeaveRequest (nhân viên gửi yêu cầu)
+    leave_requests = relationship(
+        "LeaveRequest", 
+        back_populates="employee", 
+        foreign_keys="[LeaveRequest.EmployeeID]", 
+        cascade="all, delete-orphan"
+    )
+    
+    # Quan hệ với LeaveRequest (HR Manager duyệt yêu cầu)
+    approved_leave_requests = relationship(
+        "LeaveRequest", 
+        back_populates="hr_manager", 
+        foreign_keys="[LeaveRequest.HRManagerID]", 
+        cascade="all, delete-orphan"
+    )
+    
+    # Quan hệ với các bảng khác
     payslips = relationship("Payslip", back_populates="employee", cascade="all, delete-orphan")
     performances = relationship("Performance", back_populates="employee", cascade="all, delete-orphan")
     salaries = relationship("Salary", back_populates="employee", cascade="all, delete-orphan")
-
