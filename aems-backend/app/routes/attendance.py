@@ -37,7 +37,7 @@ def create_attendance(attendance: AttendanceCreate, db: Session = Depends(get_db
             EmployeeID=attendance.EmployeeID,
             Date=attendance.Date,
             Status=attendance.Status,
-            HoursWorked=attendance.HoursWorked
+            Remarks=attendance.Remarks
         )
         db.add(new_attendance)
         db.commit()
@@ -78,8 +78,8 @@ def update_attendance(attendance_id: int, attendance: AttendanceUpdate, db: Sess
     # Cập nhật các trường được cung cấp
     if attendance.Status:
         db_attendance.Status = attendance.Status
-    if attendance.HoursWorked is not None:
-        db_attendance.HoursWorked = attendance.HoursWorked
+    if attendance.Remarks is not None:
+        db_attendance.Remarks = attendance.Remarks
 
     db.commit()
     db.refresh(db_attendance)
@@ -95,3 +95,9 @@ def delete_attendance(attendance_id: int, db: Session = Depends(get_db)):
     db.delete(db_attendance)
     db.commit()
     return {"message": f"Attendance with ID {attendance_id} has been deleted successfully"}
+
+# API để trả về attendance của tất cả nhân viên
+@router.get("/", response_model=list[AttendanceOut])
+def get_all_attendances(db: Session = Depends(get_db)):
+    attendances = db.query(Attendance).all()
+    return attendances

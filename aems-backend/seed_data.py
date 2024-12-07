@@ -91,9 +91,9 @@ def seed_data():
 
     # 5. Tạo Attendances
     attendances = [
-        Attendance(AttendanceID=1, EmployeeID=4, Date=date(2023, 11, 1), Status="Present", HoursWorked=8),
-        Attendance(AttendanceID=2, EmployeeID=5, Date=date(2023, 11, 1), Status="Absent", HoursWorked=0),
-        Attendance(AttendanceID=3, EmployeeID=6, Date=date(2023, 11, 1), Status="Present", HoursWorked=7),
+        Attendance(AttendanceID=1, EmployeeID=4, Date=date(2023, 11, 1), Status="Present", Remarks="Late"),
+        Attendance(AttendanceID=2, EmployeeID=5, Date=date(2023, 11, 1), Status="Absent", Remarks="No approval"),
+        Attendance(AttendanceID=3, EmployeeID=6, Date=date(2023, 11, 1), Status="Present", Remarks="Request approval"),
     ]
     session.add_all(attendances)
     session.commit()

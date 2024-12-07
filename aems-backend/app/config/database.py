@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base  # Updated import
 
-DATABASE_URL='mysql+mysqlconnector://fuduweiii:mailongthien111@localhost:3306/aems'
+DATABASE_URL='mysql+mysqlconnector://mailongthien:mailongthien111@localhost:3306/aems'
 
 # Add error handling for missing environment variable
 if not DATABASE_URL:

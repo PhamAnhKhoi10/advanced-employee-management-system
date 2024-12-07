@@ -10,7 +10,7 @@ class Attendance(Base):
     EmployeeID = Column(Integer, ForeignKey("employees.EmployeeID", ondelete="CASCADE"), nullable=False)
     Date = Column(Date, nullable=False)
     Status = Column(String(20), nullable=False)
-    HoursWorked = Column(Integer, nullable=True)
+    Remarks = Column(String(255), nullable=True)
 
     # Quan hệ với Employee
     employee = relationship("Employee", back_populates="attendances")
