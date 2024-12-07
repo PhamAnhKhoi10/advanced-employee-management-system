@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.salaries import Salary
-from app.schemas.salaries import SalaryCreate, SalaryUpdate, SalaryOut
+from app.schemas.salaries import SalaryCreate, SalaryUpdate, SalaryOut, EmployeeSalaryResponse
 from app.config.database import SessionLocal
+from app.models.employees import Employee
 
 router = APIRouter()
 
@@ -45,10 +46,14 @@ def get_salary(salary_id: int, db: Session = Depends(get_db)):
     return salary
 
 # API để lấy tất cả salary của một nhân viên
-@router.get("/employee/{employee_id}", response_model=list[SalaryOut])
+@router.get("/employee/{employee_id}", response_model=EmployeeSalaryResponse)
 def get_employee_salaries(employee_id: int, db: Session = Depends(get_db)):
+    employee = db.query(Employee).filter(Employee.EmployeeID == employee_id).first()
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")
     salaries = db.query(Salary).filter(Salary.EmployeeID == employee_id).all()
-    return salaries
+    salaries_out = [SalaryOut.from_orm(salary) for salary in salaries]
+    return EmployeeSalaryResponse(EmployeeName=employee.Name, Salaries=salaries_out)
 
 # API để cập nhật salary
 @router.put("/{salary_id}", response_model=SalaryOut)

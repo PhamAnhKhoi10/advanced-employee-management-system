@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.payslips import Payslip
-from app.schemas.payslips import PayslipCreate, PayslipUpdate, PayslipOut
+from app.schemas.payslips import PayslipCreate, PayslipUpdate, PayslipOut, PayslipOutResponse
 from app.config.database import SessionLocal
+from app.models.employees import Employee
 
 router = APIRouter()
 
@@ -38,12 +39,16 @@ def get_payslip(payslip_id: int, db: Session = Depends(get_db)):
     return payslip
 
 # API để lấy tất cả payslips của một nhân viên
-@router.get("/employee/{employee_id}", response_model=list[PayslipOut])
+@router.get("/employee/{employee_id}", response_model=PayslipOutResponse)
 def get_employee_payslips(employee_id: int, db: Session = Depends(get_db)):
+    employee = db.query(Employee).filter(Employee.EmployeeID == employee_id).first()
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")
     payslips = db.query(Payslip).filter(Payslip.EmployeeID == employee_id).all()
     if not payslips:
         raise HTTPException(status_code=404, detail="Employee not found")
-    return payslips
+    payslips_out = [PayslipOut.from_orm(p) for p in payslips]
+    return PayslipOutResponse(Name=employee.Name, Payslips=payslips_out)
 
 # API để cập nhật payslip
 @router.put("/{payslip_id}", response_model=PayslipOut)

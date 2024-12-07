@@ -36,4 +36,9 @@ class SalaryOut(BaseModel):
 
     class Config:
         orm_mode = True
+        from_attributes = True
+
+class EmployeeSalaryResponse(BaseModel):
+    EmployeeName: str
+    Salaries: list[SalaryOut]
 

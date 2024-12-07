@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.attendances import Attendance
-from app.schemas.attendances import AttendanceCreate, AttendanceUpdate, AttendanceOut
+from app.schemas.attendances import AttendanceCreate, AttendanceUpdate, AttendanceOut, EmployeeAttendanceResponse
 from app.config.database import SessionLocal
 from app.models.employees import Employee
 
@@ -60,13 +60,14 @@ def get_attendance(attendance_id: int, db: Session = Depends(get_db)):
     return attendance
 
 # API để lấy tất cả attendance của một nhân viên
-@router.get("/employee/{employee_id}", response_model=list[AttendanceOut])
+@router.get("/employee/{employee_id}", response_model=EmployeeAttendanceResponse)
 def get_employee_attendance(employee_id: int, db: Session = Depends(get_db)):
     employee = db.query(Employee).filter(Employee.EmployeeID == employee_id).first()
     if not employee:
-        raise HTTPException(status_code=404, detail="Employee not found")   
+        raise HTTPException(status_code=404, detail="Employee not found")
     attendances = db.query(Attendance).filter(Attendance.EmployeeID == employee_id).all()
-    return attendances
+    attendances_out = [AttendanceOut.from_orm(attendance) for attendance in attendances]
+    return EmployeeAttendanceResponse(EmployeeName=employee.Name, Attendances=attendances_out)
 
 # API để cập nhật attendance
 @router.put("/{attendance_id}", response_model=AttendanceOut)

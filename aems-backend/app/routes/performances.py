@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.performances import Performance
-from app.schemas.performances import PerformanceCreate, PerformanceUpdate, PerformanceOut
+from app.schemas.performances import PerformanceCreate, PerformanceUpdate, PerformanceOut, EmployeePerformanceResponse
 from app.config.database import SessionLocal
+from app.models.employees import Employee
 
 router = APIRouter()
 
@@ -38,10 +39,14 @@ def get_performance(performance_id: int, db: Session = Depends(get_db)):
     return performance
 
 # API để lấy tất cả performance của một nhân viên
-@router.get("/employee/{employee_id}", response_model=list[PerformanceOut])
+@router.get("/employee/{employee_id}", response_model=EmployeePerformanceResponse)
 def get_employee_performances(employee_id: int, db: Session = Depends(get_db)):
+    employee = db.query(Employee).filter(Employee.EmployeeID == employee_id).first()
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")
     performances = db.query(Performance).filter(Performance.EmployeeID == employee_id).all()
-    return performances
+    performances_out = [PerformanceOut.from_orm(performance) for performance in performances]
+    return EmployeePerformanceResponse(EmployeeName=employee.Name, Performances=performances_out)
 
 # API để cập nhật performance
 @router.put("/{performance_id}", response_model=PerformanceOut)

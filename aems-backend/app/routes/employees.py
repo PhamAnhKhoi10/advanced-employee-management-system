@@ -24,7 +24,7 @@ def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
 
     # Kiểm tra nếu UserID là role admin
-    if user.RoleID == 1:  # Giả sử RoleID = 1 là admin
+    if user.RoleID == 1:  
         raise HTTPException(status_code=400, detail="Cannot create Employee for an Admin user")
 
     # Kiểm tra Employee đã tồn tại chưa
@@ -32,7 +32,7 @@ def create_employee(employee: EmployeeCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Employee already exists")
 
     new_employee = Employee(
-        UserID=employee.UserID,  # Thêm UserID từ bảng User
+        UserID=employee.UserID,  
         Name=employee.Name,
         DepartmentID=employee.DepartmentID,
         Position=employee.Position,

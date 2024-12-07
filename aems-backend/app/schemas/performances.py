@@ -30,4 +30,9 @@ class PerformanceOut(BaseModel):
 
     class Config:
         orm_mode = True
+        from_attributes = True
+
+class EmployeePerformanceResponse(BaseModel):
+    EmployeeName: str
+    Performances: list[PerformanceOut]
 

@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.notifications import Notification
-from app.schemas.notifications import NotificationCreate, NotificationUpdate, NotificationOut
+from app.schemas.notifications import NotificationCreate, NotificationUpdate, NotificationOut, NotificationWithNamesOut
 from app.config.database import SessionLocal
+from app.models.employees import Employee
 
 router = APIRouter()
 
@@ -38,10 +39,29 @@ def get_notification(notification_id: int, db: Session = Depends(get_db)):
     return notification
 
 # API để lấy tất cả thông báo của một người nhận
-@router.get("/recipient/{recipient_id}", response_model=list[NotificationOut])
+@router.get("/recipient/{recipient_id}", response_model=list[NotificationWithNamesOut])
 def get_notifications_by_recipient(recipient_id: int, db: Session = Depends(get_db)):
     notifications = db.query(Notification).filter(Notification.RecipientID == recipient_id).all()
-    return notifications    
+    if not notifications:
+        raise HTTPException(status_code=404, detail="Notifications not found")
+    
+    notifications_out = []
+    for notification in notifications:
+        sender = db.query(Employee).filter(Employee.EmployeeID == notification.SenderID).first()
+        recipient = db.query(Employee).filter(Employee.EmployeeID == notification.RecipientID).first()
+        notifications_out.append(NotificationWithNamesOut(
+            NotificationID=notification.NotificationID,
+            SenderID=notification.SenderID,
+            SenderName=sender.Name if sender else "Unknown",
+            RecipientID=notification.RecipientID,
+            RecipientName=recipient.Name if recipient else "Unknown",
+            Title=notification.Title,
+            Content=notification.Content,
+            IsRead=notification.IsRead,
+            SentAt=notification.SentAt
+        ))
+    
+    return notifications_out
 
 # API để cập nhật trạng thái đã đọc của notification
 @router.put("/{notification_id}", response_model=NotificationOut)

@@ -29,4 +29,20 @@ class NotificationOut(BaseModel):
 
     class Config:
         orm_mode = True
+        from_attributes = True
+
+class NotificationWithNamesOut(BaseModel):
+    NotificationID: int
+    SenderID: int
+    SenderName: str
+    RecipientID: int
+    RecipientName: str
+    Title: str
+    Content: str
+    IsRead: bool
+    SentAt: date
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
 
