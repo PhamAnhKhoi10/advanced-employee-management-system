@@ -49,7 +49,7 @@ export const createPerformanceRecord = createAsyncThunk(
   "hr/createPerformance",
   async (record) => {
     try {
-      const response = await fetch(`${BASE_URL}/api/v1/performanceRecord`, {
+      const response = await fetch(`${BASE_URL}/api/v1/performances`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

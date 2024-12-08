@@ -26,13 +26,13 @@ const AttendanceReport = () => {
     status: "",
     Date: "",
   });
-
+  console.log(attendanceReport);
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
-  const filteredEmployees = attendanceReport?.filter((employee) => {
+  const filteredEmployees = attendanceReport?.Attendances.filter((employee) => {
     return (
       (!filters.name ||
         employee.Name.toLowerCase().includes(filters.name.toLowerCase())) &&
@@ -132,7 +132,6 @@ const AttendanceReport = () => {
               <th className="px-6 py-3">ID</th>
               <th className="px-6 py-3">Date</th>
               <th className="px-6 py-3">Status</th>
-              <th className="px-6 py-3">Hours Worked</th>
             </tr>
           </thead>
           <tbody>
@@ -145,7 +144,6 @@ const AttendanceReport = () => {
                 <td className="px-6 py-4">{employee.EmployeeID}</td>
                 <td className="px-6 py-4">{employee.Date}</td>
                 <td className="px-6 py-4">{employee.Status}</td>
-                <td className="px-6 py-4">{employee.HoursWorked}</td>
               </tr>
             ))}
           </tbody>

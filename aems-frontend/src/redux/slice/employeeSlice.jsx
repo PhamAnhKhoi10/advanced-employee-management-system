@@ -13,7 +13,7 @@ import TokenService from "../../services/token.service";
 const employeeSlice = createSlice({
   name: "employee",
   initialState: {
-    salary: [],
+    notifications: [],
   },
   reducers: {
     setUserWithSession(state, action) {

@@ -1,17 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectEmployees } from "../redux/slice/employeeSlice";
-import { useEffect } from "react";
+
 import { requestSalary } from "../services/employee.service";
+import { useEffect } from "react";
 
 const UserSalary = () => {
   const { user, salary } = useSelector(selectEmployees);
+
+  console.log(salary);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (user) {
       dispatch(requestSalary(user.employee_id));
     }
   }, [user, dispatch]);
-  // Mock data (to be replaced with data from backend)
 
   return (
     <div className="p-10">
@@ -26,19 +29,19 @@ const UserSalary = () => {
           <h3 className="text-2xl font-semibold mb-4">Summary</h3>
           <div className="flex justify-between text-base text-zinc-400 mb-2">
             <span>Basic Salary</span>
-            <span>${salary[0]?.BasicPay ?? ""}</span>
+            <span>${salary?.Salaries[0]?.BasicPay ?? ""}</span>
           </div>
           <div className="flex justify-between text-base text-zinc-400 mb-2">
             <span>Allowances</span>
-            <span>${salary[0]?.Bonuses ?? ""}</span>
+            <span>${salary?.Salaries[0]?.Bonuses ?? ""}</span>
           </div>
           <div className="flex justify-between text-base text-zinc-400 mb-2">
             <span>Deductions</span>
-            <span>${salary[0]?.Deductions ?? ""}</span>
+            <span>${salary?.Salaries[0]?.Deductions ?? ""}</span>
           </div>
           <div className="flex justify-between text-base text-white font-bold mt-4">
             <span>Net Salary</span>
-            <span>${salary[0]?.NetPay ?? ""}</span>
+            <span>${salary?.Salaries[0]?.NetPay ?? ""}</span>
           </div>
         </div>
 
@@ -52,7 +55,7 @@ const UserSalary = () => {
               </tr>
             </thead>
             <tbody>
-              {salary?.map((item, index) => (
+              {salary?.Salaries?.map((item, index) => (
                 <tr
                   key={index}
                   className="hover:bg-zinc-700 transition duration-200"

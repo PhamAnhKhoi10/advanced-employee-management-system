@@ -10,10 +10,10 @@ import { requestPerformance } from "../../services/employee.service";
 const hrSlice = createSlice({
   name: "hr",
   initialState: {
-    attendanceReport: [],
+    attendanceReport: { Name: "", Attendances: [] },
     employee: {},
     employeeList: [],
-    employeePerRecord: [],
+    employeePerRecord: { Name: "", Performances: [] },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -27,22 +27,38 @@ const hrSlice = createSlice({
       state.employee = action.payload;
     });
     builder.addCase(requestAttendanceReport.fulfilled, (state, action) => {
-      const existingIds = state.attendanceReport.map(
+      const existingIds = state.attendanceReport.Attendances.map(
         (record) => record.AttendanceID
       );
-      const newRecords = action.payload.filter(
-        (record) => !existingIds.includes(record.AttendanceID)
-      );
-      state.attendanceReport = [...state.attendanceReport, ...newRecords];
+      const newRecords =
+        action.payload.Attendances?.filter(
+          (record) => !existingIds.includes(record.AttendanceID)
+        ) || [];
+      const updatedRecords = newRecords.map((record) => ({
+        ...record,
+        Name: action.payload.EmployeeName,
+      }));
+      state.attendanceReport.Attendances = [
+        ...state.attendanceReport.Attendances,
+        ...updatedRecords,
+      ];
     });
     builder.addCase(requestPerformance.fulfilled, (state, action) => {
-      const existingIds = state.employeePerRecord.map(
+      const existingIds = state.employeePerRecord.Performances.map(
         (record) => record.PerformanceID
       );
-      const newRecords = action.payload.filter(
-        (record) => !existingIds.includes(record.PerformanceID)
-      );
-      state.employeePerRecord = [...state.employeePerRecord, ...newRecords];
+      const newRecords =
+        action.payload.Performances?.filter(
+          (record) => !existingIds.includes(record.PerformanceID)
+        ) || [];
+      const updatedRecords = newRecords.map((record) => ({
+        ...record,
+        Name: action.payload.EmployeeName,
+      }));
+      state.employeePerRecord.Performances = [
+        ...state.employeePerRecord.Performances,
+        ...updatedRecords,
+      ];
     });
   },
 });

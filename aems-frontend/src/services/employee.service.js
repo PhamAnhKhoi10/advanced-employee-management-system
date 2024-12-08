@@ -92,7 +92,7 @@ export const requestLeave = createAsyncThunk(
   "leave/request",
   async (leaveRequest) => {
     try {
-      const response = await fetch(`${BASE_URL}/api/v1/leave-request`, {
+      const response = await fetch(`${BASE_URL}/api/v1/leave-requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,7 +142,6 @@ export const requestSalary = createAsyncThunk(
           },
         }
       );
-
       const result = await response.json();
       return result;
     } catch (error) {
@@ -182,6 +181,45 @@ export const requestProfileEdit = createAsyncThunk(
           body: JSON.stringify(employee),
         }
       );
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("There was a problem with the request:", error);
+    }
+  }
+);
+export const createPayslips = createAsyncThunk(
+  "payslips/create",
+  async (payslip) => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/v1/payslips`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payslip),
+      });
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("There was a problem with the request:", error);
+    }
+  }
+);
+
+export const createSalary = createAsyncThunk(
+  "salary/create",
+  async (salary) => {
+    try {
+      const response = await fetch(`${BASE_URL}/api/v1/salaries`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(salary),
+      });
 
       const result = await response.json();
       return result;

@@ -5,16 +5,18 @@ import {
   requestLeave,
   requestLeaveRequestsInformation,
 } from "../services/employee.service";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const SendLeaveRequest = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectEmployees);
+  const [changed, setChanged] = useState(true);
   const { leaveRequests } = useSelector(selectEmployees);
   const methods = useForm({
     defaultValues: {
       name: user.name,
       EmployeeID: user.employee_id,
+      HRManagerID: null,
       StartDate: "",
       duration: null,
       Reason: "",
@@ -22,8 +24,11 @@ const SendLeaveRequest = () => {
   });
 
   useEffect(() => {
-    dispatch(requestLeaveRequestsInformation(user.employee_id));
-  }, [dispatch, user.employee_id]);
+    if (changed === true) {
+      dispatch(requestLeaveRequestsInformation(user.employee_id));
+      setChanged(false);
+    }
+  }, [dispatch, user.employee_id, changed]);
 
   const { handleSubmit, register } = methods;
   const handleRequest = handleSubmit(async (data) => {
@@ -43,7 +48,10 @@ const SendLeaveRequest = () => {
       HRManager: 1,
       EndDate: formattedEndDate,
     };
-    dispatch(requestLeave(Data));
+    const response = await dispatch(requestLeave(Data));
+    if (response) {
+      setChanged(true);
+    }
   });
 
   return (
@@ -71,6 +79,15 @@ const SendLeaveRequest = () => {
                 {...register("duration")}
                 type="number"
                 placeholder="Duration"
+                className="w-full p-3 bg-zinc-700 g-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-300 mb-1">Manager ID</label>
+              <input
+                {...register("HRManagerID")}
+                type="number"
+                placeholder="Manager ID"
                 className="w-full p-3 bg-zinc-700 g-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               />
             </div>
@@ -109,7 +126,7 @@ const SendLeaveRequest = () => {
 
             <tbody>
               {leaveRequests &&
-                leaveRequests.map((leaveRequest) => (
+                leaveRequests.LeaveRequests.map((leaveRequest) => (
                   <>
                     <tr className="border-b border-gray-700">
                       <td className="py-2">{leaveRequest.Reason}</td>

@@ -120,7 +120,7 @@ function Attendance() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {attendance.map((row, index) => (
+                {attendance.Attendances.map((row, index) => (
                   <TableRow key={index}>
                     <TableCell sx={{ color: "#fff" }}>{row.Date}</TableCell>
                     <TableCell sx={{ color: "#fff" }}>{row.Status}</TableCell>

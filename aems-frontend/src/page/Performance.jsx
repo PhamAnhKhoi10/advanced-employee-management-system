@@ -161,7 +161,7 @@ function Performance() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {performance?.map((row, index) => (
+            {performance?.Performances?.map((row, index) => (
               <TableRow key={index}>
                 <TableCell sx={{ color: "#fff" }}>
                   {row?.PerformanceID}

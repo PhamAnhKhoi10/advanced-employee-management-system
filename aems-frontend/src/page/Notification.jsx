@@ -44,7 +44,7 @@ function Notification() {
           color: "#FFFFFF",
         }}
       >
-        {notifications?.length !== 0 ? (
+        {!notifications.detail ? (
           notifications?.map((notification) => (
             <Box
               sx={{

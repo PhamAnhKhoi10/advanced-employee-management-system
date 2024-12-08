@@ -40,18 +40,16 @@ function EmployeePerformanceRecord() {
       Rating: 0,
     },
   });
-  const requestInformationOfEachEmployee = async (id) => {
-    dispatch(requestPerformance(id));
+
+  const requestInformation = async () => {
+    for (let i = 4; i <= 20; i++) {
+      dispatch(requestPerformance(i));
+    }
   };
 
   useEffect(() => {
-    const requestInformation = async () => {
-      for (let i = 4; i <= 20; i++) {
-        await requestInformationOfEachEmployee(i);
-      }
-    };
     requestInformation();
-  }, [dispatch]);
+  }, []);
 
   const { handleSubmit, register, setValue, reset, watch } = methods;
   const performanceID = watch("PerformanceID");
@@ -65,10 +63,14 @@ function EmployeePerformanceRecord() {
   };
   const onSubmit = (data) => {
     if (data.PerformanceID) {
-      dispatch(updatePerformanceRecord(data)); // Update existing record
+      dispatch(updatePerformanceRecord(data));
+      requestInformation();
+      // Update existing record
     } else {
       console.log(data);
+
       dispatch(createPerformanceRecord(data)); // Create new record
+      requestInformation();
     }
     reset(); // Reset the form after submission
   };
@@ -130,11 +132,9 @@ function EmployeePerformanceRecord() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {employeePerRecord?.map((record) => (
+              {employeePerRecord?.Performances.map((record) => (
                 <TableRow key={record.PerformanceID}>
-                  <TableCell sx={{ color: "#fff" }}>
-                    {record.EmployeeID}
-                  </TableCell>
+                  <TableCell sx={{ color: "#fff" }}>{record.Name}</TableCell>
                   <TableCell sx={{ color: "#fff" }}>
                     {record.Feedback}
                   </TableCell>
@@ -260,9 +260,9 @@ function EmployeePerformanceRecord() {
               name="Rating"
               type="number"
               onInputCapture={(e) => {
-                e.target.value < 100 ? e.target.value : (e.target.value = 100);
+                e.target.value < 10 ? e.target.value : (e.target.value = 10);
               }}
-              label="Score (0-100)"
+              label="Score (0-10)"
               variant="outlined"
               fullWidth
               sx={{ input: { color: "#fff" }, label: { color: "#aaa" } }}
