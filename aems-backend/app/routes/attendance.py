@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.attendances import Attendance
-from app.schemas.attendances import AttendanceCreate, AttendanceUpdate, AttendanceOut
+from app.schemas.attendances import AttendanceCreate, AttendanceUpdate, AttendanceOut, EmployeeAttendanceResponse
 from app.config.database import SessionLocal
 from app.models.employees import Employee
 
@@ -37,7 +37,7 @@ def create_attendance(attendance: AttendanceCreate, db: Session = Depends(get_db
             EmployeeID=attendance.EmployeeID,
             Date=attendance.Date,
             Status=attendance.Status,
-            HoursWorked=attendance.HoursWorked
+            Remarks=attendance.Remarks
         )
         db.add(new_attendance)
         db.commit()
@@ -60,13 +60,14 @@ def get_attendance(attendance_id: int, db: Session = Depends(get_db)):
     return attendance
 
 # API để lấy tất cả attendance của một nhân viên
-@router.get("/employee/{employee_id}", response_model=list[AttendanceOut])
+@router.get("/employee/{employee_id}", response_model=EmployeeAttendanceResponse)
 def get_employee_attendance(employee_id: int, db: Session = Depends(get_db)):
     employee = db.query(Employee).filter(Employee.EmployeeID == employee_id).first()
     if not employee:
-        raise HTTPException(status_code=404, detail="Employee not found")   
+        raise HTTPException(status_code=404, detail="Employee not found")
     attendances = db.query(Attendance).filter(Attendance.EmployeeID == employee_id).all()
-    return attendances
+    attendances_out = [AttendanceOut.from_orm(attendance) for attendance in attendances]
+    return EmployeeAttendanceResponse(EmployeeName=employee.Name, Attendances=attendances_out)
 
 # API để cập nhật attendance
 @router.put("/{attendance_id}", response_model=AttendanceOut)
@@ -78,8 +79,8 @@ def update_attendance(attendance_id: int, attendance: AttendanceUpdate, db: Sess
     # Cập nhật các trường được cung cấp
     if attendance.Status:
         db_attendance.Status = attendance.Status
-    if attendance.HoursWorked is not None:
-        db_attendance.HoursWorked = attendance.HoursWorked
+    if attendance.Remarks is not None:
+        db_attendance.Remarks = attendance.Remarks
 
     db.commit()
     db.refresh(db_attendance)
@@ -95,3 +96,9 @@ def delete_attendance(attendance_id: int, db: Session = Depends(get_db)):
     db.delete(db_attendance)
     db.commit()
     return {"message": f"Attendance with ID {attendance_id} has been deleted successfully"}
+
+# API để trả về attendance của tất cả nhân viên
+@router.get("/", response_model=list[AttendanceOut])
+def get_all_attendances(db: Session = Depends(get_db)):
+    attendances = db.query(Attendance).all()
+    return attendances

@@ -91,9 +91,9 @@ def seed_data():
 
     # 5. Tạo Attendances
     attendances = [
-        Attendance(AttendanceID=1, EmployeeID=4, Date=date(2023, 11, 1), Status="Present", HoursWorked=8),
-        Attendance(AttendanceID=2, EmployeeID=5, Date=date(2023, 11, 1), Status="Absent", HoursWorked=0),
-        Attendance(AttendanceID=3, EmployeeID=6, Date=date(2023, 11, 1), Status="Present", HoursWorked=7),
+        Attendance(AttendanceID=1, EmployeeID=4, Date=date(2023, 11, 1), Status="Present", Remarks="Late"),
+        Attendance(AttendanceID=2, EmployeeID=5, Date=date(2023, 11, 1), Status="Absent", Remarks="No approval"),
+        Attendance(AttendanceID=3, EmployeeID=6, Date=date(2023, 11, 1), Status="Present", Remarks="Request approval"),
     ]
     session.add_all(attendances)
     session.commit()
@@ -102,6 +102,10 @@ def seed_data():
     leave_requests = [
         LeaveRequest(LeaveRequestID=1, EmployeeID=4, StartDate=date(2023, 12, 1), EndDate=date(2024, 11, 1), Reason="Family Emergency", Status="Approved", HRManagerID=1),
         LeaveRequest(LeaveRequestID=2, EmployeeID=5, StartDate=date(2021, 11, 1), EndDate=date(2024, 11, 12), Reason="Sick Leave", Status="Pending", HRManagerID=2),
+        LeaveRequest(LeaveRequestID=3, EmployeeID=6, StartDate=date(2022, 5, 10), EndDate=date(2022, 5, 20), Reason="Vacation", Status="Approved", HRManagerID=1),
+        LeaveRequest(LeaveRequestID=4, EmployeeID=7, StartDate=date(2023, 3, 15), EndDate=date(2023, 3, 25), Reason="Personal", Status="Rejected", HRManagerID=2),
+        LeaveRequest(LeaveRequestID=5, EmployeeID=8, StartDate=date(2023, 6, 1), EndDate=date(2023, 6, 10), Reason="Medical", Status="Approved", HRManagerID=1),
+        LeaveRequest(LeaveRequestID=6, EmployeeID=9, StartDate=date(2023, 7, 20), EndDate=date(2023, 7, 30), Reason="Family Event", Status="Pending", HRManagerID=2),
     ]
     session.add_all(leave_requests)
     session.commit()
@@ -109,6 +113,11 @@ def seed_data():
     # 7. Tạo Payslips
     payslips = [
         Payslip(PayslipID=1, EmployeeID=4, Month=11, Year=2023, GeneratedBy=1, CreatedAt=current_time),
+        Payslip(PayslipID=2, EmployeeID=5, Month=10, Year=2023, GeneratedBy=2, CreatedAt=current_time),
+        Payslip(PayslipID=3, EmployeeID=6, Month=9, Year=2023, GeneratedBy=1, CreatedAt=current_time),
+        Payslip(PayslipID=4, EmployeeID=7, Month=8, Year=2023, GeneratedBy=2, CreatedAt=current_time),
+        Payslip(PayslipID=5, EmployeeID=8, Month=7, Year=2023, GeneratedBy=1, CreatedAt=current_time),
+        Payslip(PayslipID=6, EmployeeID=9, Month=6, Year=2023, GeneratedBy=2, CreatedAt=current_time),
     ]
     session.add_all(payslips)
     session.commit()
@@ -116,6 +125,11 @@ def seed_data():
     # 8. Tạo Performance Reviews
     performances = [
         Performance(PerformanceID=1, EmployeeID=4, EvaluationDate=date(2023,10,25), TaskCompletion=60, Feedback="Great work!", Rating=5),
+        Performance(PerformanceID=2, EmployeeID=5, EvaluationDate=date(2023,9,20), TaskCompletion=70, Feedback="Good job!", Rating=4),
+        Performance(PerformanceID=3, EmployeeID=6, EvaluationDate=date(2023,8,15), TaskCompletion=80, Feedback="Excellent!", Rating=5),
+        Performance(PerformanceID=4, EmployeeID=7, EvaluationDate=date(2023,7,10), TaskCompletion=50, Feedback="Needs improvement.", Rating=3),
+        Performance(PerformanceID=5, EmployeeID=8, EvaluationDate=date(2023,6,5), TaskCompletion=90, Feedback="Outstanding!", Rating=5),
+        Performance(PerformanceID=6, EmployeeID=9, EvaluationDate=date(2023,5,15), TaskCompletion=65, Feedback="Satisfactory.", Rating=4),
     ]
     session.add_all(performances)
     session.commit()
@@ -123,6 +137,11 @@ def seed_data():
     # 9. Tạo Notifications
     notifications = [
         Notification(NotificationID=1, SenderID=1, RecipientID=4, Title="Welcome", Content="Welcome to IU Management!", IsRead=False, SentAt=current_time),
+        Notification(NotificationID=2, SenderID=2, RecipientID=5, Title="Meeting Reminder", Content="Don't forget the meeting tomorrow at 10 AM.", IsRead=False, SentAt=current_time),
+        Notification(NotificationID=3, SenderID=1, RecipientID=6, Title="Performance Review", Content="Your performance review is scheduled for next week.", IsRead=True, SentAt=current_time),
+        Notification(NotificationID=4, SenderID=2, RecipientID=7, Title="Policy Update", Content="Please review the updated company policies.", IsRead=False, SentAt=current_time),
+        Notification(NotificationID=5, SenderID=1, RecipientID=8, Title="Training Session", Content="You have a training session next Monday.", IsRead=False, SentAt=current_time),
+        Notification(NotificationID=6, SenderID=2, RecipientID=9, Title="Holiday Notice", Content="The office will be closed next Friday.", IsRead=True, SentAt=current_time),
     ]
     session.add_all(notifications)
     session.commit()
@@ -130,6 +149,11 @@ def seed_data():
     # 10. Tạo Salaries
     salaries = [
         Salary(SalaryID=1, EmployeeID=4, BasicPay=3000, Bonuses=500, Deductions=200, NetPay=3300, Month=11, Year=2023),
+        Salary(SalaryID=2, EmployeeID=5, BasicPay=3200, Bonuses=400, Deductions=300, NetPay=3300, Month=10, Year=2023),
+        Salary(SalaryID=3, EmployeeID=6, BasicPay=3100, Bonuses=600, Deductions=250, NetPay=3450, Month=9, Year=2023),
+        Salary(SalaryID=4, EmployeeID=7, BasicPay=2900, Bonuses=300, Deductions=150, NetPay=3050, Month=8, Year=2023),
+        Salary(SalaryID=5, EmployeeID=8, BasicPay=2800, Bonuses=400, Deductions=100, NetPay=3100, Month=7, Year=2023),
+        Salary(SalaryID=6, EmployeeID=9, BasicPay=2700, Bonuses=500, Deductions=200, NetPay=3000, Month=6, Year=2023),
     ]
     session.add_all(salaries)
     session.commit()

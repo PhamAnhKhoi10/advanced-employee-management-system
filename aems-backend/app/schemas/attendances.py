@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import date
 
 
@@ -8,22 +8,27 @@ class AttendanceCreate(BaseModel):
     EmployeeID: int
     Date: date
     Status: str
-    HoursWorked: Optional[int] = None  # Giá trị mặc định là None
+    Remarks: str
 
 
 # Schema cho việc cập nhật Attendance
 class AttendanceUpdate(BaseModel):
-    Status: Optional[str] = None
-    HoursWorked: Optional[int] = None
+    Status: Optional[str]
+    Remarks: Optional[str]
 
 
-# Schema cho việc trả về Attendance (đọc dữ liệu)
+# Schema cho việc trả về Attendance (đọc dữ Liệu)
 class AttendanceOut(BaseModel):
     AttendanceID: int
     EmployeeID: int
     Date: date
     Status: str
-    HoursWorked: Optional[int]
+    Remarks: Optional[str]
 
     class Config:
         orm_mode = True
+        from_attributes = True
+
+class EmployeeAttendanceResponse(BaseModel):
+    EmployeeName: str
+    Attendances: List[AttendanceOut]

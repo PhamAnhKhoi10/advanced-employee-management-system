@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.models.leave_requests import LeaveRequest
-from app.schemas.leave_requests import LeaveRequestCreate, LeaveRequestUpdate, LeaveRequestOut
+from app.schemas.leave_requests import LeaveRequestCreate, LeaveRequestUpdate, LeaveRequestOut, EmployeeLeaveRequestResponse
 from app.config.database import SessionLocal
+from app.models.employees import Employee
 
 router = APIRouter()
 
@@ -55,7 +56,11 @@ def get_leave_request(leave_request_id: int, db: Session = Depends(get_db)):
     return leave_request
 
 # API để lấy tất cả yêu cầu nghỉ phép của một nhân viên
-@router.get("/employee/{employee_id}", response_model=list[LeaveRequestOut])
+@router.get("/employee/{employee_id}", response_model=EmployeeLeaveRequestResponse)
 def get_employee_leave_requests(employee_id: int, db: Session = Depends(get_db)):
+    employee = db.query(Employee).filter(Employee.EmployeeID == employee_id).first()
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")
     leave_requests = db.query(LeaveRequest).filter(LeaveRequest.EmployeeID == employee_id).all()
-    return leave_requests
+    leave_requests_out = [LeaveRequestOut.from_orm(leave_request) for leave_request in leave_requests]
+    return EmployeeLeaveRequestResponse(EmployeeName=employee.Name, LeaveRequests=leave_requests_out)
