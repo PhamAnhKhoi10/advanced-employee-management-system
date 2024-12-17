@@ -18,8 +18,9 @@ const CreateAccount = () => {
   const { handleSubmit, register, reset } = methods;
   const handleCreate = handleSubmit(async (data) => {
     const response = await dispatch(createUser(data));
+    console.log(response.payload);
     if (createUser.fulfilled.match(response)) {
-      alert("User created successfully");
+      alert("User created successfully, user ID: " + response.payload.UserID);
       reset();
     } else {
       alert("Failed to create user");
