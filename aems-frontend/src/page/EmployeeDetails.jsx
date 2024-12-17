@@ -43,8 +43,14 @@ const EmployeeDetails = () => {
     }));
   };
 
-  const handleUpdate = (data) => {
-    dispatch(updateEmployeeDetails(data));
+  const handleUpdate = async (data) => {
+    const response = await dispatch(updateEmployeeDetails(data));
+    if (updateEmployeeDetails.fulfilled.match(response)) {
+      alert("Employee details updated successfully");
+      navigate("/employee/employee-info");
+    } else if (updateEmployeeDetails.rejected.match(response)) {
+      alert(`Failed to update employee details: ${response.payload}`);
+    }
   };
   const handleDelete = (id) => {
     dispatch(deleteEmployee(id));
@@ -134,28 +140,6 @@ const EmployeeDetails = () => {
               type="text"
               name="PhoneNumber"
               value={formData?.PhoneNumber}
-              onChange={handleInputChange}
-              className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
-            />
-          </div>
-          <div>
-            <label className="block text-base text-zinc-400 mb-2">
-              Salary *
-            </label>
-            <input
-              type="text"
-              name="salary"
-              value={formData?.salary}
-              onChange={handleInputChange}
-              className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
-            />
-          </div>
-          <div>
-            <label className="block text-base text-zinc-400 mb-2">Role *</label>
-            <input
-              type="text"
-              name="role"
-              value={formData?.role}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
             />

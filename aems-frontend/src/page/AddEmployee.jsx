@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../services/hr.service";
-
 const AddEmployee = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     UserID: null,
     Name: "",
-    DepartmentID: null,
+    DepartmentID: 1,
     Position: "",
     DateOfJoining: "",
     PhoneNumber: "",
@@ -18,7 +17,7 @@ const AddEmployee = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "UserID" ? Number(value) : value, // Convert UserID to a number
     }));
   };
 
@@ -29,8 +28,22 @@ const AddEmployee = () => {
     }));
   };
 
-  const handleAddEmployee = () => {
-    dispatch(addEmployee(formData));
+  const handleAddEmployee = async () => {
+    const response = await dispatch(addEmployee(formData));
+    if (addEmployee.fulfilled.match(response)) {
+      alert("Employee added successfully");
+      setFormData({
+        UserID: null,
+        Name: "",
+        DepartmentID: 1,
+        Position: "",
+        DateOfJoining: "",
+        PhoneNumber: "",
+        Address: "",
+      });
+    } else {
+      alert("Failed to add employee");
+    }
   };
 
   return (
@@ -49,10 +62,9 @@ const AddEmployee = () => {
               User ID *
             </label>
             <input
-              type="text"
+              type="number"
               name="UserID"
-              disabled
-              value={formData.EmployeeID}
+              value={formData.UserID}
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="E000001"
@@ -84,19 +96,6 @@ const AddEmployee = () => {
           </div>
           <div>
             <label className="block text-base text-zinc-400 mb-2">
-              Email *
-            </label>
-            <input
-              type="email"
-              name="Email"
-              value={formData.Email}
-              onChange={handleInputChange}
-              className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
-              placeholder="johndoe@example.com"
-            />
-          </div>
-          <div>
-            <label className="block text-base text-zinc-400 mb-2">
               Address
             </label>
             <input
@@ -119,19 +118,6 @@ const AddEmployee = () => {
               onChange={handleInputChange}
               className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
               placeholder="0123456789"
-            />
-          </div>
-          <div>
-            <label className="block text-base text-zinc-400 mb-2">
-              Salary *
-            </label>
-            <input
-              type="text"
-              name="Salary"
-              value={formData.Salary}
-              onChange={handleInputChange}
-              className="w-full p-2 bg-zinc-600 border border-zinc-700 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
-              placeholder="3000 $"
             />
           </div>
           <div>

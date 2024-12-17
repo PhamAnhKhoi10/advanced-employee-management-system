@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectEmployees } from "../redux/slice/employeeSlice";
+import {
+  selectEmployees,
+  setUserAfterEdit,
+} from "../redux/slice/employeeSlice";
 import { requestProfileEdit } from "../services/employee.service";
 
 const ProfilePage = () => {
@@ -42,9 +45,15 @@ const ProfilePage = () => {
     });
   };
 
-  const handleEdit = (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
-    dispatch(requestProfileEdit(profileData));
+    const response = await dispatch(requestProfileEdit(profileData));
+    if (requestProfileEdit.fulfilled.match(response)) {
+      alert("Profile updated successfully");
+      console.log(response.payload);
+    } else if (requestProfileEdit.rejected.match(response)) {
+      alert(`Failed to update profile: ${response.payload}`);
+    }
   };
 
   return (

@@ -15,9 +15,15 @@ const CreateAccount = () => {
     },
   });
 
-  const { handleSubmit, register } = methods;
+  const { handleSubmit, register, reset } = methods;
   const handleCreate = handleSubmit(async (data) => {
-    dispatch(createUser(data));
+    const response = await dispatch(createUser(data));
+    if (createUser.fulfilled.match(response)) {
+      alert("User created successfully");
+      reset();
+    } else {
+      alert("Failed to create user");
+    }
   });
   return (
     <Box
@@ -73,6 +79,9 @@ const CreateAccount = () => {
               variant="outlined"
               fullWidth
               required
+              InputLabelProps={{
+                style: { color: "#fff" }, // Set the label color to white
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",
@@ -96,6 +105,9 @@ const CreateAccount = () => {
               variant="outlined"
               fullWidth
               required
+              InputLabelProps={{
+                style: { color: "#fff" }, // Set the label color to white
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",
@@ -112,6 +124,9 @@ const CreateAccount = () => {
               fullWidth
               required
               type="email"
+              InputLabelProps={{
+                style: { color: "#fff" }, // Set the label color to white
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",
@@ -128,6 +143,9 @@ const CreateAccount = () => {
               fullWidth
               required
               type="number"
+              InputLabelProps={{
+                style: { color: "#fff" }, // Set the label color to white
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",
@@ -143,6 +161,9 @@ const CreateAccount = () => {
               variant="outlined"
               fullWidth
               required
+              InputLabelProps={{
+                style: { color: "#fff" }, // Set the label color to white
+              }}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   color: "#fff",

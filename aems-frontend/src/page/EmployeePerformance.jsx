@@ -17,6 +17,7 @@ import { useTable } from "../hooks/useTable";
 
 import {
   createPerformanceRecord,
+  deletePerformanceRecord,
   updatePerformanceRecord,
 } from "../services/hr.service";
 import { useForm } from "react-hook-form";
@@ -42,7 +43,7 @@ function EmployeePerformanceRecord() {
   });
 
   const requestInformation = async () => {
-    for (let i = 4; i <= 20; i++) {
+    for (let i = 2; i <= 20; i++) {
       dispatch(requestPerformance(i));
     }
   };
@@ -61,18 +62,50 @@ function EmployeePerformanceRecord() {
     setValue("Feedback", record.Feedback);
     setValue("Rating", record.Rating);
   };
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (data.PerformanceID) {
-      dispatch(updatePerformanceRecord(data));
-      requestInformation();
+      const response = await dispatch(
+        updatePerformanceRecord({
+          PerformanceID: data.PerformanceID,
+          EmployeeID: data.EmployeeID,
+          EvaluationDate: data.EvaluationDate,
+          TaskCompletion: Number(data.TaskCompletion),
+          Feedback: data.Feedback,
+          Rating: Number(data.Rating),
+        })
+      );
+      if (response.meta.requestStatus === "fulfilled") {
+        alert("Record updated successfully");
+        requestInformation();
+      }
       // Update existing record
     } else {
       console.log(data);
-
-      dispatch(createPerformanceRecord(data)); // Create new record
-      requestInformation();
+      const response = await dispatch(
+        createPerformanceRecord({
+          EmployeeID: data.EmployeeID,
+          EvaluationDate: data.EvaluationDate,
+          TaskCompletion: Number(data.TaskCompletion),
+          Feedback: data.Feedback,
+          Rating: Number(data.Rating),
+        })
+      ); // Create new record
+      if (response.meta.requestStatus === "fulfilled") {
+        alert("Record created successfully");
+        requestInformation();
+      }
     }
     reset(); // Reset the form after submission
+  };
+
+  const deleteRecord = async (record) => {
+    const response = await dispatch(
+      deletePerformanceRecord(record.PerformanceID)
+    );
+    if (response.meta.requestStatus === "fulfilled") {
+      alert("Record deleted successfully");
+      requestInformation();
+    }
   };
   return (
     <Box
@@ -153,6 +186,7 @@ function EmployeePerformanceRecord() {
                     </Button>
                     <Button
                       variant="contained"
+                      onClick={() => deleteRecord(record)}
                       color="error"
                       size="small"
                       sx={{ ml: 1 }}
@@ -232,6 +266,9 @@ function EmployeePerformanceRecord() {
               type="number"
               label="Task Completion"
               variant="outlined"
+              onInputCapture={(e) => {
+                e.target.value < 100 ? e.target.value : (e.target.value = 100);
+              }}
               fullWidth
               sx={{ input: { color: "#fff" }, label: { color: "#aaa" } }}
             />

@@ -25,6 +25,11 @@ const Sidebar = ({ roleID }) => {
       case 2:
         return [
           { href: "/salary", label: "Salary", icon: FaMoneyBillAlt },
+          {
+            href: "/employee/salary",
+            label: "Employee Salary",
+            icon: FaDollarSign,
+          },
           { href: "/attendance", label: "Attendance", icon: FaCalendarAlt },
           {
             href: "employee/performance",

@@ -22,7 +22,7 @@ const EmployeeList = () => {
 
   const [filters, setFilters] = useState({
     name: "",
-    id: null,
+    id: "",
     position: "",
     PhoneNumber: "",
   });
@@ -36,7 +36,8 @@ const EmployeeList = () => {
     return (
       (!filters.name ||
         employee.Name.toLowerCase().includes(filters.name.toLowerCase())) &&
-      (!filters.id || employee.EmployeeID.toString() === filters.id) &&
+      (!filters.id ||
+        employee.EmployeeID.toString() === filters.id.toString()) &&
       (!filters.position ||
         employee.Position.toLowerCase().includes(
           filters.position.toLowerCase()
@@ -88,8 +89,8 @@ const EmployeeList = () => {
             ID
           </label>
           <input
-            id="EmployeeID"
-            name="EmployeeID"
+            id="id"
+            name="id"
             type="text"
             placeholder="H000002"
             value={filters.id}
@@ -152,7 +153,7 @@ const EmployeeList = () => {
               <th className="px-6 py-3">Name</th>
               <th className="px-6 py-3">ID</th>
               <th className="px-6 py-3">Position</th>
-              <th className="px-6 py-3">Email</th>
+              <th className="px-6 py-3">Phone Number</th>
               <th className="px-6 py-3 text-center">Details</th>
             </tr>
           </thead>

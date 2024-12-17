@@ -6,6 +6,7 @@ import {
   requestNotification,
   requestPerformance,
   requestProfile,
+  requestProfileEdit,
   requestSalary,
 } from "../../services/employee.service";
 import TokenService from "../../services/token.service";
@@ -18,6 +19,12 @@ const employeeSlice = createSlice({
   reducers: {
     setUserWithSession(state, action) {
       state.user = action.payload;
+    },
+    setUserAfterEdit(state, action) {
+      state.user = {
+        ...state.user,
+        ...action.payload,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -51,11 +58,19 @@ const employeeSlice = createSlice({
     builder.addCase(requestProfile.fulfilled, (state, action) => {
       state.profile = action.payload;
     });
+    builder.addCase(requestProfileEdit.fulfilled, (state, action) => {
+      state.profile = action.payload;
+      state.user = {
+        ...state.user,
+        ...action.payload,
+      };
+    });
+    
   },
 });
 
 export const selectEmployees = (state) => state.employee;
 
-export const { setUserWithSession } = employeeSlice.actions;
+export const { setUserWithSession, setUserAfterEdit } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

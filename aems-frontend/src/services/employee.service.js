@@ -45,7 +45,7 @@ export const requestAttendance = createAsyncThunk(
 );
 export const checkAttendance = createAsyncThunk(
   "attendance/check",
-  async (userId) => {
+  async (userId, { rejectWithValue }) => {
     try {
       const response = await fetch(`${BASE_URL}/api/v1/attendance/`, {
         method: "POST",
@@ -53,14 +53,20 @@ export const checkAttendance = createAsyncThunk(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Status: "string",
-          HoursWorked: 0,
+          Status: "Present",
+          Remarks: "",
           EmployeeID: userId,
           Date: new Date().toISOString().split("T")[0],
         }),
       });
-      const text = await response.text();
-      const result = text ? JSON.parse(text) : {};
+      if (!response.ok) {
+        // If the response is not OK, reject the thunk with the response status text
+        const errorData = await response.json();
+        alert(errorData.detail);
+        return rejectWithValue(errorData);
+      }
+
+      const result = await response.json();
       return result;
     } catch (error) {
       console.error("There was a problem with the request:", error);
@@ -169,7 +175,7 @@ export const requestProfile = createAsyncThunk(
 );
 export const requestProfileEdit = createAsyncThunk(
   "profile/edit",
-  async (employee) => {
+  async (employee, { rejectWithValue }) => {
     try {
       const response = await fetch(
         `${BASE_URL}/api/v1/employees/${employee.id}`,
@@ -181,6 +187,12 @@ export const requestProfileEdit = createAsyncThunk(
           body: JSON.stringify(employee),
         }
       );
+      if (!response.ok) {
+        // If the response is not OK, reject the thunk with the response status text
+        const errorData = await response.json();
+        alert(errorData.detail);
+        return rejectWithValue(errorData);
+      }
 
       const result = await response.json();
       return result;

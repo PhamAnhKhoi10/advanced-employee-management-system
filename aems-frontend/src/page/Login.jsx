@@ -77,6 +77,7 @@ function Login() {
           />
           <TextField
             required
+            type="password"
             {...register("password")}
             label="Password"
             sx={{

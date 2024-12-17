@@ -150,7 +150,7 @@ function Performance() {
                 TASK
               </TableCell>
               <TableCell sx={{ color: "#aaa", fontWeight: "bold" }}>
-                STATUS
+                TASK COMPLETION
               </TableCell>
               <TableCell sx={{ color: "#aaa", fontWeight: "bold" }}>
                 COMPLETION DATE
@@ -166,7 +166,9 @@ function Performance() {
                 <TableCell sx={{ color: "#fff" }}>
                   {row?.PerformanceID}
                 </TableCell>
-                <TableCell sx={{ color: "#fff" }}>{row.Feedback}</TableCell>
+                <TableCell sx={{ color: "#fff" }}>
+                  {row.TaskCompletion}
+                </TableCell>
                 <TableCell sx={{ color: "#fff" }}>
                   {row.EvaluationDate}
                 </TableCell>

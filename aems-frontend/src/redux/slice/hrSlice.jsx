@@ -3,6 +3,7 @@ import {
   requestAttendanceReport,
   requestEmployeeDetails,
   requestEmployeeList,
+  requestLeaveRequests,
   requestPerformanceRecord,
 } from "../../services/hr.service";
 import { requestPerformance } from "../../services/employee.service";
@@ -13,7 +14,7 @@ const hrSlice = createSlice({
     attendanceReport: { Name: "", Attendances: [] },
     employee: {},
     employeeList: [],
-    employeePerRecord: { Name: "", Performances: [] },
+    employeePerRecord: { Name: "", Performances: [], LeaveRequests: [] },
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -57,6 +58,23 @@ const hrSlice = createSlice({
       }));
       state.employeePerRecord.Performances = [
         ...state.employeePerRecord.Performances,
+        ...updatedRecords,
+      ];
+    });
+    builder.addCase(requestLeaveRequests.fulfilled, (state, action) => {
+      const existingIds = state.employeePerRecord.LeaveRequests.map(
+        (request) => request.LeaveRequestID
+      );
+      const newRequests =
+        action.payload.LeaveRequests?.filter(
+          (request) => !existingIds.includes(request.LeaveRequestID)
+        ) || [];
+      const updatedRecords = newRequests.map((record) => ({
+        ...record,
+        Name: action.payload.EmployeeName,
+      }));
+      state.employeePerRecord.LeaveRequests = [
+        ...state.employeePerRecord.LeaveRequests,
         ...updatedRecords,
       ];
     });

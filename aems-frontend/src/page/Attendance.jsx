@@ -23,8 +23,14 @@ function Attendance() {
   const dispatch = useDispatch();
 
   const { attendance, user } = useSelector(selectEmployees);
-  const handleCheckAttendance = () => {
-    dispatch(checkAttendance(user.employee_id));
+  const handleCheckAttendance = async () => {
+    const response = await dispatch(checkAttendance(user.employee_id));
+    if (checkAttendance.fulfilled.match(response)) {
+      alert("Attendance checked successfully");
+      dispatch(requestAttendance(user.employee_id));
+    } else if (checkAttendance.rejected.match(response)) {
+      alert(`Failed to check attendance: ${response.payload}`);
+    }
   };
   useEffect(() => {
     if (user) {
